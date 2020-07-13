@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">Safe Chain</string>
+    <string name="app_name1">--- Safe Chain ---</string>
+    <string name="title_wallet">wallet</string>
+    <string name="title_transaction">transaction</string>
+    <string name="title_ecotope">ecotope</string>
+    <string name="title_consult">consult</string>
+    <!--我的模块-->
+    <string name="title_my">my</string>
+    <string name="my_realname">Real Name</string>
+    <string name="my_realname_no">Unauthorized</string>
+    <string name="my_realname_yes">Certified</string>
+    <string name="my_gesture">Gestures Password</string>
+    <string name="my_gesture_set">Has Been Set</string>
+    <string name="my_gesture_noset">Is Not Set</string>
+    <string name="my_aboutme">About Us</string>
+    <string name="my_suggestion">Suggestion</string>
+    <string name="my_version">Current Version</string>
+    <string name="my_update">Check Update</string>
+    <!--实名认证-->
+    <string name="my_realname_hint">please input your realname</string>
+    <string name="my_identity_hint">please input your identity</string>
+    <string name="my_front_hint">Shoot upload，front of identity</string>
+    <string name="my_back_hint">Shoot upload，back of identity</string>
+    <string name="my_upload_confirm">upload confirm</string>
+    <!--关于我们-->
+    <string name="my_network">network</string>
+    <string name="my_network_url">www.safechain.com</string>
+    <string name="my_forum">forum</string>
+    <string name="my_forum_url">bbs.safechain.com</string>
+    <string name="my_microblog">microblog</string>
+    <!--意见反馈-->
+    <string name="my_suggestion_hint">please input your suggestion and idea</string>
+    <string name="my_phone_hint">please input your phone number</string>
+    <string name="my_suggestion_submit">feedback submit</string>
+    <!--登录-->
+    <string name="login_login">login</string>
+    <string name="login_account_hint">please input email or phone number</string>
+    <string name="login_pwd_hint">password</string>
+    <string name="login_pwd_forget">password forget?</string>
+    <string name="login_account_not">not have Safe Chain account?</string>
+    <string name="login_goto_regist">goto regist</string>
+    <string name="login_retrieve_password">Retrieve password</string>
+    <string name="login_pwd_update">reset password</string>
+    <string name="login_update">reset</string>
+    <!--注册-->
+    <string name="login_regist">regist</string>
+    <string name="login_explain">The country or region cannot be changed after modification</string>
+    <string name="login_phone_hint">Please input phone number</string>
+    <string name="login_code_hint">Please input verification code</string>
+    <string name="login_send_code">Send verification code</string>
+    <string name="login_regist_email">Regist by email</string>
+    <string name="login_account_yes">Already have Safe Chain account</string>
+    <string name="login_goto_login">Goto login</string>
+    <string name="login_next">Next</string>
+    <string name="regist_pwd_set">password setting</string>
+    <string name="set_pwd_explain">Please enter 8-20 characters. It cannot be a pure number.</string>
+    <string name="regist_pwd_hint">Setting password</string>
+    <string name="regist_pwd_sure_hint">Sure password</string>
+    <string name="regist_invitation_code">Invitation code (optional)</string>
+    <string name="regist_invitation_code_hint">Please enter the invitation code</string>
+    <string name="regist_agree">I agree</string>
+    <string name="regist_user_agreement">《User agreement》</string>
+    <string name="regist_congratulations">Congratulations, successful registration!</string>
+    <!--钱包-->
+    <string name="wallet_asset">asset</string>
+    <string name="wallet_my_wallet">my wallet</string>
+    <string name="wallet_collect">collect</string>
+
+</resources>

@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">Safe Chain</string>
+    <string name="app_name1">--- Safe Chain ---</string>
+    <string name="title_wallet">钱包</string>
+    <string name="title_transaction">交易</string>
+    <string name="title_ecotope">生态</string>
+    <string name="title_consult">资讯</string>
+    <!--我的模块-->
+    <string name="title_my">我的</string>
+    <string name="my_realname">实名认证</string>
+    <string name="my_realname_no">未认证</string>
+    <string name="my_realname_yes">已认证</string>
+    <string name="my_gesture">手势密码</string>
+    <string name="my_gesture_set">已设置</string>
+    <string name="my_gesture_noset">未设置</string>
+    <string name="my_aboutme">关于我们</string>
+    <string name="my_suggestion">意见反馈</string>
+    <string name="my_version">当前版本</string>
+    <string name="my_update">检查更新</string>
+    <!--实名认证-->
+    <string name="my_realname_hint">请输入您的真实姓名</string>
+    <string name="my_identity_hint">请输入您的身份证号</string>
+    <string name="my_front_hint">拍摄上传，身份证正面</string>
+    <string name="my_back_hint">拍摄上传，身份证背面</string>
+    <string name="my_upload_confirm">确认上传</string>
+    <!--关于我们-->
+    <string name="my_network">网站</string>
+    <string name="my_network_url">www.safechain.com</string>
+    <string name="my_forum">论坛</string>
+    <string name="my_forum_url">bbs.safechain.com</string>
+    <string name="my_microblog">微博</string>
+    <!--意见反馈-->
+    <string name="my_suggestion_hint">请填写你的意见和建议</string>
+    <string name="my_phone_hint">请填写你的电话号码</string>
+    <string name="my_suggestion_submit">提交反馈</string>
+    <!--登录 -->
+    <string name="login_login">登录</string>
+    <string name="login_account_hint">请输入邮箱或手机号码</string>
+    <string name="login_pwd_hint">密码</string>
+    <string name="login_pwd_forget">忘记密码?</string>
+    <string name="login_account_not">还没有Safe Chain账号?</string>
+    <string name="login_goto_regist">去注册</string>
+    <string name="login_retrieve_password">找回密码</string>
+    <string name="login_pwd_update">重置密码</string>
+    <string name="login_update">重置</string>
+    <!--注册-->
+    <string name="login_regist">注册</string>
+    <string name="login_explain">国家或地区修改后不可更改</string>
+    <string name="login_phone_hint">请输入手机号</string>
+    <string name="login_code_hint">请输入验证码</string>
+    <string name="login_send_code">发送验证码</string>
+    <string name="login_regist_email">邮箱注册</string>
+    <string name="login_account_yes">已有Safe Chain账号</string>
+    <string name="login_goto_login">去登陆</string>
+    <string name="login_next">下一步</string>
+    <string name="regist_pwd_set">设置密码</string>
+    <string name="set_pwd_explain">请输入8-20位字符，不可以是纯数字。</string>
+    <string name="regist_pwd_hint">设置密码</string>
+    <string name="regist_pwd_sure_hint">确认密码</string>
+    <string name="regist_invitation_code">邀请码（选填）</string>
+    <string name="regist_invitation_code_hint">请输入邀请码</string>
+    <string name="regist_agree">我同意</string>
+    <string name="regist_user_agreement">《用户协议》</string>
+    <string name="regist_congratulations">恭喜您，注册成功！</string>
+    <!--钱包-->
+    <string name="wallet_asset">资产</string>
+    <string name="wallet_my_wallet">我的钱包</string>
+    <string name="wallet_collect">收藏</string>
+
+
+</resources>

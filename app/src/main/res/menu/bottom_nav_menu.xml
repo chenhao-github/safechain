@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_wallet"
+        android:icon="@drawable/ic_wallet_black"
+        android:title="@string/title_wallet" />
+
+    <item
+        android:id="@+id/navigation_transaction"
+        android:icon="@drawable/ic_transaction_black"
+        android:title="@string/title_transaction" />
+
+    <item
+        android:id="@+id/navigation_ecotope"
+        android:icon="@drawable/ic_ecotope_black"
+        android:title="@string/title_ecotope" />
+
+    <item
+        android:id="@+id/navigation_consult"
+        android:icon="@drawable/ic_consult_black"
+        android:title="@string/title_consult" />
+
+    <item
+        android:id="@+id/navigation_my"
+        android:icon="@drawable/ic_my_black"
+        android:title="@string/title_my" />
+
+</menu>

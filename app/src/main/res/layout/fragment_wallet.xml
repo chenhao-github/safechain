@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--第一行-->
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_36">
+
+        <ImageView
+            android:id="@+id/img_message"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_25"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:src="@mipmap/ic_wallet_dollar_main" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/title_wallet"
+            android:textColor="@color/colorTitle"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_en"
+            android:layout_width="@dimen/dp_17"
+            android:layout_height="@dimen/dp_17"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:src="@mipmap/ic_wallet_scan_code" />
+    </RelativeLayout>
+    <!--第一行下的灰线-->
+    <TextView
+        android:id="@+id/txt_line"
+        android:layout_below="@+id/rl_top"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
+    <!--我的钱包区域-->
+    <RelativeLayout
+        android:id="@+id/rl_my_wallet"
+        android:layout_below="@+id/txt_line"
+        android:background="@mipmap/ic_wallet_my_wallet_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_160">
+        <TextView
+            android:id="@+id/txt_my_wallet"
+            android:layout_marginTop="@dimen/dp_32"
+            android:layout_marginLeft="@dimen/dp_36"
+            android:text="@string/wallet_my_wallet"
+            android:textSize="@dimen/dp_20"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/img_more"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/txt_my_wallet"
+            android:layout_marginRight="@dimen/dp_36"
+            android:src="@mipmap/ic_wallet_more"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_3" />
+        <!--地址区域 地址+二维码-->
+        <RelativeLayout
+            android:id="@+id/ll_address"
+            android:layout_below="@+id/txt_my_wallet"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_alignLeft="@+id/txt_my_wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_address"
+                android:text="482ee7c37...2ea729b62"
+                android:textSize="@dimen/dp_12"
+                android:textColor="@color/colorWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/img_qr_code"
+                android:src="@mipmap/ic_wallet_qr_code"
+                android:layout_toRightOf="@+id/txt_address"
+                android:layout_marginLeft="@dimen/dp_7"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/dp_9"
+                android:layout_height="@dimen/dp_9" />
+        </RelativeLayout>
+        <!--金额-->
+        <TextView
+            android:id="@+id/txt_money"
+            android:text="￥12,345.00"
+            android:textSize="@dimen/dp_20"
+            android:textColor="@color/colorWhite"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_marginBottom="@dimen/dp_40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <!--资产-->
+    <TextView
+        android:id="@+id/txt_asset"
+        android:layout_below="@+id/rl_my_wallet"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="@string/wallet_asset"
+        android:textSize="@dimen/dp_20"
+        android:textColor="@color/colorMyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--斜杠-->
+    <TextView
+        android:id="@+id/txt_sprit"
+        android:layout_toRightOf="@+id/txt_asset"
+        android:layout_alignBottom="@+id/txt_asset"
+        android:layout_marginLeft="@dimen/dp_13"
+        android:text="/"
+        android:textSize="@dimen/dp_20"
+        android:textColor="@color/colorMyHeaderBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--收藏-->
+    <TextView
+        android:id="@+id/txt_collect"
+        android:layout_toRightOf="@+id/txt_sprit"
+        android:layout_alignBottom="@+id/txt_sprit"
+        android:layout_marginLeft="@dimen/dp_13"
+        android:text="@string/wallet_collect"
+        android:textSize="@dimen/dp_15"
+        android:textColor="@color/colorIdentity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlv_chain"
+        android:layout_below="@+id/txt_asset"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_alignLeft="@+id/txt_asset"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.my.SuggestionActivity">
+    <!--第一行-->
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:src="@mipmap/ic_my_back" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/my_suggestion"
+            android:textColor="@color/colorTitle"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <!--第一行下的灰线-->
+    <TextView
+        android:id="@+id/txt_line"
+        android:layout_below="@+id/rl_top"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
+    <!--意见建议输入框-->
+    <EditText
+        android:id="@+id/et_suggestion"
+        android:layout_below="@+id/txt_line"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/dp_16"
+        android:textColor="@color/colorIdentity"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:background="@drawable/bg_my_identity"
+        android:paddingLeft="@dimen/dp_16"
+        android:gravity="top"
+        android:paddingTop="@dimen/dp_16"
+        android:hint="@string/my_suggestion_hint"
+        android:layout_width="@dimen/dp_320"
+        android:layout_height="@dimen/dp_167" />
+    <!--电话号码输入框-->
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_below="@+id/et_suggestion"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/dp_16"
+        android:textColor="@color/colorIdentity"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:background="@drawable/bg_my_identity"
+        android:paddingLeft="@dimen/dp_16"
+        android:hint="@string/my_phone_hint"
+        android:layout_width="@dimen/dp_320"
+        android:layout_height="@dimen/dp_40" />
+    <Button
+        android:id="@+id/btn_submit"
+        android:text="@string/my_suggestion_submit"
+        android:textSize="@dimen/dp_16"
+        android:textColor="@color/colorWhite"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_button_gray"
+        android:layout_width="@dimen/dp_320"
+        android:layout_height="@dimen/dp_40" />
+
+</RelativeLayout>
