@@ -66,6 +66,8 @@
     <string name="wallet_asset">资产</string>
     <string name="wallet_my_wallet">我的钱包</string>
     <string name="wallet_collect">收藏</string>
+    <string name="wallet_collection">收款</string>
+    <string name="wallet_transfer">转账</string>
 
 
 </resources>

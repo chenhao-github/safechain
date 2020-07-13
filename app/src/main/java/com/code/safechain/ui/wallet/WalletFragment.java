@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.code.safechain.R;
 import com.code.safechain.base.BaseAdapter;
 import com.code.safechain.base.BaseFragment;
+import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.WalletConstract;
 import com.code.safechain.model.bean.Chain;
 import com.code.safechain.presenter.WalletPresenter;
@@ -56,7 +57,9 @@ public class WalletFragment extends BaseFragment<WalletConstract.Presenter>
             @Override
             public void onItemClick(BaseAdapter.BaseViewHolder holder) {
                 Chain chain = mChains.get(holder.getLayoutPosition());
-                new Intent(getActivity())
+                Intent intent = new Intent(getActivity(), ChainDetailActivity.class);
+                intent.putExtra(Constants.DATA, chain);
+                startActivity(intent);
             }
         });
     }

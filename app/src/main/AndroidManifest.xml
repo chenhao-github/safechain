@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.wallet.ChainDetailActivity"></activity>
+        <activity android:name=".ui.wallet.CollectionActivity"></activity>
+        <activity android:name=".ui.wallet.ChainDetailActivity" />
         <activity android:name=".ui.login.UpdatePwdActivity" />
         <activity android:name=".ui.login.VerificationCodeUpdatePwdActivity" />
         <activity android:name=".ui.login.RegistSuccessActivity" />

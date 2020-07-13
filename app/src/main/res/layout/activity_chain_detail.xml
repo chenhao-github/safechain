@@ -1,9 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.wallet.ChainDetailActivity">
+    <!--第一行-->
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_36">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:src="@mipmap/ic_my_back" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="USDT"
+            android:textColor="@color/colorTitle"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_info"
+            android:layout_width="@dimen/dp_17"
+            android:layout_height="@dimen/dp_17"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:src="@mipmap/ic_wallet_chain_detail_info" />
+    </RelativeLayout>
+    <!--第一行下的灰线-->
+    <TextView
+        android:id="@+id/txt_line"
+        android:layout_below="@+id/rl_top"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
+
+
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_17"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_46">
+        <!--转账-->
+        <Button
+            android:id="@+id/btn_transfer"
+            android:text="@string/wallet_transfer"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorTransfer"
+            android:background="@drawable/bg_button_white"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_40" />
+        <!--收款-->
+        <Button
+            android:id="@+id/btn_collection"
+            android:text="@string/wallet_collection"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="@dimen/dp_17"
+            android:background="@drawable/bg_button_yellow"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_40" />
+    </LinearLayout>
+</RelativeLayout>

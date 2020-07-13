@@ -66,5 +66,7 @@
     <string name="wallet_asset">asset</string>
     <string name="wallet_my_wallet">my wallet</string>
     <string name="wallet_collect">collect</string>
+    <string name="wallet_collection">collection</string>
+    <string name="wallet_transfer">transfer</string>
 
 </resources>

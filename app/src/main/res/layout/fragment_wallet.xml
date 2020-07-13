@@ -10,7 +10,7 @@
         android:layout_height="@dimen/dp_36">
 
         <ImageView
-            android:id="@+id/img_message"
+            android:id="@+id/img_dollar"
             android:layout_width="@dimen/dp_14"
             android:layout_height="@dimen/dp_25"
             android:layout_centerVertical="true"
@@ -27,7 +27,7 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/img_en"
+            android:id="@+id/img_scan_code"
             android:layout_width="@dimen/dp_17"
             android:layout_height="@dimen/dp_17"
             android:layout_alignParentRight="true"
