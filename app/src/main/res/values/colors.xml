@@ -20,6 +20,8 @@
     <color name="colorExplain">#ff643c</color>
     <color name="colorChainIconBg">#f5f5f5</color>
     <color name="colorTransfer">#f4ca65</color>
+    <color name="walletPath">#505050</color>
+    <color name="colorLogText">#98792d</color>
     <color name="colorRedTextView">#ff3a3a</color>
     <color name="colorBlueTextView">#5078e6</color>
 </resources>
