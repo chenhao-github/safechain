@@ -68,6 +68,10 @@
     <string name="wallet_collect">收藏</string>
     <string name="wallet_collection">收款</string>
     <string name="wallet_transfer">转账</string>
+    <string name="wallet_chain_all">全部</string>
+    <string name="wallet_chain_into">转入</string>
+    <string name="wallet_chain_out">转出</string>
+    <string name="wallet_chain_fail">失败</string>
 
 
 </resources>

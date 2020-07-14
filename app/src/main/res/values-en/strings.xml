@@ -68,5 +68,9 @@
     <string name="wallet_collect">collect</string>
     <string name="wallet_collection">collection</string>
     <string name="wallet_transfer">transfer</string>
+    <string name="wallet_chain_all">all</string>
+    <string name="wallet_chain_into">into</string>
+    <string name="wallet_chain_out">out</string>
+    <string name="wallet_chain_fail">fail</string>
 
 </resources>

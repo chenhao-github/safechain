@@ -58,6 +58,7 @@
             android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <!--右边的 三个点 。。。-->
         <ImageView
             android:id="@+id/img_more"
             android:layout_alignParentRight="true"

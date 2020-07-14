@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/wallet_collection"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorTitle"
             android:textSize="16sp" />
 
 

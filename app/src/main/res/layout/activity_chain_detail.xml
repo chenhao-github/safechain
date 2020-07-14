@@ -44,9 +44,153 @@
         android:background="@color/colorLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1" />
-
-
-
+    <!--此币的金额  上面-->
+    <TextView
+        android:id="@+id/txt_chain_money1"
+        android:layout_below="@+id/txt_line"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_48"
+        android:text="￥12,943.00"
+        android:textSize="@dimen/dp_27"
+        android:textColor="@color/colorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--此币的金额  正下面-->
+    <TextView
+        android:id="@+id/txt_chain_money2"
+        android:layout_below="@+id/txt_chain_money1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="￥0.00"
+        android:textSize="@dimen/dp_13"
+        android:textColor="@color/colorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--币的名字标记行：标记和名字-->
+    <LinearLayout
+        android:id="@+id/ll_chain_self_name"
+        android:layout_toRightOf="@+id/txt_chain_money1"
+        android:layout_below="@+id/txt_line"
+        android:layout_marginLeft="@dimen/dp_45"
+        android:layout_marginTop="@dimen/dp_52"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_chain_self_mark"
+            android:background="@drawable/bg_textview_red_chain"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_8" />
+        <TextView
+            android:id="@+id/txt_chain_self_name"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="USDT"
+            android:textColor="@color/colorTitle"
+            android:textSize="@dimen/dp_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--币的中文名标记行：标记和名字-->
+    <LinearLayout
+        android:id="@+id/ll_chain_china_name"
+        android:layout_below="@+id/ll_chain_self_name"
+        android:layout_alignLeft="@+id/ll_chain_self_name"
+        android:layout_marginTop="@dimen/dp_5"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_chain_china_mark"
+            android:background="@drawable/bg_textview_blue_chain"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_8" />
+        <TextView
+            android:id="@+id/txt_chain_china_name"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="CNY"
+            android:textColor="@color/colorTitle"
+            android:textSize="@dimen/dp_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--功能标签行-->
+    <LinearLayout
+        android:id="@+id/ll_navigation"
+        android:orientation="horizontal"
+        android:layout_below="@+id/txt_chain_money2"
+        android:layout_marginTop="@dimen/dp_36"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <!--全部-->
+            <TextView
+                android:id="@+id/txt_all"
+                android:text="@string/wallet_chain_all"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/dp_15"
+                android:background="@drawable/bg_txt_yellow"
+                android:gravity="center"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_28" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <!--转入-->
+            <TextView
+                android:id="@+id/txt_into"
+                android:text="@string/wallet_chain_into"
+                android:textColor="@color/colorMyName"
+                android:textSize="@dimen/dp_15"
+                android:gravity="center"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_28" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <!--转出 -->
+            <TextView
+                android:id="@+id/txt_out"
+                android:text="@string/wallet_chain_out"
+                android:textColor="@color/colorMyName"
+                android:textSize="@dimen/dp_15"
+                android:gravity="center"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_28" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <!--失败 -->
+            <TextView
+                android:id="@+id/txt_fail"
+                android:text="@string/wallet_chain_fail"
+                android:textColor="@color/colorMyName"
+                android:textSize="@dimen/dp_15"
+                android:gravity="center"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_28" />
+        </LinearLayout>
+    </LinearLayout>
+    <!--币的交易记录-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlv_chain_transaction"
+        android:layout_below="@+id/ll_navigation"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_alignLeft="@+id/ll_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:layout_alignParentBottom="true"
