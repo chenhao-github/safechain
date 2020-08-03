@@ -1,10 +1,10 @@
 package com.code.safechain.base;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import com.code.safechain.interfaces.IBasePresenter;
 import com.code.safechain.interfaces.IBaseView;
 import butterknife.ButterKnife;

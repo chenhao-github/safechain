@@ -17,15 +17,15 @@ public class RxUtils {
      * @param <T>
      * @return
      */
-    public static <T> FlowableTransformer<T,T> rxScheduler(){
-        return new FlowableTransformer<T, T>() {
-            @Override
-            public Publisher<T> apply(Flowable<T> upstream) {
-                return upstream.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-            }
-        };
-    }
+//    public static <T> ObservableTransformer<T,T> rxScheduler(){
+//        return new ObservableTransformer<T,T>(){
+//            @Override
+//            public ObservableSource<T> apply(Observable<T> upstream) {
+//                return upstream.subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread());
+//            }
+//        };
+//    }
 
 
     public static <T> ObservableTransformer<T,T> changeScheduler(){

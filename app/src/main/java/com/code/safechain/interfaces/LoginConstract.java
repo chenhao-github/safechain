@@ -1,5 +1,7 @@
 package com.code.safechain.interfaces;
 
+import com.code.safechain.ui.login.bean.RegistRsBean;
+
 /**
  * @Auther: hchen
  * @Date: 2020/7/7 0007
@@ -7,10 +9,10 @@ package com.code.safechain.interfaces;
  */
 public interface LoginConstract {
     interface View extends IBaseView{
-        void loginReturn();//登录后的返回
+        void loginReturn(RegistRsBean registRsBean);//登录后的返回
     }
 
     interface Presenter extends IBasePresenter<View>{
-        void login(String account, String pws, String code);//登录
+        void login(String json);//登录
     }
 }

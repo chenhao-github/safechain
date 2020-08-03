@@ -12,12 +12,15 @@ public class Chain implements Serializable {
     private String name;
     private String money1;
     private String money2;
+    private String address;
+    boolean isCheck;
 
-    public Chain(int img, String name, String money1, String money2) {
+    public Chain(int img, String name, String money1, String money2, String address) {
         this.img = img;
         this.name = name;
         this.money1 = money1;
         this.money2 = money2;
+        this.address = address;
     }
 
     public int getImg() {
@@ -52,6 +55,22 @@ public class Chain implements Serializable {
         this.money2 = money2;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+
     @Override
     public String toString() {
         return "Chain{" +
@@ -59,6 +78,8 @@ public class Chain implements Serializable {
                 ", name='" + name + '\'' +
                 ", money1='" + money1 + '\'' +
                 ", money2='" + money2 + '\'' +
+                ", address='" + address + '\'' +
+                ", isCheck=" + isCheck +
                 '}';
     }
 }

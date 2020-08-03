@@ -7,8 +7,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.code.safechain.R;
 import com.code.safechain.base.BaseFragment;
 import com.code.safechain.interfaces.MyConstract;

@@ -1,6 +1,10 @@
 package com.code.safechain.ui.login;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -9,15 +13,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.code.safechain.R;
+import com.code.safechain.app.BaseApp;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.LoginConstract;
 import com.code.safechain.interfaces.RegistConstract;
 import com.code.safechain.presenter.LoginPresenter;
 import com.code.safechain.presenter.RegistPresenter;
+import com.code.safechain.ui.login.bean.RegistRsBean;
+import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,6 +46,7 @@ public class VerificationCodeActivity extends BaseActivity<RegistConstract.Prese
     private ArrayAdapter<String> countryAdapter;
     private ArrayList<String> mFixsList;
     private ArrayAdapter<String> mFixAdapter;
+    private String mPhone;
 
     @Override
     protected int getLayout() {
@@ -105,6 +115,7 @@ public class VerificationCodeActivity extends BaseActivity<RegistConstract.Prese
                 break;
             case R.id.txt_send_code:
                 ToastUtil.showShort("发送验证码");
+                sendVerifiCode();
                 break;
             case R.id.txt_regist_email:
                 ToastUtil.showShort("邮箱注册");
@@ -118,9 +129,34 @@ public class VerificationCodeActivity extends BaseActivity<RegistConstract.Prese
         }
     }
 
-    private void toSetPwdActivity() {
-        Intent intent = new Intent(this, SetPwdActivity.class);
+    private void sendVerifiCode() {
+        mPhone = mEtPhone.getText().toString().trim();//得到手机号
+//        String phoneFix = mSpPhoneFix的选中值;
+        String phoneFix = "+86";
+        if(!TextUtils.isEmpty(mPhone)){
+            // 封装数据
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("type",1);
+            map.put("phone", mPhone);
+            map.put("nation",phoneFix);
+            //加密
+            String json = SystemUtils.getJson(map);//得到签名后的数据作为sign的值的json串
+            presenter.sendVerifiCode(json);
+        }else {
+            ToastUtil.showShort(BaseApp.getRes().getString(R.string.regist_phone_not_null));
+        }
+    }
 
+    private void toSetPwdActivity() {
+        //得到验证码
+        String veriCode = mEtCode.getText().toString().trim();
+        if(TextUtils.isEmpty(veriCode) || veriCode.length()!=6){
+            ToastUtil.showShort("验证码不合法！");
+            return;
+        }
+        Intent intent = new Intent(this, SetPwdActivity.class);
+        intent.putExtra(Constants.PHONE_NUMBER,mPhone);
+        intent.putExtra(Constants.VERIFICODE,veriCode);
         startActivity(intent);
     }
 
@@ -130,7 +166,8 @@ public class VerificationCodeActivity extends BaseActivity<RegistConstract.Prese
     }
 
     @Override
-    public void sendPwdReturn() {
+    public void sendPwdReturn(RegistRsBean registRsBean) {
 
     }
+
 }

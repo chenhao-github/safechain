@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.wallet.ChainInfoActivity">
+    <!--第一行-->
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_43">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_my_back" />
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="USDT"
+            android:typeface="normal"
+            android:textColor="@color/colorTitle"
+            android:textSize="@dimen/dp_17" />
+    </RelativeLayout>
+    <!--第一行下的灰线 第1条-->
+    <TextView
+        android:id="@+id/txt_line"
+        android:layout_below="@+id/rl_top"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
+    <!--币的图标和名字 行-->
+    <RelativeLayout
+        android:id="@+id/rlv_chain_area"
+        android:layout_below="@+id/txt_line"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_67">
+        <RelativeLayout
+            android:id="@+id/rl_icon"
+            android:background="@drawable/bg_circle_wallet_chain_icon"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_33"
+            android:layout_height="@dimen/dp_33">
+            <ImageView
+                android:id="@+id/img_chain_icon"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/chain_icon"
+                android:scaleType="fitXY"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/txt_chain_name"
+            android:layout_toRightOf="@+id/rl_icon"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_centerVertical="true"
+            android:text="USDT"
+            android:textSize="@dimen/dp_23"
+            android:textColor="@color/colorMyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <!--名字下的粗线  第2条-->
+    <TextView
+        android:id="@+id/txt_line2"
+        android:layout_below="@+id/rlv_chain_area"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_3" />
+    <!--基本信息-->
+    <LinearLayout
+        android:id="@+id/ll_info"
+        android:layout_below="@+id/txt_line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:text="@string/wallet_chain_info_title"
+            android:textSize="@dimen/dp_17"
+            android:textColor="@color/colorTitle"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--基本信息下的粗线  第3条-->
+    <TextView
+        android:id="@+id/txt_line3"
+        android:layout_below="@+id/ll_info"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
+    <!--官网-->
+    <RelativeLayout
+        android:id="@+id/rl_network"
+        android:layout_below="@+id/txt_line3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:id="@+id/txt_network"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorMyName"
+            android:text="@string/my_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txt_network_url"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorTransfer"
+            android:text="@string/my_network_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!--官网下的灰线 第4条-->
+        <TextView
+            android:id="@+id/txt_line4"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1" />
+    </RelativeLayout>
+
+    <!--论坛  合约地址-->
+    <RelativeLayout
+        android:id="@+id/rl_forum"
+        android:layout_below="@+id/rl_network"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:id="@+id/txt_forum"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorMyName"
+            android:text="@string/my_forum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txt_forum_url"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorTransfer"
+            android:text="@string/my_forum_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txt_line5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1" />
+    </RelativeLayout>
+    <!--社区  -->
+    <RelativeLayout
+        android:id="@+id/rl_community"
+        android:layout_below="@+id/rl_forum"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:id="@+id/txt_community"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorMyName"
+            android:text="@string/my_community"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!--Facebook-->
+        <TextView
+            android:id="@+id/txt_facebook"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorTransfer"
+            android:text="Facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!--INS-->
+        <TextView
+            android:id="@+id/txt_ins"
+            android:layout_toLeftOf="@+id/txt_facebook"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_16"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorTransfer"
+            android:text="INS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!--新浪微博-->
+        <TextView
+            android:id="@+id/txt_microblog"
+            android:layout_toLeftOf="@+id/txt_ins"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_16"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorTransfer"
+            android:text="@string/my_microblog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!--论坛 合约地址下的灰线 第5条线-->
+        <TextView
+            android:id="@+id/txt_line6"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1" />
+    </RelativeLayout>
+    <!--详情-->
+    <RelativeLayout
+        android:id="@+id/rl_chain_info"
+        android:layout_below="@+id/rl_community"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_chain_info"
+            android:layout_marginTop="@dimen/dp_17"
+            android:layout_marginBottom="@dimen/dp_17"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_marginRight="@dimen/dp_18"
+            android:text="发生发顺丰撒法师法师法撒发送发生发顺丰撒飞洒发顺丰发生发发发发发发发"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorMyRight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <!--详情下的粗线-->
+    <TextView
+        android:id="@+id/txt_line7"
+        android:layout_below="@+id/rl_chain_info"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_3" />
+    <!--发行数据-->
+    <RelativeLayout
+        android:id="@+id/rl_issue_data"
+        android:layout_below="@+id/txt_line7"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:id="@+id/txt_issue_data"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorMyName"
+            android:text="@string/wallet_chain_info_issue_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1" />
+    </RelativeLayout>
+    <!--状态-->
+    <RelativeLayout
+        android:id="@+id/rl_status"
+        android:layout_below="@+id/rl_issue_data"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:id="@+id/txt_status_title"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorMyName"
+            android:text="@string/wallet_status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txt_status"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorMyRight"
+            android:text="流通中"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1" />
+    </RelativeLayout>
+    <!--发行日期-->
+    <RelativeLayout
+        android:id="@+id/rl_issue_date"
+        android:layout_below="@+id/rl_status"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:id="@+id/txt_issue_date_title"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorMyName"
+            android:text="@string/wallet_issue_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txt_issue_date"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorMyRight"
+            android:text="2020-08-10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1" />
+    </RelativeLayout>
+    <!--发行成本-->
+    <RelativeLayout
+        android:id="@+id/rl_issue_cost"
+        android:layout_below="@+id/rl_issue_date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:id="@+id/txt_issue_cost_title"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorMyName"
+            android:text="@string/wallet_issue_cost_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txt_issue_cost"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorMyRight"
+            android:text="1 USD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

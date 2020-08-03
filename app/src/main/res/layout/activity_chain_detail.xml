@@ -184,15 +184,18 @@
         </LinearLayout>
     </LinearLayout>
     <!--币的交易记录-->
-    <androidx.recyclerview.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_chain_transaction"
         android:layout_below="@+id/ll_navigation"
         android:layout_marginTop="@dimen/dp_5"
         android:layout_alignLeft="@+id/ll_navigation"
+        android:layout_above="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <!--底部 转账 收款 按钮-->
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_17"
         android:gravity="center"
@@ -202,7 +205,7 @@
         <Button
             android:id="@+id/btn_transfer"
             android:layout_width="@dimen/dp_150"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_40"
             android:background="@drawable/bg_button_white"
             android:text="@string/wallet_transfer"
             android:textColor="@color/colorTransfer"

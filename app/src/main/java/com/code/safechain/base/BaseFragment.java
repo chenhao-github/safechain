@@ -3,14 +3,14 @@ package com.code.safechain.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import com.code.safechain.interfaces.IBasePresenter;
 import com.code.safechain.interfaces.IBaseView;
 
@@ -23,6 +23,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment im
     protected Activity activity; //当前页面的Activity
 
     Unbinder unbinder;
+
 
     @Nullable
     @Override

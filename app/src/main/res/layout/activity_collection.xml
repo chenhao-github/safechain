@@ -16,186 +16,188 @@
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="@dimen/dp_10"
-            android:background="#fff"
+            android:background="@color/colorTransfer"
             android:layout_height="@dimen/dp_18"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_18"
-            android:src="@mipmap/ic_my_back" />
-
+            android:src="@mipmap/ic_collection_back" />
         <TextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/wallet_collection"
-            android:textColor="@color/colorTitle"
+            android:textColor="@color/colorWhite"
             android:textSize="16sp" />
     </RelativeLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+<!--收款中心区域-->
+    <RelativeLayout
         android:id="@+id/qr_all"
         android:layout_width="@dimen/dp_320"
-        android:layout_height="@dimen/dp_422"
+        android:layout_height="@dimen/dp_400"
         android:layout_below="@id/rl_top"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_22"
         android:background="@drawable/shape_collect_money">
-
-        <TextView
-            android:id="@+id/scanning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_55"
+        <!--收款金额提示区域-->
+        <LinearLayout
+            android:id="@+id/ll_transfer_money"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_40"
-            android:text="扫二维码，转入"
-            android:textColor="@color/colorMyRight"
-            android:textSize="@dimen/dp_15"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_40"
-            android:text="  10,000 USDT"
-            android:textColor="@color/colorMyRight"
-            android:textSize="@dimen/dp_15"
-            app:layout_constraintLeft_toRightOf="@id/scanning"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_collection_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/collection_hint"
+                android:textColor="@color/colorMyRight"
+                android:textSize="@dimen/dp_13" />
+            <!--收款金额-->
+            <TextView
+                android:id="@+id/txt_collection_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10,000 USDT"
+                android:textColor="@color/colorMyRight"
+                android:textSize="@dimen/dp_13"/>
+        </LinearLayout>
+        <!--二维码区-->
         <RelativeLayout
-            android:id="@+id/QRCodeBox"
-            android:layout_width="@dimen/dp_144"
-            android:layout_height="@dimen/dp_144"
-            android:layout_marginLeft="@dimen/dp_88"
+            android:id="@+id/rl_QRCodeBox"
+            android:layout_below="@+id/ll_transfer_money"
             android:layout_marginTop="@dimen/dp_25"
-            android:background="@mipmap/bg_qr"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scanning">
-
+            android:layout_width="@dimen/dp_143"
+            android:layout_height="@dimen/dp_143"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/bg_qr">
             <ImageView
-                android:layout_width="@dimen/dp_130"
-                android:layout_height="@dimen/dp_130"
+                android:layout_width="@dimen/dp_123"
+                android:layout_height="@dimen/dp_123"
                 android:layout_centerInParent="true"
                 android:src="@mipmap/qr" />
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/walletMsg"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_70"
-            android:layout_marginTop="@dimen/dp_30"
-            app:layout_constraintTop_toBottomOf="@id/QRCodeBox">
-
-            <TextView
-                android:id="@+id/walletPath"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="钱包地址"
-                android:textSize="@dimen/dp_15" />
-
-            <TextView
-                android:layout_width="@dimen/dp_192"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/walletPath"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_10"
-                android:gravity="center"
-                android:maxLines="2"
-                android:text="asdsadsadadsdjhkjwbifihqwasdasdasd"
-                android:textColor="@color/colorTitle"
-                android:textSize="@dimen/dp_15" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/share"
+        <!--钱包地址 文本-->
+        <TextView
+            android:id="@+id/txt_wallet_address_title"
+            android:layout_below="@+id/rl_QRCodeBox"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_26"
+            android:text="@string/wallet_address"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/colorMyRight"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_15"
+            android:layout_height="wrap_content"/>
+        <!--地址值-->
+        <TextView
+            android:id="@+id/txt_wallet_address"
+            android:layout_below="@+id/txt_wallet_address_title"
+            android:layout_width="@dimen/dp_216"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_16"
+            android:gravity="center"
+            android:text="asdsadsadadsdjhkjwbifihqwasdasdasd"
+            android:textColor="@color/colorTitle"
+            android:textSize="@dimen/dp_15" />
+        <!--分享小区域-->
+        <LinearLayout
+            android:id="@+id/ll_share"
+            android:layout_below="@+id/txt_wallet_address"
+            android:layout_marginTop="@dimen/dp_40"
             android:layout_marginLeft="@dimen/dp_38"
-            android:layout_marginTop="@dimen/dp_40"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/walletMsg">
-
-            <ImageView
-                android:id="@+id/ic_share"
-                android:layout_width="@dimen/dp_15"
-                android:layout_height="@dimen/dp_15"
-                android:src="@mipmap/ic_share_it" />
-
-            <TextView
-                android:id="@+id/tx_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_7"
-                android:src="@mipmap/ic_share_it"
-                android:text="分享" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginLeft="@dimen/dp_40"
-            android:layout_marginTop= "@dimen/dp_40"
-            app:layout_constraintLeft_toRightOf="@id/share"
-            app:layout_constraintTop_toBottomOf="@id/walletMsg"
-            android:id="@+id/copy"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_15">
-
+            android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/ic_copy"
-                android:layout_width="@dimen/dp_15"
-                android:layout_height="@dimen/dp_15"
-                android:src="@mipmap/ic_copy" />
-
+                android:id="@+id/img_wallet_share"
+                android:src="@mipmap/ic_share_it"
+                android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                />
             <TextView
-                android:id="@+id/tx_copy"
+                android:id="@+id/txt_wallet_share"
+                android:text="@string/wallet_share"
+                android:textSize="@dimen/dp_13"
+                android:textColor="@color/colorMyRight"
                 android:layout_marginLeft="@dimen/dp_7"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_share_it"
-                android:text="复制"/>
+                />
         </LinearLayout>
-
+        <!--复制小区域-->
         <LinearLayout
-            android:id="@+id/setMoney"
-            android:layout_marginLeft="@dimen/dp_40"
+            android:id="@+id/ll_copy"
+            android:layout_toRightOf="@+id/ll_share"
+            android:layout_marginLeft="@dimen/dp_41"
+            android:layout_alignBottom="@+id/ll_share"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_40"
-            app:layout_constraintLeft_toRightOf="@id/copy"
-            app:layout_constraintTop_toBottomOf="@id/walletMsg">
+            android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/ic_setMoney"
-                android:layout_width="@dimen/dp_15"
-                android:layout_height="@dimen/dp_15"
-                android:src="@mipmap/ic_set_money" />
-
+                android:id="@+id/img_wallet_copy"
+                android:src="@mipmap/ic_copy"
+                android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                />
             <TextView
-                android:id="@+id/tx_setMoney"
+                android:id="@+id/txt_wallet_copy"
+                android:text="@string/wallet_copy"
+                android:textSize="@dimen/dp_13"
+                android:textColor="@color/colorMyRight"
                 android:layout_marginLeft="@dimen/dp_7"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_share_it"
-                android:text="设置金额" />
+                />
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--设置小区域-->
+        <LinearLayout
+            android:id="@+id/ll_set_money"
+            android:layout_toRightOf="@+id/ll_copy"
+            android:layout_alignBottom="@+id/ll_copy"
+            android:layout_marginLeft="@dimen/dp_41"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_wallet_set_money"
+                android:src="@mipmap/ic_set_money"
+                android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                />
+            <TextView
+                android:id="@+id/txt_wallet_set_money"
+                android:text="@string/wallet_set_money"
+                android:textSize="@dimen/dp_13"
+                android:textColor="@color/colorMyRight"
+                android:layout_marginLeft="@dimen/dp_7"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
-        android:id="@+id/appLog"
+        android:id="@+id/img_wallet_dollar_gathering"
+        android:src="@mipmap/ic_wallet_dollar_gathering"
+        android:layout_below="@id/qr_all"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_centerHorizontal="true"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_36"
-        android:layout_below="@id/qr_all"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_30"
-        android:src="@mipmap/ic_wallet_dollar_gathering" />
-
+        />
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/appLog"
+        android:layout_below="@+id/img_wallet_dollar_gathering"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_6"
         android:text="@string/app_name"
         android:textColor="@color/colorLogText"
-        android:textSize="@dimen/dp_12" />
+        android:textSize="@dimen/dp_17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 </RelativeLayout>

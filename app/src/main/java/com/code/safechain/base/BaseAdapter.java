@@ -1,20 +1,20 @@
 package com.code.safechain.base;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
     protected Context mContext;
-    private List<T> mDatas;
+    public List<T> mDatas;
     //条目点击监听
-    private OnItemClickListener onItemClickListener;
+    public OnItemClickListener onItemClickListener;
     //条目组件的点击事件的监听器，在子适配器中配置数据时使用,在子类中使用，所以用受保护的
     protected View.OnClickListener onClickListener;
 
@@ -33,8 +33,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(mContext,getLayout(),null);
-        BaseViewHolder holder = new BaseViewHolder(view);
+        View view = LayoutInflater.from(mContext).inflate(getLayout(),parent,false);
+        final BaseViewHolder holder = new BaseViewHolder(view);
         //条目的点击事件在此添加，onBindViewHolder比此方法更提前执行，在此更合适
         view.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.transaction.OrderActivity">
+    <!--第一行-->
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_43">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_my_back" />
+        <!--订单 title-->
+        <TextView
+            android:id="@+id/txt_order_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/transaction_order"
+            android:typeface="normal"
+            android:textColor="@color/colorTitle"
+            android:textSize="@dimen/dp_17" />
+        <!--线-->
+        <TextView style="@style/Line1Style" />
+    </RelativeLayout>
+    <!--第二行  菜单-->
+    <LinearLayout
+        android:id="@+id/ll_navigation"
+        android:layout_below="@+id/rl_top"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <!--全部-->
+        <TextView
+            android:id="@+id/txt_all"
+            android:text="@string/transaction_order_all"
+            style="@style/Text1StyleOrder"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/bg_button_yellow"
+            />
+        <!--进行中-->
+        <TextView
+            android:id="@+id/txt_ongoing"
+            android:text="@string/transaction_order_ongoing"
+            android:textColor="@color/colorMyName"
+            style="@style/Text1StyleOrder"
+            />
+        <!--已失败-->
+        <TextView
+            android:id="@+id/txt_failed"
+            android:text="@string/transaction_order_failed"
+            android:textColor="@color/colorMyName"
+            style="@style/Text1StyleOrder"
+            />
+        <!--已失败-->
+        <TextView
+            android:id="@+id/txt_completed"
+            android:text="@string/transaction_order_completed"
+            android:textColor="@color/colorMyName"
+            style="@style/Text1StyleOrder"
+            />
+    </LinearLayout>
+    <!--下方列表-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_order"
+        android:layout_below="@+id/ll_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</RelativeLayout>

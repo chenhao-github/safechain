@@ -1,28 +1,139 @@
 package com.code.safechain.ui.transaction;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.code.safechain.R;
+import com.code.safechain.base.BaseFragment;
+import com.code.safechain.common.Constants;
+import com.code.safechain.interfaces.TransactionConstract;
+import com.code.safechain.presenter.TransactionPresenter;
+import com.code.safechain.utils.SystemUtils;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @Auther: hchen
  * @Date: 2020/7/4 0004
  * @Description:
  */
-public class TransactionFragment extends Fragment {
+public class TransactionFragment extends BaseFragment<TransactionConstract.Presenter>
+        implements TransactionConstract.View,View.OnClickListener {
 
+    @BindView(R.id.txt_buy)
+    TextView txtBuy;
+    @BindView(R.id.txt_sale)
+    TextView txtSale;
+    @BindView(R.id.img_order)
+    ImageView imgOrder;
+    @BindView(R.id.img_filter)
+    ImageView imgFilter;
+    private FragmentManager mFm;
+    private BuyFragment mBuy;
+    private SaleFragment mSale;
+    private PopupWindow mPw;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_transaction, null);
-        return view;
+    protected int getLayout() {
+        return R.layout.fragment_transaction;
+    }
+
+    @Override
+    protected TransactionConstract.Presenter createPresenter() {
+        return new TransactionPresenter();
+    }
+
+    @Override
+    protected void initView() {
+        mFm = getChildFragmentManager();
+        mBuy = new BuyFragment();
+        mSale = new SaleFragment();
+        //添加两个fragment
+        mFm.beginTransaction()
+                .add(R.id.fragment_contain, mBuy)
+                .add(R.id.fragment_contain,mSale)
+                .hide(mSale).commit();
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @OnClick({R.id.txt_buy, R.id.txt_sale, R.id.img_order, R.id.img_filter})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.txt_buy:
+                dealBuySaleAndFragment(0);
+                break;
+            case R.id.txt_sale:
+                dealBuySaleAndFragment(1);
+                break;
+            case R.id.img_order:
+                startActivity(new Intent(getActivity(),OrderActivity.class));
+                break;
+            case R.id.img_filter:
+                showPopupwindow();//弹出筛选popupwindow
+                break;
+        }
+    }
+
+    /**
+     * 处理 我要买和我要卖 的字体颜色，两个fragment的隐藏显示
+     * @param i  0 是我要买 主导   1 我要卖 主导
+     */
+    private void dealBuySaleAndFragment(int i) {
+        if(i == 0){
+            //切换 我要买  我要卖 的字体大小和颜色
+            txtBuy.setTextSize(20);
+            txtBuy.setTextColor(getResources().getColor(R.color.colorMyNetWorkUrl));
+            txtSale.setTextSize(17);
+            txtSale.setTextColor(getResources().getColor(R.color.colorIdentity));
+            mFm.beginTransaction().show(mBuy).hide(mSale).commit();
+        }else {
+            txtBuy.setTextSize(17);
+            txtBuy.setTextColor(getResources().getColor(R.color.colorIdentity));
+            txtSale.setTextSize(20);
+            txtSale.setTextColor(getResources().getColor(R.color.colorMyNetWorkUrl));
+            mFm.beginTransaction().show(mSale).hide(mBuy).commit();
+        }
+    }
+
+    //弹出筛选popupwindow
+    private void showPopupwindow() {
+        View pwLayout = View.inflate(getActivity(), R.layout.popup_trans_buy_filter, null);
+        mPw = new PopupWindow(pwLayout, 960, 840);
+        SystemUtils.setBackgroundAlpha(getActivity().getWindow(), Constants.SHADOW);//设置背景半透明效果
+        mPw.showAtLocation(txtBuy, Gravity.CENTER,0,0);
+        //获得 取消 筛选 按钮
+        Button cancel = pwLayout.findViewById(R.id.btn_cancel);
+        Button filter = pwLayout.findViewById(R.id.btn_filter);
+        cancel.setOnClickListener(this);
+        filter.setOnClickListener(this);
+
+    }
+
+    //关闭  筛选  按钮的监听
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.btn_cancel){//关闭
+            mPw.dismiss();
+            SystemUtils.setBackgroundAlpha(getActivity().getWindow(), Constants.NO_SHADOW);
+        }else if(v.getId() == R.id.btn_filter){//筛选
+            //网络请求实现筛选
+            Toast.makeText(context, "进行筛选", Toast.LENGTH_SHORT).show();
+            mPw.dismiss();
+            SystemUtils.setBackgroundAlpha(getActivity().getWindow(), Constants.NO_SHADOW);
+        }
     }
 }

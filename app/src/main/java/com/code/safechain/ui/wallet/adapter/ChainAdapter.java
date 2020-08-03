@@ -1,20 +1,14 @@
 package com.code.safechain.ui.wallet.adapter;
 
 import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.code.safechain.R;
 import com.code.safechain.base.BaseAdapter;
 import com.code.safechain.model.bean.Chain;
-
-import org.w3c.dom.Text;
+import com.code.safechain.ui.wallet.bean.WalletHomeRsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +18,9 @@ import java.util.List;
  * @Date: 2020/7/11 0011
  * @Description:
  */
-public class ChainAdapter extends BaseAdapter<Chain> {
+public class ChainAdapter extends BaseAdapter<WalletHomeRsBean.ResultBean.DataBean> {
 
-    public ChainAdapter(Context context, List<Chain> datas) {
+    public ChainAdapter(Context context, List<WalletHomeRsBean.ResultBean.DataBean> datas) {
         super(context, datas);
     }
 
@@ -36,14 +30,15 @@ public class ChainAdapter extends BaseAdapter<Chain> {
     }
 
     @Override
-    public void bindData(BaseViewHolder holder, Chain data) {
+    public void bindData(BaseViewHolder holder, WalletHomeRsBean.ResultBean.DataBean data) {
         ImageView icon = (ImageView) holder.getViewById(R.id.img_chain_icon);
         TextView name = (TextView) holder.getViewById(R.id.txt_chain_name);
         TextView money1 = (TextView) holder.getViewById(R.id.txt_chain_money1);
         TextView money2 = (TextView) holder.getViewById(R.id.txt_chain_money2);
-        Glide.with(mContext).load(data.getImg()).into(icon);
-        name.setText(data.getName());
-        money1.setText(data.getMoney1());
-        money2.setText("￥ "+data.getMoney2());
+        Glide.with(mContext).load(data.getLogo_url()).into(icon);
+
+        name.setText(data.getSymbol());
+        money1.setText(String.format("%.2f", Double.parseDouble(data.getNum())));
+        money2.setText("￥ " + String.format("%.2f",data.getSum()));
     }
 }
