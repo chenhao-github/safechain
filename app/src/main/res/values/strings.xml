@@ -17,6 +17,15 @@
     <string name="my_suggestion">意见反馈</string>
     <string name="my_version">当前版本</string>
     <string name="my_update">检查更新</string>
+    <string name="my_add_paytype">添加收款方式</string>
+    <string name="my_paytype_wechat_hint">请输入微信号</string>
+    <string name="my_paytype_alipay_hint">请输入支付宝号</string>
+    <string name="my_paytype_unionpay_username_hint">持卡人姓名</string>
+    <string name="my_paytype_unionpay_bankname_hint">银行卡开户地址</string>
+    <string name="my_paytype_unionpay_bankno_hint">银行卡号</string>
+
+    <string name="my_paytype_upload">上传</string>
+    <string name="my_paytype_re_upload">重新上传</string>
     <!--实名认证-->
     <string name="my_realname_hint">请输入您的真实姓名</string>
     <string name="my_identity_hint">请输入您的身份证号</string>
@@ -156,5 +165,9 @@
     <string name="transaction_payment_method">收款方式</string>
     <string name="transaction_cancel_order">取消订单</string>
     <string name="transaction_to_pay">去付款</string>
+    <string name="transaction_paytype_wechat">微信</string>
+    <string name="transaction_paytype_alipay">支付宝</string>
+    <string name="transaction_paytype_unionpay">银联</string>
+
 
 </resources>

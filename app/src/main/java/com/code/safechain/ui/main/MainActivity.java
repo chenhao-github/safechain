@@ -1,8 +1,11 @@
 package com.code.safechain.ui.main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Entity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.design.widget.TabLayout;
@@ -10,8 +13,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 
 import com.code.safechain.R;
+import com.code.safechain.common.Constants;
 import com.code.safechain.ui.consult.ConsultFragment;
 import com.code.safechain.ui.ecotope.EcotopeFragment;
 import com.code.safechain.ui.my.MyFragment;
@@ -20,6 +25,7 @@ import com.code.safechain.ui.wallet.WalletFragment;
 import com.code.safechain.utils.LocalManageUtil;
 import com.code.safechain.utils.LoggerUtil;
 import com.code.safechain.utils.Sha1;
+import com.code.safechain.utils.SystemUtils;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -49,7 +55,30 @@ public class MainActivity extends AppCompatActivity {
         initTab();
         initFragment();
         switchFragment(0);//刚进入系统默认显示 钱包
+        requestPermiss();//处理动态权限
+    }
 
+    //申请权限
+    private void requestPermiss() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            ArrayList<String> permissionsList = new ArrayList<>();
+            String[] permissions = {
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
+
+            for (String perm : permissions) {
+                if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(perm)) {
+                    permissionsList.add(perm);// 进入到这里代表没有权限.
+                }
+            }
+            if (permissionsList.isEmpty()) {
+                return;
+            } else {
+                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 0);
+            }
+        }
     }
 
     private void initTab() {
@@ -116,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
         //记录当前的Fragment索引，方便下次隐藏
         mLastFragmentPosition = type;
     }
-
     /**
      * 设置系统语言
      *

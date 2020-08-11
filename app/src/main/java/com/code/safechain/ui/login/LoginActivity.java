@@ -105,6 +105,7 @@ public class LoginActivity extends BaseActivity<LoginConstract.Presenter> implem
             String token = registRsBean.getResult().getToken();
             SpUtils.getInstance(this).setValue(Constants.TOKEN, token);//保存登录token
             startActivity(new Intent(this,MainActivity.class));
+            finish();
         }else {
             ToastUtil.showShort("账号密码不正确!");
         }

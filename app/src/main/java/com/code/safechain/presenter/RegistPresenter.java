@@ -28,13 +28,14 @@ import okhttp3.RequestBody;
 public class RegistPresenter extends BasePresenter<RegistConstract.View> implements RegistConstract.Presenter {
 
     private Disposable mDisposable;
+    //获取验证码
     @SuppressLint("CheckResult")
     @Override
     public void sendVerifiCode(String json) {
         RequestBody body = null;
         MediaType parse = MediaType.parse("application/json; charset=utf-8");
         body = RequestBody.create(parse,json);
-        //
+        //获取验证码
         HttpManager.getInstance().getApiServer().getVerificationCode(body)
             .compose(RxUtils.<VerificationRsBean>changeScheduler())
             .subscribe(new Observer<VerificationRsBean>() {
@@ -83,7 +84,8 @@ public class RegistPresenter extends BasePresenter<RegistConstract.View> impleme
 
                     @Override
                     public void onError(Throwable e) {
-
+                        String str1 = e.getMessage();
+                        String s = "";
                     }
 
                     @Override

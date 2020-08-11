@@ -142,6 +142,8 @@ public class VerificationCodeActivity extends BaseActivity<RegistConstract.Prese
             //加密
             String json = SystemUtils.getJson(map);//得到签名后的数据作为sign的值的json串
             presenter.sendVerifiCode(json);
+
+
         }else {
             ToastUtil.showShort(BaseApp.getRes().getString(R.string.regist_phone_not_null));
         }

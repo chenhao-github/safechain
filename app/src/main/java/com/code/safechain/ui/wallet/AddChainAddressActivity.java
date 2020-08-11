@@ -125,24 +125,12 @@ public class AddChainAddressActivity extends BaseActivity<WalletAddAddressConstr
         ToastUtil.showShort(addAddressRsBean.getMessage());
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // 按下BACK，同时没有重复
-           if(mPw.isShowing()){
-               mPw.dismiss();
-               SystemUtils.setBackgroundAlpha(getWindow(),Constants.NO_SHADOW);;//设置背景不透明
-               return true;//不执行系统的返回
-           }
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
-
     private void showPopupwindow() {
         View view = View.inflate(this, R.layout.popup_chain_list, null);
         mPw = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, 1100);
         SystemUtils.setBackgroundAlpha(getWindow(), Constants.SHADOW);//设置屏幕透明度，具有半透明效果
+        mPw.setFocusable(true);//必须要加，按下后退键才能获取焦点，关闭pw，而不是退出界面
+
         mPw.showAtLocation(mTxtSave, Gravity.CENTER|Gravity.BOTTOM, 0,0);
         RecyclerView rlv = view.findViewById(R.id.rlv_chains);
         Button btnCancel = view.findViewById(R.id.btn_cancel);
@@ -151,9 +139,16 @@ public class AddChainAddressActivity extends BaseActivity<WalletAddAddressConstr
             @Override
             public void onClick(View v) {
                 mPw.dismiss();
+//                SystemUtils.setBackgroundAlpha(getWindow(),Constants.NO_SHADOW);;//设置背景不透明
+            }
+        });
+        mPw.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
                 SystemUtils.setBackgroundAlpha(getWindow(),Constants.NO_SHADOW);;//设置背景不透明
             }
         });
+
     }
 
     //RecycleView配置数据

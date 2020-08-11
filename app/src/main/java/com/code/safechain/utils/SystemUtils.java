@@ -149,7 +149,6 @@ public class SystemUtils {
             }
             LoggerUtil.logI("111",jsonObject.toString());
             return jsonObject.toString();
-//            return jsonObject.toString().toLowerCase();
         } catch (Exception e) {
             e.printStackTrace();
         }

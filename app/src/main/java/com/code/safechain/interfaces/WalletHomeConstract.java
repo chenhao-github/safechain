@@ -14,10 +14,10 @@ import okhttp3.ResponseBody;
  */
 public interface WalletHomeConstract {
     interface View extends IBaseView{
-        void getWalletHomeReturn(WalletHomeRsBean walletHomeRsBean);
+        void getWalletHomeReturn(WalletHomeRsBean walletHomeRsBean);//得到资产的返回
     }
 
     interface Presenter extends IBasePresenter<View>{
-        void getWalletHome(HashMap<String, Object> map);
+        void getWalletHome(HashMap<String, Object> map);//得到我的所有资产
     }
 }

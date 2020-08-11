@@ -15,12 +15,15 @@
                 android:id="@+id/txt_chain_type_title"
                 android:text="@string/transaction_chain_type"
                 style="@style/Text2Style" />
-            <!--币种 值-->
-            <TextView
-                android:id="@+id/txt_chain_type"
-                android:text="HKDT"
-                style="@style/Text3Style"
-                android:textColor="@color/colorMyName"/>
+            <Spinner
+                android:id="@+id/sp_chain_type"
+                android:textColor="@color/colorMyName"
+                android:background="@drawable/bg_login_spinner"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="wrap_content"/>
             <!--官网下的灰线 第4条-->
             <TextView style="@style/Line1Style" />
         </RelativeLayout>
@@ -36,10 +39,23 @@
                 android:text="@string/transaction_mini_trade"
                 style="@style/Text2Style" />
             <!--最小交易额 值-->
-            <TextView
+            <EditText
                 android:id="@+id/txt_mini_trade"
-                android:text="￥ 1.00"
-                style="@style/Text3Style" />
+                style="@style/Text3Style"
+                android:hint="0.0"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:digits="0123456789." />
+            <!--￥ -->
+            <TextView
+                android:id="@+id/txt_dollor"
+                android:text="￥"
+                android:textColor="@color/colorMyRight"
+                android:textSize="@dimen/dp_13"
+                android:layout_toLeftOf="@+id/txt_mini_trade"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <!--官网下的灰线 第4条-->
             <TextView style="@style/Line1Style" />
         </RelativeLayout>
@@ -55,10 +71,24 @@
                 android:text="@string/transaction_maxi_trade"
                 style="@style/Text2Style" />
             <!--最大交易额 值-->
-            <TextView
+            <EditText
                 android:id="@+id/txt_maxi_trade"
-                android:text="￥ 10,000.00"
+                android:hint="0.0"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:digits="0123456789."
                 style="@style/Text3Style" />
+            <!--￥ -->
+            <TextView
+                android:id="@+id/txt_dollor1"
+                android:text="￥"
+                android:textColor="@color/colorMyRight"
+                android:textSize="@dimen/dp_13"
+                android:layout_toLeftOf="@+id/txt_maxi_trade"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <!--官网下的灰线 第4条-->
             <TextView style="@style/Line1Style" />
         </RelativeLayout>
@@ -81,9 +111,12 @@
                 android:layout_marginLeft="@dimen/dp_8"
                 style="@style/Text2Style" />
             <!--出货总量 值-->
-            <TextView
+            <EditText
                 android:id="@+id/txt_total_shipment"
-                android:text="89.99"
+                android:hint="00.00"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:digits="0123456789."
                 style="@style/Text3Style" />
             <!--官网下的灰线 第4条-->
             <TextView style="@style/Line1Style" />
@@ -152,36 +185,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <!--微信-->
-                <ImageView
-                    android:id="@+id/img_weixin"
-                    android:src="@mipmap/ic_trans_buy_pay_weixin"
-                    android:scaleType="fitXY"
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20" />
+                <CheckBox
+                    android:id="@+id/ck_wechat"
+                    android:button="@null"
+                    android:background="@drawable/ck_wechat_selector"
+                    android:checked="true"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25" />
                 <!--支付宝-->
-                <ImageView
-                    android:id="@+id/img_alipay"
-                    android:src="@mipmap/ic_trans_buy_pay_alipay"
-                    android:scaleType="fitXY"
+                <CheckBox
+                    android:id="@+id/ck_alipay"
+                    android:button="@null"
+                    android:background="@drawable/ck_alipay_selector"
                     android:layout_marginLeft="@dimen/dp_13"
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20" />
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25" />
                 <!--银联-->
-                <ImageView
-                    android:id="@+id/img_unionpay"
-                    android:src="@mipmap/ic_trans_buy_pay_unionpay"
-                    android:scaleType="fitXY"
+                <CheckBox
+                    android:id="@+id/ck_unionpay"
+                    android:button="@null"
+                    android:background="@drawable/ck_unionpay_selector"
                     android:layout_marginLeft="@dimen/dp_13"
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20" />
-                <!--visa-->
-                <ImageView
-                    android:id="@+id/img_visa"
-                    android:src="@mipmap/ic_trans_buy_pay_visa"
-                    android:scaleType="fitXY"
-                    android:layout_marginLeft="@dimen/dp_13"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_20" />
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25" />
             </LinearLayout>
             <!--官网下的灰线 第4条-->
             <TextView style="@style/Line1Style" />
@@ -200,18 +226,32 @@
             <Button
                 android:id="@+id/btn_floating_price"
                 android:text="@string/transaction_floating_price"
-                android:layout_toLeftOf="@+id/txt_fixed_price"
-                android:layout_marginRight="@dimen/dp_30"
+                android:textColor="@color/colorWhite"
+                android:layout_toLeftOf="@+id/btn_fixed_price"
+                android:layout_marginRight="@dimen/dp_20"
                 android:background="@drawable/bg_button_yellow"
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:layout_width="@dimen/dp_67"
                 android:layout_height="@dimen/dp_20" />
             <!--一口价 -->
-            <TextView
-                android:id="@+id/txt_fixed_price"
+            <Button
+                android:id="@+id/btn_fixed_price"
                 android:text="@string/transaction_fixed_price"
-                style="@style/Text3Style" />
+                android:textColor="@color/colorMyRight"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:gravity="center"
+                android:layout_width="@dimen/dp_67"
+                android:layout_height="@dimen/dp_20"
+                 />
+            <!--
+             <item name="android:textColor">@color/colorMyRight</item>
+
+
+            -->
             <!--官网下的灰线 第4条-->
             <TextView style="@style/Line1Style" />
         </RelativeLayout>
@@ -227,29 +267,20 @@
                 android:text="@string/transaction_setting_premium"
                 style="@style/Text2Style" />
             <!--市场参考价 文字-->
-            <TextView
-                android:id="@+id/txt_market_price_title"
-                android:text="@string/transaction_market_price"
+            <EditText
+                android:id="@+id/txt_set_price"
+                android:hint="@string/transaction_market_price"
                 android:textSize="@dimen/dp_13"
                 android:textColor="@color/colorMyRight"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/color_cursor"
                 android:layout_toRightOf="@+id/txt_setting_premium_title"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
-            <!--市场参考价 值-->
-            <TextView
-                android:id="@+id/txt_market_price"
-                android:text="2666.2"
-                android:textSize="@dimen/dp_13"
-                android:textColor="@color/colorMyRight"
-                android:layout_toRightOf="@+id/txt_market_price_title"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+
             <!--设置溢价图标-->
             <ImageView
                 android:id="@+id/img_setting_premium"
@@ -285,12 +316,12 @@
             <!--币数量-->
             <TextView
                 android:id="@+id/txt_chain_number1"
-                android:text="38.98"
                 style="@style/Text3Style"
                 android:layout_alignParentRight="false"
-                android:layout_toLeftOf="@+id/txt_chain_name1"
                 android:layout_marginRight="@dimen/dp_8"
-                />
+                android:layout_marginBottom="19dp"
+                android:layout_toLeftOf="@+id/txt_chain_name1"
+                android:text="38.98" />
             <!--币名字-->
             <TextView
                 android:id="@+id/txt_chain_name1"

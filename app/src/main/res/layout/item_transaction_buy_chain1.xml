@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--第一个字符和用户名-->
+    <LinearLayout
+        android:id="@+id/ll_img_name"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!--第一个字符-->
+        <RelativeLayout
+            android:background="@drawable/bg_circle_buy_first_char"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16">
+            <TextView
+                android:id="@+id/txt_first_name"
+                android:text="陈"
+                android:textSize="@dimen/dp_10"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <!--用户名-->
+        <TextView
+            android:id="@+id/txt_name"
+            android:text="陈三"
+            android:textSize="@dimen/dp_16"
+            android:textColor="@color/colorMyName"
+            android:layout_marginLeft="@dimen/dp_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--数量标题-->
+    <TextView
+        android:id="@+id/txt_number_title"
+        android:text="@string/chain_number_title"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/colorIdentity"
+        android:layout_below="@+id/ll_img_name"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_alignLeft="@+id/ll_img_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--数量值-->
+    <TextView
+        android:id="@+id/txt_number"
+        android:text="1111"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/colorIdentity"
+        android:layout_toRightOf="@+id/txt_number_title"
+        android:layout_alignBottom="@+id/txt_number_title"
+        android:layout_marginLeft="@dimen/dp_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--限额标题-->
+    <TextView
+        android:id="@+id/txt_quota_title"
+        android:text="@string/chain_quota_title"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/colorIdentity"
+        android:layout_below="@+id/txt_number_title"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_alignLeft="@+id/txt_number_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--限额值-->
+    <TextView
+        android:id="@+id/txt_quota"
+        android:text="1111"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/colorIdentity"
+        android:layout_toRightOf="@+id/txt_quota_title"
+        android:layout_alignBottom="@+id/txt_quota_title"
+        android:layout_marginLeft="@dimen/dp_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--支付方式行-->
+    <LinearLayout
+        android:id="@+id/ll_pay"
+        android:layout_below="@+id/txt_quota_title"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_alignLeft="@+id/txt_quota_title"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!--微信-->
+        <ImageView
+            android:id="@+id/img_weixin"
+            android:src="@mipmap/ic_trans_buy_pay_weixin"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13" />
+        <!--支付宝-->
+        <ImageView
+            android:id="@+id/img_alipay"
+            android:src="@mipmap/ic_trans_buy_pay_alipay"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13" />
+        <!--银联-->
+        <ImageView
+            android:id="@+id/img_unionpay"
+            android:src="@mipmap/ic_trans_buy_pay_unionpay"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13" />
+        <!--visa-->
+        <ImageView
+            android:id="@+id/img_visa"
+            android:src="@mipmap/ic_trans_buy_pay_visa"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_13" />
+    </LinearLayout>
+    <!--百分比-->
+    <TextView
+        android:id="@+id/txt_percent"
+        android:text="198|98%"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/colorIdentity"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--单价 标题-->
+    <TextView
+        android:id="@+id/txt_unit_price_title"
+        android:text="@string/chain_unit_price"
+        android:textSize="@dimen/dp_12"
+        android:textColor="@color/colorIdentity"
+        android:layout_below="@+id/txt_percent"
+        android:layout_alignRight="@+id/txt_percent"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--单价 值-->
+    <TextView
+        android:id="@+id/txt_unit_price"
+        android:text="￥7.03"
+        android:textSize="@dimen/dp_15"
+        android:textColor="@color/colorMyNetWorkUrl"
+        android:layout_below="@+id/txt_unit_price_title"
+        android:layout_alignRight="@+id/txt_unit_price_title"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--购买按钮-->
+    <Button
+        android:id="@+id/btn_buy"
+        android:text="@string/chain_purchase"
+        android:layout_below="@+id/txt_unit_price"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_alignRight="@+id/txt_unit_price"
+        android:background="@drawable/bg_button_yellow"
+        android:layout_width="@dimen/dp_77"
+        android:layout_height="@dimen/dp_28" />
+    <!-- 底线-->
+    <TextView
+        android:layout_below="@+id/ll_pay"
+        android:layout_marginTop="@dimen/dp_21"
+        android:background="@color/colorLine1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
+</RelativeLayout>

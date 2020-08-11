@@ -58,7 +58,6 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
 
     @Override
     protected void initView() {
-        requestPermiss();//处理动态权限
         mPhoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);//得到手机号码
         mVeriCode = getIntent().getStringExtra(Constants.VERIFICODE);//得到验证码
         dealDrawableRightOfSetPwd(mEtPwd);//处理 密码输入框内部右边的图片的点击事件，实现切换
@@ -114,6 +113,9 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
         if(registRsBean.getError() == 0){
             //跳转到注册成功界面
             startActivity(new Intent(this, RegistSuccessActivity.class));
+            
+        }else if (registRsBean.getError() == -202){
+            ToastUtil.showShort(registRsBean.getMessage());
         }
     }
 
@@ -159,27 +161,6 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
         String json = SystemUtils.getJson(map);
 
         presenter.sendPwd(json);
-    }
-
-    //申请权限
-    private void requestPermiss() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            ArrayList<String> permissionsList = new ArrayList<>();
-            String[] permissions = {
-                    Manifest.permission.READ_PHONE_STATE
-            };
-
-            for (String perm : permissions) {
-                if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(perm)) {
-                    permissionsList.add(perm);// 进入到这里代表没有权限.
-                }
-            }
-            if (permissionsList.isEmpty()) {
-                return;
-            } else {
-                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 0);
-            }
-        }
     }
 
 }

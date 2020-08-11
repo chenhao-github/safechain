@@ -86,6 +86,10 @@ public class ChainDetailActivity extends BaseActivity<WalletChainTranConstract.P
         //设置币的名字
         mTxtTitle.setText(mDataBean.getSymbol());
 
+        getWalletChainTran();//获得币交信息和交易信息
+    }
+    //获得币交信息和交易信息
+    private void getWalletChainTran() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
         map.put("token_id",mDataBean.getToken_id());
@@ -129,7 +133,7 @@ public class ChainDetailActivity extends BaseActivity<WalletChainTranConstract.P
             case R.id.btn_transfer://转账
                 Intent itTransfer = new Intent(this, TransferActivity.class);
                 itTransfer.putExtra(Constants.DATA, mDataBean);
-                startActivity(itTransfer);
+                startActivityForResult(itTransfer,100);
                 break;
             case R.id.btn_collection://收款
                 Intent intentCollection = new Intent(this, CollectionActivity.class);
@@ -138,11 +142,19 @@ public class ChainDetailActivity extends BaseActivity<WalletChainTranConstract.P
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //转账回调
+        if(requestCode == 100 && resultCode == RESULT_OK){
+            getWalletChainTran();
+        }
+    }
+
     /**
      * 设置导航的状态信息
      * @param currentTv
      */
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void setNavigation(TextView currentTv) {
         if(currentTv != mLastTxt){
@@ -158,15 +170,16 @@ public class ChainDetailActivity extends BaseActivity<WalletChainTranConstract.P
 
         }
     }
-
     /**
      * 或钱包 币交易的回调
      * @param chainTransactionRsBean
      */
     @Override
     public void getWalletChainTranReturn(ChainTransactionRsBean chainTransactionRsBean) {
-        //转为小数点后两位，设置到界面
-        mTxtChainMoney1.setText(String.format("%.2f",Double.parseDouble(chainTransactionRsBean.getResult().getTotal())));
-        mAdapter.updataListAddMore(chainTransactionRsBean.getResult().getData());
+        //把查询的币的余额，转为小数点后两位，设置到币身上
+        mDataBean.setNum(String.format("%.2f",Double.parseDouble(chainTransactionRsBean.getResult().getTotal())));
+        //余额设置到页面
+        mTxtChainMoney1.setText(mDataBean.getNum());
+        mAdapter.updataListClearAddMore(chainTransactionRsBean.getResult().getData());
     }
 }

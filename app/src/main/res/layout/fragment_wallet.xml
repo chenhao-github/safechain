@@ -67,30 +67,7 @@
             android:src="@mipmap/ic_wallet_more"
             android:layout_width="@dimen/dp_16"
             android:layout_height="@dimen/dp_3" />
-        <!--地址区域 地址+二维码-->
-        <RelativeLayout
-            android:id="@+id/ll_address"
-            android:layout_below="@+id/txt_my_wallet"
-            android:layout_marginTop="@dimen/dp_6"
-            android:layout_alignLeft="@+id/txt_my_wallet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/txt_address"
-                android:text="482ee7c37...2ea729b62"
-                android:textSize="@dimen/dp_12"
-                android:textColor="@color/colorWhite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:id="@+id/img_qr_code"
-                android:src="@mipmap/ic_wallet_qr_code"
-                android:layout_toRightOf="@+id/txt_address"
-                android:layout_marginLeft="@dimen/dp_7"
-                android:layout_centerVertical="true"
-                android:layout_width="@dimen/dp_9"
-                android:layout_height="@dimen/dp_9" />
-        </RelativeLayout>
+
         <!--金额-->
         <TextView
             android:id="@+id/txt_money"

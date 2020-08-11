@@ -91,7 +91,7 @@
         <!--购买 币名字-->
         <TextView
             android:id="@+id/txt_payment_chain_name"
-            android:text="USDT"
+            android:text=""
             android:layout_toRightOf="@+id/txt_payment_title"
             android:layout_marginLeft="@dimen/dp_10"
             style="@style/Text2Style" />
@@ -168,19 +168,18 @@
         android:layout_below="@+id/rl_number"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50">
-        <!--数量 文字-->
+        <!--订单号 文字-->
         <TextView
             android:id="@+id/txt_order_number_title"
             android:text="@string/transaction_order_number"
             style="@style/Text2Style"
             />
-        <!--数量 值-->
+        <!--订单号 值-->
         <TextView
             android:id="@+id/txt_order_number"
-            android:text="2345678912345678"
-            android:textSize="@dimen/dp_18"
             style="@style/Text3Style"
-            />
+            android:text="2345678912345678"
+            android:textSize="@dimen/dp_18" />
         <TextView style="@style/Line1Style"/>
     </RelativeLayout>
     <!--卖家昵称 行-->
@@ -216,13 +215,16 @@
             android:text="@string/transaction_payment_method"
             style="@style/Text2Style"
             />
-        <!--卖家昵称 值-->
-        <!--<TextView-->
-            <!--android:id="@+id/txt_seller_nickname"-->
-            <!--android:text="凯文先生"-->
-            <!--android:textSize="@dimen/dp_18"-->
-            <!--style="@style/Text3Style"-->
-            <!--/>-->
+        <!--图标-->
+        <ImageView
+            android:id="@+id/img_paytype"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/ic_add_paytype_wechat_select"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            />
         <TextView style="@style/Line1Style"/>
     </RelativeLayout>
 

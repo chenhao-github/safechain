@@ -39,7 +39,7 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
     @BindView(R.id.img_filter)
     ImageView imgFilter;
     private FragmentManager mFm;
-    private BuyFragment mBuy;
+    public BuyFragment mBuy;
     private SaleFragment mSale;
     private PopupWindow mPw;
 

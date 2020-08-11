@@ -161,7 +161,7 @@
             android:layout_toLeftOf="@+id/img_right2"
             android:layout_marginRight="@dimen/dp_16"
             android:layout_centerVertical="true"
-            android:text="@string/my_gesture_set"
+            android:text="@string/my_gesture_noset"
             android:textSize="14sp"
             android:textColor="@color/colorMyRight"
             android:layout_width="wrap_content"
@@ -304,10 +304,42 @@
             android:layout_width="@dimen/dp_8"
             android:layout_height="@dimen/dp_14" />
     </RelativeLayout>
+    <!--支付方式行-->
+    <RelativeLayout
+        android:id="@+id/rl_paytype"
+        android:layout_below="@+id/rl_update"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_paytype"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@mipmap/ic_update"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20" />
+        <TextView
+            android:id="@+id/txt_paytype"
+            android:layout_toRightOf="@+id/img_paytype"
+            android:layout_centerVertical="true"
+            android:text="@string/transaction_mode_of_payment"
+            android:textSize="15sp"
+            android:textColor="@color/colorMyName"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/img_right7"
+            android:src="@mipmap/ic_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_14" />
+    </RelativeLayout>
     <!--退出登录-->
     <RelativeLayout
         android:id="@+id/rl_loginout"
-        android:layout_below="@+id/rl_update"
+        android:layout_below="@+id/rl_paytype"
         android:layout_centerInParent="true"
         android:background="@drawable/bg_circle_my_loginout"
         android:layout_marginTop="@dimen/dp_26"

@@ -17,6 +17,15 @@
     <string name="my_suggestion">Suggestion</string>
     <string name="my_version">Current Version</string>
     <string name="my_update">Check Update</string>
+    <string name="my_add_paytype">Add PayType</string>
+    <string name="my_paytype_wechat_hint">Please input wechat</string>
+    <string name="my_paytype_alipay_hint">Please input alipay</string>
+    <string name="my_paytype_unionpay_username_hint">Name of cardholder</string>
+    <string name="my_paytype_unionpay_bankname_hint">Bank card account opening address</string>
+    <string name="my_paytype_unionpay_bankno_hint">Bank card number</string>
+
+    <string name="my_paytype_upload">upload</string>
+    <string name="my_paytype_re_upload">reupload</string>
     <!--实名认证-->
     <string name="my_realname_hint">please input your realname</string>
     <string name="my_identity_hint">please input your identity</string>
@@ -155,5 +164,8 @@
     <string name="transaction_payment_method">Payment method</string>
     <string name="transaction_cancel_order">Cancel order</string>
     <string name="transaction_to_pay">To pay</string>
+    <string name="transaction_paytype_wechat">wechat</string>
+    <string name="transaction_paytype_alipay">alipay</string>
+    <string name="transaction_paytype_unionpay">unionpay</string>
 
 </resources>

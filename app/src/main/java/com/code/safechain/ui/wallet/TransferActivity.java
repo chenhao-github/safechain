@@ -2,6 +2,7 @@ package com.code.safechain.ui.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,7 +19,11 @@ import com.code.safechain.presenter.WalletTransferPresenter;
 import com.code.safechain.ui.wallet.bean.TransferRsBean;
 import com.code.safechain.ui.wallet.bean.WalletAddressRsBean;
 import com.code.safechain.ui.wallet.bean.WalletHomeRsBean;
+import com.code.safechain.utils.SpUtils;
+import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,10 +37,14 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
     TextView mTxtChainName;
     @BindView(R.id.txt_balance)
     TextView mTxtBalance;
+    @BindView(R.id.et_amount)
+    EditText mEtAmount;
     @BindView(R.id.et_chain_address)
     EditText mEtChainAddress;//收款地址
 
     private WalletHomeRsBean.ResultBean.DataBean mChain;
+    private WalletAddressRsBean.ResultBean.DataBean mAddress;
+    private HashMap<String, Object> mMap;
 
     @Override
     protected int getLayout() {
@@ -63,10 +72,9 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
         //设置余额值  0.00是传入的数据，用真实数据替换
         mTxtBalance.setText(String.format("%.2f",Double.parseDouble(mChain.getNum())));
 
-
     }
 
-    @OnClick({R.id.img_back, R.id.img_scan_code, R.id.img_address_book})
+    @OnClick({R.id.img_back, R.id.img_scan_code, R.id.img_address_book, R.id.btn_transfer})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
@@ -83,22 +91,62 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
                 intent.putExtra(Constants.DATA,mChain);
                 startActivityForResult(intent,100);
                 break;
+            case R.id.btn_transfer:
+                transfer();//转账
+                break;
         }
+    }
+
+    //转账
+    private void transfer() {
+        //得到转账金额和收款地址
+        String amount = mEtAmount.getText().toString().trim();
+        String addressData = mEtChainAddress.getText().toString().trim();
+        if(TextUtils.isEmpty(amount) || TextUtils.isEmpty(addressData)){
+            ToastUtil.showShort("金额和地址不能为空");
+            return;
+        }
+
+        //封装数据到Map
+        mMap = new HashMap<>();
+        mMap.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+        mMap.put("token_id", mChain.getToken_id());
+        mMap.put("to_addr",addressData);
+        mMap.put("amount",amount);
+        //先判断是否有手势密码
+        String paywd = SpUtils.getInstance(this).getString(Constants.PAYWD);
+        if(TextUtils.isEmpty(paywd)){
+            ToastUtil.showShort("请先设置手势支付密码");
+            return;
+        }
+        //有手势密码，跳转到手势密码验证页面
+        startActivityForResult(new Intent(this,CheckGestureActivity.class),200);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //选择地址本
         if(requestCode == 100 && resultCode == 100){
             WalletAddressRsBean.ResultBean.DataBean address =
                     (WalletAddressRsBean.ResultBean.DataBean) data.getSerializableExtra(Constants.DATA);
             mEtChainAddress.setText(address.getAddr());//设置地址本的收款地址
+        }
+        //验证手势秘密
+        if(requestCode == 200 && resultCode == RESULT_OK){
+            //通过手势获得
+            mMap.put("paywd",SpUtils.getInstance(this).getString(Constants.PAYWD));
+            //加密
+            String json = SystemUtils.getJson(mMap);
+            presenter.transfer(json);
         }
     }
 
     //转账的回传
     @Override
     public void transferReturn(TransferRsBean transferRsBean) {
-
+        ToastUtil.showShort(transferRsBean.getMessage());
+        setResult(RESULT_OK);
+        finish();
     }
 }

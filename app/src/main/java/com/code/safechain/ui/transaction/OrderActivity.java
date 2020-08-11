@@ -12,20 +12,29 @@ import android.widget.TextView;
 import com.code.safechain.R;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.base.BaseAdapter;
+import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.TransactionConstract;
+import com.code.safechain.interfaces.TransactionOrdersConstract;
 import com.code.safechain.model.bean.OrderBean;
+import com.code.safechain.presenter.TransOrderPresenter;
 import com.code.safechain.presenter.TransactionPresenter;
 import com.code.safechain.ui.transaction.adapter.OrderAdapter;
+import com.code.safechain.ui.transaction.bean.OrderRsBean;
+import com.code.safechain.utils.SpUtils;
+import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
-public class OrderActivity extends BaseActivity<TransactionConstract.Presenter>
-        implements TransactionConstract.View, BaseAdapter.OnItemClickListener{
+public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Presenter>
+        implements TransactionOrdersConstract.View, BaseAdapter.OnItemClickListener{
     @BindView(R.id.img_back)
     ImageView imgBack;
     @BindView(R.id.txt_all)
@@ -40,7 +49,7 @@ public class OrderActivity extends BaseActivity<TransactionConstract.Presenter>
     TextView lastTv;
     @BindView(R.id.rlv_order)
     RecyclerView rlvOrder;
-    private ArrayList<OrderBean> mOrderBeans;
+    private ArrayList<OrderRsBean.ResultBean> mOrderBeans;
     private OrderAdapter mOrderAdapter;
 
     @Override
@@ -49,8 +58,8 @@ public class OrderActivity extends BaseActivity<TransactionConstract.Presenter>
     }
 
     @Override
-    protected TransactionConstract.Presenter createPresenter() {
-        return new TransactionPresenter();
+    protected TransactionOrdersConstract.Presenter createPresenter() {
+        return new TransOrderPresenter();
     }
 
     @Override
@@ -62,36 +71,49 @@ public class OrderActivity extends BaseActivity<TransactionConstract.Presenter>
         mOrderAdapter = new OrderAdapter(this, mOrderBeans);
         rlvOrder.setAdapter(mOrderAdapter);
         mOrderAdapter.setOnItemClickListener(this);
+
+
     }
 
     @Override
     protected void initData() {
-       mOrderBeans.add(new OrderBean("HKDT","43.22HKDT","￥8.45","20201983082411111","【已取消】","￥8.17"));
-       mOrderBeans.add(new OrderBean("HKDT","43.22HKDT","￥8.45","20201983082411111","【已取消】","￥8.17"));
-       mOrderBeans.add(new OrderBean("HKDT","43.22HKDT","￥8.45","20201983082411111","【已取消】","￥8.17"));
-       mOrderBeans.add(new OrderBean("HKDT","43.22HKDT","￥8.45","20201983082411111","【已取消】","￥8.17"));
-       mOrderAdapter.notifyDataSetChanged();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+        map.put("role_type",1);//1买家  2卖家
+        map = SystemUtils.getMap(map);
+        presenter.getOrders(map);
     }
 
     @OnClick({R.id.img_back, R.id.txt_all, R.id.txt_ongoing, R.id.txt_failed, R.id.txt_completed})
     public void onViewClicked(View view) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+        map.put("role_type",1);//1买家  2卖家
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
                 break;
             case R.id.txt_all:
                 switchTv(txtAll);
+
                 break;
             case R.id.txt_ongoing:
                 switchTv(txtOngoing);
+
+                map.put("state",1);//进行中
                 break;
             case R.id.txt_failed:
                 switchTv(txtFailed);
                 break;
             case R.id.txt_completed:
                 switchTv(txtCompleted);
+
+                map.put("state",2);//已完成
                 break;
         }
+
+        map = SystemUtils.getMap(map);
+        presenter.getOrders(map);
     }
 
     //切换textview导航
@@ -101,12 +123,21 @@ public class OrderActivity extends BaseActivity<TransactionConstract.Presenter>
         currentTv.setTextColor(getResources().getColor(R.color.colorWhite));
         currentTv.setBackground(getResources().getDrawable(R.drawable.bg_button_yellow));
         lastTv = currentTv;
+
     }
 
     @Override
     public void onItemClick(BaseAdapter.BaseViewHolder holder) {
-        OrderBean position = mOrderBeans.get(holder.getAdapterPosition());
+        OrderRsBean.ResultBean resultBean = mOrderBeans.get(holder.getAdapterPosition());
         Intent intent = new Intent(this, OrderDetailActivity.class);
+        intent.putExtra("order",resultBean);
         startActivity(intent);
+    }
+
+    //得到订单的回传
+    @Override
+    public void getOrdersReturn(OrderRsBean orderRsBean) {
+        mOrderAdapter.updataListClearAddMore(orderRsBean.getResult());
+
     }
 }
