@@ -7,7 +7,9 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.view.View;
 
+import com.code.safechain.R;
 import com.code.safechain.app.BaseApp;
+import com.code.safechain.ui.my.SettingLanguageActivity;
 
 import java.util.Locale;
 
@@ -33,13 +35,13 @@ public class LocalManageUtil {
      * @return  String language = locale.getLanguage();  得到语言值 zh  en
      */
     public static Locale getSetLanguageLocale(Context context) {
-        switch (SpUtils.getInstance(context).getSelectLanguage()) {
+        switch (SpUtils.getInstance(context).getSelectLanguage()) {//判断设置的语言
             case 0://没有设置语言，用系统默认
                 return getSystemLocale(context);
             case 1:
-                return Locale.CHINA;
-            case 2:
                 return Locale.ENGLISH;
+            case 2:
+                return Locale.CHINA;
             default:
                 return Locale.CHINA;
         }
@@ -80,10 +82,25 @@ public class LocalManageUtil {
     }
 
     /**
-     * 保存选择的语言
+     * 保存选择的语言,并设置
      * @param i
+     * @param
      */
     public static void saveSelectLanguage(int i) {
         SpUtils.getInstance(BaseApp.baseApp).saveLanguage(i);
+//        Locale locale = getSystemLocale(BaseApp.baseApp);//获得系统语言
+//        String country = locale.getCountry();
+//        if(country.equals("CN")){//中文
+//            mImgLanguage.setImageResource(R.mipmap.icon_my_language_zh);
+//        }else {//不是中文，则全为英文
+//            mImgLanguage.setImageResource(R.mipmap.icon_my_language_en);
+//        }
+//        if(i == 0){//系统默认，无需操作
+//
+//        }else if(i == 1){//英文
+//
+//        }else if(i == 2){//中文
+//
+//        }
     }
 }

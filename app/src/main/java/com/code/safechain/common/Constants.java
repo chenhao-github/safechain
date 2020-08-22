@@ -14,20 +14,25 @@ public interface Constants {
     //网络缓存地址
     String PATH_CACHE = PATH_DATA + "/safechain";
     //钱包APP的基础地址
-    String BASE_SHOP_URL = "http://13.251.156.240";
+//    String BASE_SHOP_URL = "http://13.251.156.240";
+    String BASE_SHOP_URL = "http://www.safe-chain.io";
     //signKey
     String SIGNKEY = "482ee7c37b7313c66c38f962ea729b62";
     //传值的key
     String DATA = "data";
     String PHONE_NUMBER = "phonenumber";
     String VERIFICODE = "verifiCode";
+    String NATION = "nation";
     String ACCOUNT = "account";
     String PASSWORD = "password";
     String TOKEN = "token";
     String TOKEN_ID = "token_id";
     String PAYWD = "paywd";
     //转账类型
-    String[] TRANSACTIONS = {"【转入】","【转出】","【失败】"};
+    String[] TRANSACTIONS = {"",
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_chain_into)+"】",
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_chain_out)+"】",
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_chain_fail)+"】"};
     //转账类型的颜色
     int[] TRANSACTIONS_COLOR = {R.color.colorGreenInto, R.color.colorBlueOut, R.color.colorRedError};
 
@@ -57,5 +62,9 @@ public interface Constants {
     //订单状态
     String[] ORDERSTATE = {"无","【进行中】","【已完成】"};
 
+    //倒计时 xs后重新发送
+    String RESEND = BaseApp.baseApp.getResources().getString(R.string.regist_phone_resend);
+    //发送验证码
+    String SENDCODE = BaseApp.baseApp.getResources().getString(R.string.login_send_code);
 
 }

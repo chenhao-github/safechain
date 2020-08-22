@@ -133,37 +133,44 @@ public class LoginActivity extends BaseActivity<LoginConstract.Presenter> implem
     }
     //去登陆
     private void login() {
+        //封装数据到Map
+        HashMap<String, Object> map = new HashMap<>();
         //得到账号和密码
         String phone = mEtAccount.getText().toString().trim();
         String pwd = mEtPwd.getText().toString().trim();
-        if(TextUtils.isEmpty(phone) || phone.length()!=11){
-            ToastUtil.showShort("手机号不合法!");
+        if(TextUtils.isEmpty(phone)){
+            ToastUtil.showShort("账号不能为空!");
             return;
         }
+        if(SystemUtils.isMobile(phone)){//是手机号，封装手机号信息
+            map.put("type","1");
+            map.put("phone",phone);
+            map.put("nation","+86");
+        }else {//不是手机号，验证是否是邮箱
+            if(SystemUtils.isEmail(phone)){//是邮箱，封装邮箱
+                map.put("type","2");
+                map.put("email",phone);
+            }else {
+                ToastUtil.showShort("请输入正确的手机号或邮箱");
+                return;
+            }
+        }
+
         if(TextUtils.isEmpty(pwd) || pwd.length()<4 || pwd.length()>20){
             ToastUtil.showShort("密码不合法!");
             return;
         }
-
-        //封装数据到Map
-        HashMap<String, Object> map = new HashMap<>();
         map.put("passwd",pwd);
-        map.put("type","1");
         map.put("device_type",2);
         map.put("device_id", DeviceIdFactory.getInstance(this).getDeviceUuid());
-        map.put("phone",phone);
-        map.put("nation","+86");
         //加密
         String json = SystemUtils.getJson(map);
         presenter.login(json);
     }
 
+    //跳转到 验证码发送页面
     private void toVerificationCode() {
-        String account = mEtAccount.getText().toString().trim();
-        String pwd = mEtPwd.getText().toString().trim();
         Intent intent = new Intent(this, VerificationCodeActivity.class);
-        intent.putExtra(Constants.ACCOUNT, account);
-        intent.putExtra(Constants.PASSWORD, pwd);
         startActivity(intent);
     }
 }

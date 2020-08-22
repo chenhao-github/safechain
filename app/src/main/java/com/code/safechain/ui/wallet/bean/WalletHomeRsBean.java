@@ -85,6 +85,25 @@ public class WalletHomeRsBean {
             private double sum;
             private String symbol;
             private int token_id;
+            private String price_cny;
+
+            public String getPrice_cny() {
+                return price_cny;
+            }
+
+            public void setPrice_cny(String price_cny) {
+                this.price_cny = price_cny;
+            }
+
+            public String getPrice_usd() {
+                return price_usd;
+            }
+
+            public void setPrice_usd(String price_usd) {
+                this.price_usd = price_usd;
+            }
+
+            private String price_usd;
 
             public String getAddr() {
                 return addr;

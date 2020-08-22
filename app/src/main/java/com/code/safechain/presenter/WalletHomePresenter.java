@@ -39,7 +39,8 @@ public class WalletHomePresenter extends BasePresenter<WalletHomeConstract.View>
 
                     @Override
                     public void onError(Throwable e) {
-                        String s = "";
+                        String s = e.getMessage();
+                        String q = "";
                     }
 
                     @Override

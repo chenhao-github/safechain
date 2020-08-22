@@ -45,6 +45,8 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
     boolean isShow;//密码输入框眼睛是否显示
     private String mVeriCode;
     private String mPhoneNumber;
+    private int mRegistType;
+    private String mNation;
 
     @Override
     protected int getLayout() {
@@ -58,8 +60,10 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
 
     @Override
     protected void initView() {
-        mPhoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);//得到手机号码
+        mPhoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);//得到手机号码，或邮箱号
         mVeriCode = getIntent().getStringExtra(Constants.VERIFICODE);//得到验证码
+        mNation = getIntent().getStringExtra(Constants.NATION);//得到国家代码
+        mRegistType = getIntent().getIntExtra(Constants.DATA, 0);//1 手机，2邮箱
         dealDrawableRightOfSetPwd(mEtPwd);//处理 密码输入框内部右边的图片的点击事件，实现切换
         dealDrawableRightOfSetPwd(mEtPwdSure);//处理 密码输入框内部右边的图片的点击事件，实现切换
 
@@ -103,29 +107,14 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
 
     }
 
-    @Override
-    public void sendVerifiCodeReturn() {
-
-    }
-
-    @Override
-    public void sendPwdReturn(RegistRsBean registRsBean) {
-        if(registRsBean.getError() == 0){
-            //跳转到注册成功界面
-            startActivity(new Intent(this, RegistSuccessActivity.class));
-            
-        }else if (registRsBean.getError() == -202){
-            ToastUtil.showShort(registRsBean.getMessage());
-        }
-    }
-
     @OnClick({R.id.img_back, R.id.btn_regist})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
                 break;
             case R.id.img_back:
-                fileList();
+//                fileList();
+                finish();//结束本页面
                 break;
             case R.id.btn_regist:
                 toRegist();//去注册
@@ -150,10 +139,14 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
         }
         //封装数据到Map
         HashMap<String, Object> map = new HashMap<>();
-        map.put("type","1");
+        map.put("type",mRegistType);//注册的类别  1手机 2邮箱
         map.put("passwd",pwd);
-        map.put("phone",mPhoneNumber);
-        map.put("nation","+86");
+        if(mRegistType == 1){//手机号注册，需要国家代码
+            map.put("phone",mPhoneNumber);//手机号码
+            map.put("nation",mNation);
+        }else if(mRegistType == 2){//邮箱注册
+            map.put("email",mPhoneNumber);//邮箱号
+        }
         map.put("sms_code",mVeriCode);
         map.put("device_type",2);
         map.put("device_id", DeviceIdFactory.getInstance(this).getDeviceUuid());
@@ -162,5 +155,24 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
 
         presenter.sendPwd(json);
     }
+
+    @Override
+    public void sendPwdReturn(RegistRsBean registRsBean) {
+        if(registRsBean.getError() == 0){
+            //跳转到注册成功界面
+            startActivity(new Intent(this, RegistSuccessActivity.class));
+            finish();
+
+        }else if (registRsBean.getError() == -202){
+            ToastUtil.showShort(registRsBean.getMessage());
+        }
+    }
+
+
+    @Override
+    public void sendVerifiCodeReturn() {
+
+    }
+
 
 }

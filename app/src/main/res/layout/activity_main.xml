@@ -14,6 +14,7 @@
         android:id="@+id/tab"
         app:tabSelectedTextColor="@color/colorTransfer"
         android:layout_alignParentBottom="true"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

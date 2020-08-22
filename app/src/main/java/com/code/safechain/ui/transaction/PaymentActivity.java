@@ -22,6 +22,7 @@ import com.code.safechain.ui.transaction.bean.TransactionBuyRsBean;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,8 +89,10 @@ public class PaymentActivity extends BaseActivity<TransactionBuyConstract.Presen
         //赋值
         mTxtMoney.setText("￥ "+(float)mMap.get("total"));//设置应付款
         mTxtPayee.setText(mSaleOrder.getUser_name());//设置收款人
-        //获得支付方式
+        //获得所有支付方式
         mPays = mSaleOrder.getPays();
+        //获取选择的支付方式
+        getChoosePayType();
         //默认显示第一个支付方式的支付图片或银联信息
         if(mPays != null)
             switchPaytype(mPays.get(0));
@@ -110,6 +113,43 @@ public class PaymentActivity extends BaseActivity<TransactionBuyConstract.Presen
 
             }
         });
+
+    }
+
+    private void getChoosePayType() {
+        int payType = mSaleOrder.getPay_type();//获得卖订单中设置的支付方式的组合
+        ArrayList<OthersSaleOrderRsBean.ResultBean.PaysBean> paysBeans = new ArrayList<>();
+        int weixinIndex = 0;
+        int aliIndex = 0;
+        int unionIndex = 0;
+        //找到每一个支付方式的索引
+        for (int i = 0; i < mPays.size(); i++) {
+            if(mPays.get(i).getPay_type()==1)
+                weixinIndex = i;
+            else if (mPays.get(i).getPay_type()==2)
+                aliIndex = i;
+            else if (mPays.get(i).getPay_type()==4)
+                unionIndex = i;
+        }
+        //通过总的支付方式选取 支付方式集合
+        if(payType == 1){//只显示微信
+            paysBeans.add(mPays.get(weixinIndex));
+        }else if (payType == 2){//只显示 支付宝
+            paysBeans.add(mPays.get(aliIndex));
+        }else if(payType == 4){//只显示 银联
+            paysBeans.add(mPays.get(unionIndex));
+        }else if(payType == 3){//显示 微信和支付宝
+            paysBeans.add(mPays.get(weixinIndex));
+            paysBeans.add(mPays.get(aliIndex));
+        }else if(payType == 5){//显示 微信和银联
+            paysBeans.add(mPays.get(weixinIndex));
+            paysBeans.add(mPays.get(unionIndex));
+        }else if(payType == 6){//显示 支付宝和银联
+            paysBeans.add(mPays.get(aliIndex));
+            paysBeans.add(mPays.get(unionIndex));
+        }
+        mPays.clear();//清空完整的支付方式
+        mPays.addAll(paysBeans);//添加选择的支付方式
 
     }
 

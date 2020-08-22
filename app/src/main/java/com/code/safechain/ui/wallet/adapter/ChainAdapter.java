@@ -38,7 +38,9 @@ public class ChainAdapter extends BaseAdapter<WalletHomeRsBean.ResultBean.DataBe
         Glide.with(mContext).load(data.getLogo_url()).into(icon);
 
         name.setText(data.getSymbol());
-        money1.setText(String.format("%.2f", Double.parseDouble(data.getNum())));
-        money2.setText("￥ " + String.format("%.2f",data.getSum()));
+//        money1.setText(String.format("%.2f", Double.parseDouble(data.getNum())));
+//        money2.setText("￥ " + String.format("%.2f",data.getSum()));
+        money1.setText(data.getNum());
+        money2.setText("￥" + data.getSum());
     }
 }

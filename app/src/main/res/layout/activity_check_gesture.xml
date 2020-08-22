@@ -5,8 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.wallet.CheckGestureActivity">
+    <!--第一行-->
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_43">
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/my_check_gesture"
+            android:typeface="normal"
+            android:textColor="@color/colorTitle"
+            android:textSize="@dimen/dp_17" />
+    </RelativeLayout>
+    <!--第一行下的灰线-->
+    <TextView
+        android:id="@+id/txt_line"
+        android:layout_below="@+id/rl_top"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
     <com.code.safechain.ui.my.GestureView
         android:id="@+id/gestureview"
+        android:layout_below="@+id/txt_line"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_centerInParent="true"
         android:layout_width="300dp"
         android:layout_height="400dp" />

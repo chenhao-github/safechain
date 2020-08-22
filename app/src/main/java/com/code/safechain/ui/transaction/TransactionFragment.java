@@ -2,6 +2,7 @@ package com.code.safechain.ui.transaction;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -13,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.code.safechain.R;
+import com.code.safechain.app.BaseApp;
 import com.code.safechain.base.BaseFragment;
 import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.TransactionConstract;
 import com.code.safechain.presenter.TransactionPresenter;
 import com.code.safechain.utils.SystemUtils;
+import com.code.safechain.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -93,7 +96,7 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
      * @param i  0 是我要买 主导   1 我要卖 主导
      */
     private void dealBuySaleAndFragment(int i) {
-        if(i == 0){
+        if(i == 0){//显示我要买
             //切换 我要买  我要卖 的字体大小和颜色
             txtBuy.setTextSize(20);
             txtBuy.setTextColor(getResources().getColor(R.color.colorMyNetWorkUrl));
@@ -101,11 +104,16 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
             txtSale.setTextColor(getResources().getColor(R.color.colorIdentity));
             mFm.beginTransaction().show(mBuy).hide(mSale).commit();
         }else {
-            txtBuy.setTextSize(17);
-            txtBuy.setTextColor(getResources().getColor(R.color.colorIdentity));
-            txtSale.setTextSize(20);
-            txtSale.setTextColor(getResources().getColor(R.color.colorMyNetWorkUrl));
-            mFm.beginTransaction().show(mSale).hide(mBuy).commit();
+            //切换到我要卖，先判断是否实名认证
+            if(BaseApp.userBean!=null&&!TextUtils.isEmpty(BaseApp.userBean.getResult().getCard_id())){
+                txtBuy.setTextSize(17);
+                txtBuy.setTextColor(getResources().getColor(R.color.colorIdentity));
+                txtSale.setTextSize(20);
+                txtSale.setTextColor(getResources().getColor(R.color.colorMyNetWorkUrl));
+                mFm.beginTransaction().show(mSale).hide(mBuy).commit();
+            }else {
+                ToastUtil.showShort("请先实名认证！");
+            }
         }
     }
 

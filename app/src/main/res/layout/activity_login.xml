@@ -109,8 +109,8 @@
         android:layout_marginLeft="@dimen/dp_41"
         android:text="@string/login_account_not"
         android:textSize="@dimen/dp_13"
-        android:textColor="@color/colorMyName"
-        android:background="@color/colorGrayButton"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorYellowButton"
         android:typeface="normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

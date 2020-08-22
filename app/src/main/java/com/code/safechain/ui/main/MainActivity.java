@@ -16,20 +16,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
 import com.code.safechain.R;
+import com.code.safechain.app.BaseApp;
 import com.code.safechain.common.Constants;
+import com.code.safechain.model.HttpManager;
 import com.code.safechain.ui.consult.ConsultFragment;
 import com.code.safechain.ui.ecotope.EcotopeFragment;
+import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.my.MyFragment;
 import com.code.safechain.ui.transaction.TransactionFragment;
 import com.code.safechain.ui.wallet.WalletFragment;
+import com.code.safechain.ui.wallet.bean.ChainInfoRsBean;
 import com.code.safechain.utils.LocalManageUtil;
 import com.code.safechain.utils.LoggerUtil;
+import com.code.safechain.utils.RxUtils;
 import com.code.safechain.utils.Sha1;
+import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.security.DigestException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +44,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tab)
@@ -56,29 +66,7 @@ public class MainActivity extends AppCompatActivity {
         initFragment();
         switchFragment(0);//刚进入系统默认显示 钱包
         requestPermiss();//处理动态权限
-    }
-
-    //申请权限
-    private void requestPermiss() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            ArrayList<String> permissionsList = new ArrayList<>();
-            String[] permissions = {
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            };
-
-            for (String perm : permissions) {
-                if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(perm)) {
-                    permissionsList.add(perm);// 进入到这里代表没有权限.
-                }
-            }
-            if (permissionsList.isEmpty()) {
-                return;
-            } else {
-                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 0);
-            }
-        }
+        getUserInfo();
     }
 
     private void initTab() {
@@ -145,6 +133,61 @@ public class MainActivity extends AppCompatActivity {
         //记录当前的Fragment索引，方便下次隐藏
         mLastFragmentPosition = type;
     }
+
+    //申请权限
+    private void requestPermiss() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            ArrayList<String> permissionsList = new ArrayList<>();
+            String[] permissions = {
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+            };
+
+            for (String perm : permissions) {
+                if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(perm)) {
+                    permissionsList.add(perm);// 进入到这里代表没有权限.
+                }
+            }
+            if (permissionsList.isEmpty()) {
+                return;
+            } else {
+                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 0);
+            }
+        }
+    }
+
+    private void getUserInfo() {
+        //封装数据
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+        map = SystemUtils.getMap(map);
+        HttpManager.getInstance().getApiServer().getUserData(map)
+                .compose(RxUtils.<UserBean>changeScheduler())
+                .subscribe(new Observer<UserBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(UserBean userBean) {
+                        BaseApp.userBean = userBean;//保存用户信息
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+//                        String s = e.getMessage();
+//                        String a = "";
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
     /**
      * 设置系统语言
      *
@@ -155,14 +198,16 @@ public class MainActivity extends AppCompatActivity {
         super.attachBaseContext(LocalManageUtil.setLocal(newBase));
     }
 
-    /**
-     * 设置完语言后，调用此方法 重启app加载设置的语言
-     */
-    public void reStartApp() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        Process.killProcess(Process.myPid());
-    }
+
+
+//    protected void onSaveInstanceState(Bundle outState) {
+//        //在FragmentActivity保存所有Fragment状态前把Fragment从FragmentManager中移除掉。
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        for (int i = 0; i < fragments.size(); i++) {
+//            transaction.remove(fragments.get(i));
+//        }
+//        transaction.commitAllowingStateLoss();
+//        super.onSaveInstanceState(outState);
+//    }
 
 }

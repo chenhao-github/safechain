@@ -8,10 +8,14 @@ import com.code.safechain.R;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.interfaces.MyConstract;
 import com.code.safechain.presenter.MyPresenter;
+import com.code.safechain.ui.main.bean.UserBean;
+import com.code.safechain.ui.my.bean.GestureRsBean;
+import com.code.safechain.ui.my.bean.UploadIconRsBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 public class AboutMeActivity extends BaseActivity<MyConstract.Presenter> implements MyConstract.View {
 
@@ -38,10 +42,6 @@ public class AboutMeActivity extends BaseActivity<MyConstract.Presenter> impleme
 
     }
 
-    @Override
-    public void uploadHeaderReturn() {
-
-    }
 
 
     @OnClick(R.id.img_back)
@@ -53,5 +53,20 @@ public class AboutMeActivity extends BaseActivity<MyConstract.Presenter> impleme
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void uploadHeaderReturn(UploadIconRsBean uploadIconRsBean) {
+
+    }
+
+    @Override
+    public void updateUserDataReturn(GestureRsBean gestureRsBean) {
+
+    }
+
+    @Override
+    public void getUserDataReturn(UserBean userBean) {
+
     }
 }

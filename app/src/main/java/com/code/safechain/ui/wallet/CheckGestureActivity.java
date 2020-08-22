@@ -7,14 +7,27 @@ import android.util.Log;
 
 import com.code.safechain.R;
 import com.code.safechain.common.Constants;
+import com.code.safechain.model.HttpManager;
 import com.code.safechain.ui.my.GestureView;
+import com.code.safechain.ui.my.bean.GestureRsBean;
+import com.code.safechain.ui.wallet.bean.ChainInfoRsBean;
+import com.code.safechain.utils.RxUtils;
 import com.code.safechain.utils.SpUtils;
+import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.ResponseBody;
 
 public class CheckGestureActivity extends AppCompatActivity {
     private GestureView mGestureview;
+    private String mCurrentPaywd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,38 +49,13 @@ public class CheckGestureActivity extends AppCompatActivity {
 
             @Override
             public void onFinish(List<Integer> list) {
-                String currentPaywd = "";
+                mCurrentPaywd = "";
                 for (int i = 0; i < list.size(); i++) {
-                    currentPaywd += list.get(i);
+                    mCurrentPaywd += list.get(i);
                 }
-                //得到手势密码
-                String paywd = SpUtils.getInstance(CheckGestureActivity.this).getString(Constants.PAYWD);
-                if(paywd.equals(currentPaywd)){
-                    ToastUtil.showShort("验证成功");
-                    setResult(RESULT_OK);
-                    finish();
-                }else {
-                    ToastUtil.showShort("不正确，请重试！");
-                }
-//                if (mList.isEmpty()) {
-//                    mList.addAll(list);
-//                    Log.i("111", "onFinish: "+mList);
-////                    tvGuide.setText(R.string.gesture_set_again);
-//                    ToastUtil.showLong("请再次绘制相同解锁图案");
-//                } else {
-//                    if (isSame(list)) {
-//                        ToastUtil.showLong("设置成功");
-//                        updatePaywd(list);//修改手势秘密
-////                        setResult(RESULT_OK);
-////                        finish();
-//                    } else {
-////                        gestureView.showError();
-////                        tvError.setVisibility(View.VISIBLE);
-////                        tvError.setText("两次绘制图案不一致 请重新绘制");
-//                        ToastUtil.showLong("两次绘制图案不一致 请重新绘制");
-//                    }
-//                }
                 mGestureview.reset();
+                //验证手势密码
+                checkGesture(mCurrentPaywd);
             }
 
             @Override
@@ -77,5 +65,55 @@ public class CheckGestureActivity extends AppCompatActivity {
                 ToastUtil.showLong("手势密码最少连续四个点");
             }
         });
+    }
+
+    //通过 回传到ChainDetailActivity，再跳转到 TransferActivity页面，TransferActivity操作完后
+    // 再回传到回传到ChainDetailActivity 要区分
+    //不通过，继续设置
+    private void checkGesture(String currentPaywd) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("type",5);//手势密码验证
+        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+        map.put("paywd",currentPaywd);//手势密码验证
+
+        map = SystemUtils.getMap(map);
+        HttpManager.getInstance().getApiServer().checkPaywd(map)
+                .compose(RxUtils.<GestureRsBean>changeScheduler())
+                .subscribe(new Observer<GestureRsBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(GestureRsBean gestureRsBean) {
+                        dealRs(gestureRsBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    //处理验证结果
+    private void dealRs(GestureRsBean gestureRsBean) {
+        if(gestureRsBean.getError() == 0){//验证成功，回传到ChainDetailActivity
+            Intent intent = new Intent();
+            intent.putExtra(Constants.PAYWD,mCurrentPaywd);
+            setResult(200,intent);
+            finish();
+        }else if(gestureRsBean.getError() == -209){//没有支付密码
+            Intent intent = new Intent();
+            setResult(300,intent);
+            finish();
+        } else if(gestureRsBean.getError() == -208) {//支付密码不正确
+            ToastUtil.showShort(gestureRsBean.getMessage());
+        }
     }
 }

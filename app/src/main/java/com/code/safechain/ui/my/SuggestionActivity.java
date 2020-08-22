@@ -14,12 +14,16 @@ import com.code.safechain.R;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.interfaces.MyConstract;
 import com.code.safechain.presenter.MyPresenter;
+import com.code.safechain.ui.main.bean.UserBean;
+import com.code.safechain.ui.my.bean.GestureRsBean;
+import com.code.safechain.ui.my.bean.UploadIconRsBean;
 import com.code.safechain.utils.LoggerUtil;
 import com.code.safechain.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 public class SuggestionActivity extends BaseActivity<MyConstract.Presenter> implements MyConstract.View {
 
@@ -51,6 +55,21 @@ public class SuggestionActivity extends BaseActivity<MyConstract.Presenter> impl
         mEtSuggestion.addTextChangedListener(watcher);//添加监听
         mEtPhone.addTextChangedListener(watcher);
 
+
+    }
+
+    @Override
+    public void uploadHeaderReturn(UploadIconRsBean uploadIconRsBean) {
+
+    }
+
+    @Override
+    public void updateUserDataReturn(GestureRsBean gestureRsBean) {
+
+    }
+
+    @Override
+    public void getUserDataReturn(UserBean userBean) {
 
     }
 
@@ -88,10 +107,6 @@ public class SuggestionActivity extends BaseActivity<MyConstract.Presenter> impl
 
     }
 
-    @Override
-    public void uploadHeaderReturn() {
-
-    }
 
     @OnClick({R.id.img_back, R.id.btn_submit})
     public void onClick(View v) {

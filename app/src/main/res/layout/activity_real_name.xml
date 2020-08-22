@@ -75,10 +75,10 @@
         <ImageView
             android:id="@+id/img_camera_front"
             android:src="@mipmap/ic_camera"
-            android:layout_marginTop="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_centerHorizontal="true"
-            android:layout_width="@dimen/dp_22"
-            android:layout_height="@dimen/dp_22" />
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100" />
         <TextView
             android:id="@+id/txt_front_show"
             android:layout_below="@+id/img_camera_front"
@@ -102,10 +102,10 @@
         <ImageView
             android:id="@+id/img_camera_back"
             android:src="@mipmap/ic_camera"
-            android:layout_marginTop="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_centerHorizontal="true"
-            android:layout_width="@dimen/dp_22"
-            android:layout_height="@dimen/dp_22" />
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100" />
         <TextView
             android:id="@+id/txt_back_show"
             android:layout_below="@+id/img_camera_back"

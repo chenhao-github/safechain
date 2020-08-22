@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/colorWhite">
 <!--第一行-->
     <RelativeLayout
         android:id="@+id/rl_top"
@@ -27,13 +27,13 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/img_en"
+            android:id="@+id/img_language"
             android:layout_width="@dimen/dp_18"
             android:layout_height="@dimen/dp_18"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_18"
-            android:src="@mipmap/ic_en" />
+            android:src="@mipmap/icon_my_language_zh" />
     </RelativeLayout>
     <!--第一行下的灰线-->
     <TextView
@@ -45,6 +45,7 @@
     <!--中间的头像-->
     <RelativeLayout
         android:id="@+id/rl_header"
+        android:visibility="invisible"
         android:background="@drawable/bg_circle_my_header"
         android:layout_below="@+id/txt_line"
         android:layout_centerInParent="true"
@@ -75,14 +76,42 @@
     <!--名字-->
     <TextView
         android:id="@+id/txt_name"
+        android:visibility="invisible"
         android:layout_below="@+id/rl_header"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/dp_14"
-        android:text="凯文先生"
         android:textSize="18sp"
         android:textColor="@color/colorMyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <!--未登录，显示登录，注册页面-->
+    <LinearLayout
+        android:id="@+id/ll_regist_login"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_70"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_regist"
+            android:text="@string/login_regist"
+            android:textColor="@color/colorTransfer"
+            android:gravity="center"
+            android:background="@drawable/bg_button_white"
+            android:layout_width="@dimen/dp_93"
+            android:layout_height="@dimen/dp_33" />
+        <Button
+            android:id="@+id/btn_login"
+            android:text="@string/login_login"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="@dimen/dp_17"
+            android:gravity="center"
+            android:background="@drawable/bg_button_yellow"
+            android:layout_width="@dimen/dp_93"
+            android:layout_height="@dimen/dp_33" />
+    </LinearLayout>
+
     <!--实名认证行-->
     <RelativeLayout
         android:id="@+id/rl_realname"
@@ -273,7 +302,7 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <!--检查更新行-->
-    <RelativeLayout
+  <!--  <RelativeLayout
         android:id="@+id/rl_update"
         android:layout_below="@+id/rl_version"
         android:layout_marginTop="@dimen/dp_16"
@@ -303,11 +332,11 @@
             android:layout_centerVertical="true"
             android:layout_width="@dimen/dp_8"
             android:layout_height="@dimen/dp_14" />
-    </RelativeLayout>
+    </RelativeLayout>-->
     <!--支付方式行-->
     <RelativeLayout
         android:id="@+id/rl_paytype"
-        android:layout_below="@+id/rl_update"
+        android:layout_below="@+id/rl_version"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

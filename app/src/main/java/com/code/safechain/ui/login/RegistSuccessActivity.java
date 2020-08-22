@@ -30,6 +30,7 @@ public class RegistSuccessActivity extends AppCompatActivity {
                 break;
             case R.id.btn_goto_login:
                 startActivity(new Intent(this, LoginActivity.class));
+                finish();
                 break;
         }
     }

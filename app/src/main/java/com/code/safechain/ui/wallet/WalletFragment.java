@@ -140,9 +140,12 @@ public class WalletFragment extends BaseFragment<WalletHomeConstract.Presenter>
 
     @Override
     public void getWalletHomeReturn(WalletHomeRsBean walletHomeRsBean) {
+        if(walletHomeRsBean.getResult() != null){
+//            mTxtMoney.setText(String.format("%.6f", walletHomeRsBean.getResult().getTotal()));
+            mTxtMoney.setText(walletHomeRsBean.getResult().getTotal()+"");
+            mAdapter.updataListClearAddMore(walletHomeRsBean.getResult().getData());
 
-        mTxtMoney.setText(String.format("%.2f", walletHomeRsBean.getResult().getTotal()));
-        mAdapter.updataListClearAddMore(walletHomeRsBean.getResult().getData());
+        }
 
     }
 }

@@ -45,6 +45,7 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
     private WalletHomeRsBean.ResultBean.DataBean mChain;
     private WalletAddressRsBean.ResultBean.DataBean mAddress;
     private HashMap<String, Object> mMap;
+    private String mPaywd;
 
     @Override
     protected int getLayout() {
@@ -66,11 +67,12 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
         //获得Chain对象
         Intent intent = getIntent();
         mChain = (WalletHomeRsBean.ResultBean.DataBean)intent.getSerializableExtra(Constants.DATA);
+        mPaywd = getIntent().getStringExtra(Constants.PAYWD);//得到手势密码
         //设置转账币的名字
         mTxtChain.setText(mChain.getSymbol());
         mTxtChainName.setText(mChain.getSymbol());
         //设置余额值  0.00是传入的数据，用真实数据替换
-        mTxtBalance.setText(String.format("%.2f",Double.parseDouble(mChain.getNum())));
+        mTxtBalance.setText(String.format("%.2f",mChain.getSum()));
 
     }
 
@@ -113,14 +115,10 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
         mMap.put("token_id", mChain.getToken_id());
         mMap.put("to_addr",addressData);
         mMap.put("amount",amount);
-        //先判断是否有手势密码
-        String paywd = SpUtils.getInstance(this).getString(Constants.PAYWD);
-        if(TextUtils.isEmpty(paywd)){
-            ToastUtil.showShort("请先设置手势支付密码");
-            return;
-        }
-        //有手势密码，跳转到手势密码验证页面
-        startActivityForResult(new Intent(this,CheckGestureActivity.class),200);
+        mMap.put("paywd",mPaywd);//设置手势密码
+        //加密
+        String json = SystemUtils.getJson(mMap);
+        presenter.transfer(json);
     }
 
     @Override
@@ -132,21 +130,14 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
                     (WalletAddressRsBean.ResultBean.DataBean) data.getSerializableExtra(Constants.DATA);
             mEtChainAddress.setText(address.getAddr());//设置地址本的收款地址
         }
-        //验证手势秘密
-        if(requestCode == 200 && resultCode == RESULT_OK){
-            //通过手势获得
-            mMap.put("paywd",SpUtils.getInstance(this).getString(Constants.PAYWD));
-            //加密
-            String json = SystemUtils.getJson(mMap);
-            presenter.transfer(json);
-        }
+
     }
 
     //转账的回传
     @Override
     public void transferReturn(TransferRsBean transferRsBean) {
         ToastUtil.showShort(transferRsBean.getMessage());
-        setResult(RESULT_OK);
+        setResult(100);
         finish();
     }
 }

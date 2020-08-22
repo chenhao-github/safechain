@@ -11,6 +11,9 @@ import com.code.safechain.ui.login.bean.VerificationRsBean;
 import com.code.safechain.utils.LoggerUtil;
 import com.code.safechain.utils.RxUtils;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,6 +22,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 /**
  * @Auther: hchen
@@ -29,7 +33,6 @@ public class RegistPresenter extends BasePresenter<RegistConstract.View> impleme
 
     private Disposable mDisposable;
     //获取验证码
-    @SuppressLint("CheckResult")
     @Override
     public void sendVerifiCode(String json) {
         RequestBody body = null;
@@ -63,12 +66,10 @@ public class RegistPresenter extends BasePresenter<RegistConstract.View> impleme
         addSubscribe(mDisposable);
     }
 
+    //注册 发送密码
     @Override
     public void sendPwd(String json) {
-        RequestBody body = null;
-        MediaType parse = MediaType.parse("application/json; charset=utf-8");
-        body = RequestBody.create(parse,json);
-        //
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),json);
         HttpManager.getInstance().getApiServer().regist(body)
                 .compose(RxUtils.<RegistRsBean>changeScheduler())
                 .subscribe(new Observer<RegistRsBean>() {
@@ -85,7 +86,6 @@ public class RegistPresenter extends BasePresenter<RegistConstract.View> impleme
                     @Override
                     public void onError(Throwable e) {
                         String str1 = e.getMessage();
-                        String s = "";
                     }
 
                     @Override
@@ -93,7 +93,6 @@ public class RegistPresenter extends BasePresenter<RegistConstract.View> impleme
 
                     }
                 });
-
         addSubscribe(mDisposable);
     }
 }

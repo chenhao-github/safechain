@@ -60,9 +60,10 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
     private OthersSaleOrderRsBean.ResultBean mSaleOrder;
     private TextView mNumber;
     private TextView mActualPayment;
-    private TextView mAutoCancel;
+//    private TextView mAutoCancel;
     private int n = 30;//倒计时
-    private Timer mTimer;
+    private TextView mQuota;
+    //    private Timer mTimer;
 
     @Override
     protected int getLayout() {
@@ -87,6 +88,20 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){//显示的时候
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("token", SpUtils.getInstance(getActivity()).getString(Constants.TOKEN));
+            map.put("size",Constants.SIZE);
+//        map.put("lastid",Constants.SIZE);//最后一条数据的 商品id（主键id）,从这里开始取 size条
+
+            map = SystemUtils.getMap(map);
+            presenter.getSaleOrder(map);
+        }
     }
 
     @Override
@@ -124,11 +139,11 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
                 dealBuySaleAndFragment(TYPE_NUMBER);
                 type_buy = TYPE_NUMBER;
                 break;
-            case R.id.btn_auto_cancel:
+            /*case R.id.btn_auto_cancel:
                 mPw.dismiss();
                 SystemUtils.setBackgroundAlpha(getActivity().getWindow(),Constants.NO_SHADOW);
 //                mTimer.cancel();//关闭定时器
-                break;
+                break;*/
             case R.id.btn_place_order://下单
                 toPaymentActivity();
                 break;
@@ -150,8 +165,15 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
             BigDecimal b1 = new BigDecimal(mSaleOrder.getNum());//币的原本数量
             BigDecimal input = new BigDecimal(s.toString());//把输入的金额转为 BigDecimal
             BigDecimal total = a1.multiply(b1);// 相乘结果，得到币的总值
-            if(input.compareTo(total) == 1){
+           /* if(input.compareTo(total) == 1){
                 ToastUtil.showShort("金额超过币值!");
+                return;
+            }*/
+            //得到最大最小金额
+            BigDecimal min = new BigDecimal(Double.toString(mSaleOrder.getMin()));//最小金额
+            BigDecimal max = new BigDecimal(Double.toString(mSaleOrder.getMax()));//最大金额
+            if(input.compareTo(min) == -1 || input.compareTo(max) == 1){
+                ToastUtil.showShort("金额超过限额!");
                 return;
             }
             totalPay = Float.valueOf(input.stripTrailingZeros().toPlainString());//
@@ -160,8 +182,8 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
             mActualPayment.setText(s.toString());//设置实付款
         }else if(type_buy == TYPE_NUMBER) {//如果按数量购买
             float input = Float.parseFloat(s.toString());
-            if(input<mSaleOrder.getMin() || input >mSaleOrder.getMax()){
-                ToastUtil.showShort("超过限额！");
+            if(input<1 || input >Float.parseFloat(mSaleOrder.getNum())){
+                ToastUtil.showShort("数量超过限额！");
                 return;
             }
             mNumber.setText(s.toString());
@@ -210,11 +232,11 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
             public void onDismiss() {
                 //设置背景不透明
                 SystemUtils.setBackgroundAlpha(getActivity().getWindow(), Constants.NO_SHADOW);
-                mTimer.cancel();//关闭倒计时
-                n = 30;//把倒计时重置到30秒
+//                mTimer.cancel();//关闭倒计时
+//                n = 30;//把倒计时重置到30秒
             }
         });
-        //倒计时
+        /*//倒计时
         mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
             @Override
@@ -231,7 +253,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
                     mTimer.cancel();
                 }
             }
-        },1000,1000);
+        },1000,1000);*/
     }
 
     private void initViewOfPw(View pwLayout) {
@@ -248,21 +270,22 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
         mBuyNumber = pwLayout.findViewById(R.id.txt_buy_number);
         //输入框
         mInput = pwLayout.findViewById(R.id.et_input);
-        TextView quota = pwLayout.findViewById(R.id.txt_quota);//限额
+        //限额
+        mQuota = pwLayout.findViewById(R.id.txt_quota);
         //交易数量
         mNumber = pwLayout.findViewById(R.id.txt_trans_number);
         //实付款
         mActualPayment = pwLayout.findViewById(R.id.txt_trans_actual_payment);
         //自动取消
-        mAutoCancel = pwLayout.findViewById(R.id.btn_auto_cancel);
+//        mAutoCancel = pwLayout.findViewById(R.id.btn_auto_cancel);
         //赋值
-        quota.setText(mSaleOrder.getMin() + " - " + mSaleOrder.getMax());//限额赋值
+        mQuota.setText(mSaleOrder.getMin() + " - " + mSaleOrder.getMax());//限额赋值
         //下单
         mPlaceOrder = pwLayout.findViewById(R.id.btn_place_order);
         //添加监听
         mBuyMoney.setOnClickListener(this);//按金额购买
         mBuyNumber.setOnClickListener(this);//按数量购买
-        mAutoCancel.setOnClickListener(this);//取消按钮
+//        mAutoCancel.setOnClickListener(this);//取消按钮
         mPlaceOrder.setOnClickListener(this);//下单
         //输入框添加值改变事件
        mInput.addTextChangedListener(new TextWatcher() {
@@ -284,18 +307,25 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
                     BigDecimal b1 = new BigDecimal(mSaleOrder.getNum());//币的数量
                     BigDecimal input = new BigDecimal(s.toString());//把输入的数据转为 BigDecimal
                     BigDecimal total = a1.multiply(b1);// 单价*数量 得到总价钱
-                    if(input.compareTo(total) == 1){
-                        ToastUtil.showShort("金额超过币值!");
-//                        return;
+//                    if(input.compareTo(total) == 1){
+//                        ToastUtil.showShort("金额超过币值!");
+////                        return;
+//                    }
+                    //得到最大最小金额
+                    BigDecimal min = new BigDecimal(Double.toString(mSaleOrder.getMin()));//最小金额
+                    BigDecimal max = new BigDecimal(Double.toString(mSaleOrder.getMax()));//最大金额
+                    if(input.compareTo(min) == -1 || input.compareTo(max) == 1){
+                        ToastUtil.showShort("金额超过限额!");
                     }
+
                     //在divide方法中传递第二个参数，定义精确到小数点后几位，否则在不整除的情况下，结果是无限循环小数时，就会抛出以上异常。
                     BigDecimal num = input.divide(a1,2, BigDecimal.ROUND_HALF_UP);//计算交易数量
                     mNumber.setText(num.stripTrailingZeros().toPlainString());//设置数量 去除末尾的0
                     mActualPayment.setText(s.toString());//设置实付款
                 }else if(type_buy == TYPE_NUMBER) {//如果按数量购买
                     float input = Float.parseFloat(s.toString());
-                    if(input<mSaleOrder.getMin() || input >mSaleOrder.getMax()){
-                        ToastUtil.showShort("超过限额！");
+                    if(input<1 || input >Float.parseFloat(mSaleOrder.getNum())){
+                        ToastUtil.showShort("数量超过限额！");
 //                        return;
                     }
                     mNumber.setText(s.toString());
@@ -315,17 +345,21 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
     }
 
     /**
-     * 处理 我要买和我要卖 的字体颜色
+     * 处理 我要买和我要卖 的字体颜色和限额的值
      * @param type  0 按金额  1 按数量
      */
     private void dealBuySaleAndFragment(int type) {
-        if(type == TYPE_MONEY){
+        if(type == TYPE_MONEY){//安金额购买
             //切换 我要买  我要卖 的字体大小和颜色
             mBuyMoney.setTextColor(getResources().getColor(R.color.colorTransfer));
             mBuyNumber.setTextColor(getResources().getColor(R.color.colorTitle));
+            //修改限额的值 为min--max
+            mQuota.setText(mSaleOrder.getMin() + " - " + mSaleOrder.getMax());//限额赋值
         }else {
             mBuyMoney.setTextColor(getResources().getColor(R.color.colorTitle));
             mBuyNumber.setTextColor(getResources().getColor(R.color.colorTransfer));
+            //修改限额的值为 1-数量
+            mQuota.setText("1 - " + mSaleOrder.getNum());//限额赋值
         }
         setInputHint(type);//修改购买弹出框中的提示信息
     }

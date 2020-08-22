@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
+import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.utils.LocalManageUtil;
 
 public class BaseApp extends Application {
 
     public static BaseApp baseApp;
+    public static UserBean userBean;
 
     @Override
     public void onCreate() {

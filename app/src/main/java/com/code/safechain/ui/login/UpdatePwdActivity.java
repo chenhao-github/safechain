@@ -5,21 +5,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.code.safechain.R;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.common.Constants;
-import com.code.safechain.interfaces.RegistConstract;
-import com.code.safechain.presenter.RegistPresenter;
-import com.code.safechain.ui.login.bean.RegistRsBean;
-import com.code.safechain.utils.DeviceIdFactory;
-import com.code.safechain.utils.SpUtils;
+import com.code.safechain.interfaces.UpdateUserInfoConstract;
+import com.code.safechain.presenter.UpdateUserInfoPresenter;
+import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
 
@@ -29,8 +27,11 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UpdatePwdActivity extends BaseActivity<RegistConstract.Presenter> implements RegistConstract.View {
+public class UpdatePwdActivity extends BaseActivity<UpdateUserInfoConstract.Presenter>
+        implements UpdateUserInfoConstract.View {
 
+    @BindView(R.id.img_back)
+    ImageView mImgBack;
     @BindView(R.id.et_pwd)
     EditText mEtPwd;
     @BindView(R.id.et_pwd_sure)
@@ -39,6 +40,7 @@ public class UpdatePwdActivity extends BaseActivity<RegistConstract.Presenter> i
     boolean isShow;//密码输入框眼睛是否显示
     private String mPhoneNumber;
     private String mVeriCode;
+    private String mType;
 
     @Override
     protected int getLayout() {
@@ -46,15 +48,16 @@ public class UpdatePwdActivity extends BaseActivity<RegistConstract.Presenter> i
     }
 
     @Override
-    protected RegistConstract.Presenter createPresenter() {
-        return new RegistPresenter();
+    protected UpdateUserInfoConstract.Presenter createPresenter() {
+        return new UpdateUserInfoPresenter();
     }
 
     @Override
     protected void initView() {
         requestPermiss();//处理动态权限
-        mPhoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);//得到手机号码
+        mPhoneNumber = getIntent().getStringExtra(Constants.PHONE_NUMBER);//得到手机号码 或邮箱
         mVeriCode = getIntent().getStringExtra(Constants.VERIFICODE);//得到验证码
+        mType = getIntent().getStringExtra("type");//得到类别 1手机  2邮箱
         dealDrawableRightOfSetPwd(mEtPwd);//处理 密码输入框内部右边的图片的点击事件，实现切换
         dealDrawableRightOfSetPwd(mEtPwdSure);//处理 密码输入框内部右边的图片的点击事件，实现切换
     }
@@ -97,16 +100,14 @@ public class UpdatePwdActivity extends BaseActivity<RegistConstract.Presenter> i
 
     }
 
-    @Override
-    public void sendVerifiCodeReturn() {
-
-    }
 
     @Override
-    public void sendPwdReturn(RegistRsBean registRsBean) {
-        if(registRsBean.getError() == 0){
+    public void updateUserInfoReturn( GestureRsBean gestureRsBean) {
+        if(gestureRsBean.getError() == 0){
+            ToastUtil.showShort("修改成功!");
             //跳转到登录界面
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
     }
 
@@ -120,9 +121,7 @@ public class UpdatePwdActivity extends BaseActivity<RegistConstract.Presenter> i
                 break;
             case R.id.btn_update:
                 //网络请求修改
-//                toUpdate();
-//                //跳转到登录界面
-                startActivity(new Intent(this, LoginActivity.class));
+                toUpdate();
                 break;
         }
     }
@@ -141,18 +140,20 @@ public class UpdatePwdActivity extends BaseActivity<RegistConstract.Presenter> i
         }
         //封装数据到Map
         HashMap<String, Object> map = new HashMap<>();
-        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+//        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+        if("1".equals(mType)){//手机
+            map.put("phone",mPhoneNumber);
+            map.put("nation","+86");
+            map.put("sms_code",mVeriCode);
+        }else if ("2".equals(mType)){//邮箱
+            map.put("email",mPhoneNumber);
+            map.put("email_code",mVeriCode);
+        }
+        map.put("type",mType);
         map.put("passwd",pwd);
-        map.put("phone",mPhoneNumber);
-        map.put("type","1");
-        map.put("nation","+86");
-        map.put("sms_code",mVeriCode);
-        map.put("device_type",2);
-        map.put("device_id", DeviceIdFactory.getInstance(this).getDeviceUuid());
         //加密
         String json = SystemUtils.getJson(map);
-
-        presenter.sendPwd(json);
+        presenter.updateUserInfo(json);
     }
 
     //申请权限

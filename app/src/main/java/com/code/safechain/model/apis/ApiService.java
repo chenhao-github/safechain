@@ -1,7 +1,9 @@
 package com.code.safechain.model.apis;
 
+import com.code.safechain.ui.login.bean.CountryCodeBean;
 import com.code.safechain.ui.login.bean.RegistRsBean;
 import com.code.safechain.ui.login.bean.VerificationRsBean;
+import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
 import com.code.safechain.ui.transaction.bean.MySaleOrderRsBean;
@@ -10,8 +12,10 @@ import com.code.safechain.ui.transaction.bean.PayTypeRsBean;
 import com.code.safechain.ui.transaction.bean.OthersSaleOrderRsBean;
 import com.code.safechain.ui.transaction.bean.TransactionBuyRsBean;
 import com.code.safechain.ui.wallet.bean.AddAddressRsBean;
+import com.code.safechain.ui.wallet.bean.ChainInfoRsBean;
 import com.code.safechain.ui.wallet.bean.ChainTransactionRsBean;
 import com.code.safechain.ui.wallet.bean.TransferRsBean;
+import com.code.safechain.ui.wallet.bean.WalletAddressOnlyRsBean;
 import com.code.safechain.ui.wallet.bean.WalletAddressRsBean;
 import com.code.safechain.ui.wallet.bean.WalletHomeRsBean;
 
@@ -42,6 +46,10 @@ public interface ApiService {
     @PUT("/api/user")
     Observable<GestureRsBean> updateUser(@Body RequestBody requestBody);
 
+    //获得用户信息
+    @GET("/api/user")
+    Observable<UserBean> getUserData(@QueryMap Map<String, Object> map);
+
     //登录
     @POST("/api/login")
     Observable<RegistRsBean> login(@Body RequestBody requestBody);
@@ -54,9 +62,21 @@ public interface ApiService {
     @GET("/api/tran")
     Observable<ChainTransactionRsBean> getWalletChainTrans(@QueryMap Map<String, Object> map);
 
-    //获取钱包地址
+    //币详情 非交易列表
+    @GET("/api/common")
+    Observable<ChainInfoRsBean> getChainInfo(@QueryMap Map<String, Object> map);
+
+    //验证交易密码
+    @GET("/api/common")
+    Observable<GestureRsBean> checkPaywd(@QueryMap Map<String, Object> map);
+
+    //获取所有钱包地址
     @GET("/api/wallet")
     Observable<WalletAddressRsBean> getWalletAddress(@QueryMap Map<String, Object> map);
+
+    //获取单个币的钱包地址
+    @GET("/api/wallet")
+    Observable<WalletAddressOnlyRsBean> getWalletAddressOnly(@QueryMap Map<String, Object> map);
 
     //添加钱包地址
     @POST("/api/wallet")
@@ -90,5 +110,9 @@ public interface ApiService {
     //订单列表
     @GET("/api/order")
     Observable<OrderRsBean>  getOrders(@QueryMap Map<String, Object> map);
+
+    //国家代码
+    @GET("/api/common")
+    Observable<CountryCodeBean> getCountryCode(@QueryMap Map<String, Object> map);
 
 }
