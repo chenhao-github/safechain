@@ -199,7 +199,7 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
                 break;
             case R.id.rl_paytype:
                 //跳转到支付方式设置页面
-                startActivity(new Intent(getActivity(), PayTypeActivity.class));
+                startActivityForResult(new Intent(getActivity(), PayTypeActivity.class),400);
                 break;
             case R.id.rl_loginout: //登出
                 SpUtils.getInstance(getActivity()).setValue(Constants.TOKEN,"");
@@ -225,7 +225,10 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
         if(requestCode == 200 && resultCode == getActivity().RESULT_OK){//实名认证成功
             txtRealNameRs.setText(BaseApp.getRes().getString(R.string.my_realname_yes));
         }
-        if(requestCode == 300 && resultCode == getActivity().RESULT_OK){//设置语言成功
+        if(requestCode == 300 && resultCode == getActivity().RESULT_OK){//设置语言成功，重启主页，无需处理
+
+        }
+        if(requestCode == 400 && resultCode == getActivity().RESULT_OK){//设置支付方式成功，我的页面无需处理
 
         }
 

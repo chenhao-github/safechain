@@ -49,7 +49,8 @@ public class TransactionBuyPresenter extends BasePresenter<TransactionBuyConstra
 
                     @Override
                     public void onError(Throwable e) {
-
+                        String str = e.getMessage();
+                        String s = "";
                     }
 
                     @Override

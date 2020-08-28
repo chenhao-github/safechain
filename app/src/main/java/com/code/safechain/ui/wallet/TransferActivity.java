@@ -22,6 +22,7 @@ import com.code.safechain.ui.wallet.bean.WalletHomeRsBean;
 import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
+import com.code.safechain.zxing.activity.CaptureActivity;
 
 import java.util.HashMap;
 
@@ -85,7 +86,7 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
                 finish();
                 break;
             case R.id.img_scan_code:
-
+                startActivityForResult(new Intent(this, CaptureActivity.class),200);
                 break;
             case R.id.img_address_book:
                 //跳转到地址本
@@ -129,6 +130,10 @@ public class TransferActivity extends BaseActivity<WalletTransferConstract.Prese
             WalletAddressRsBean.ResultBean.DataBean address =
                     (WalletAddressRsBean.ResultBean.DataBean) data.getSerializableExtra(Constants.DATA);
             mEtChainAddress.setText(address.getAddr());//设置地址本的收款地址
+        }
+        if (requestCode == 200 && resultCode == 200){
+            String code = data.getStringExtra(Constants.DATA);
+            mEtChainAddress.setText(code);
         }
 
     }

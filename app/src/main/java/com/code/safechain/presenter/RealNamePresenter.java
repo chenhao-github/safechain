@@ -8,7 +8,6 @@ import com.code.safechain.interfaces.RealNameConstract;
 import com.code.safechain.model.HttpManager;
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
-import com.code.safechain.ui.transaction.bean.PayTypeRsBean;
 import com.code.safechain.utils.LoggerUtil;
 import com.code.safechain.utils.RxUtils;
 
@@ -48,8 +47,7 @@ public class RealNamePresenter extends BasePresenter<RealNameConstract.View> imp
 
                 @Override
                 public void onError(Throwable e) {
-                    String s1 = e.getMessage();
-                    LoggerUtil.logI("111",s1);
+
                 }
 
                 @Override
@@ -80,7 +78,7 @@ public class RealNamePresenter extends BasePresenter<RealNameConstract.View> imp
                         @Override
                         public void onNext(UploadIconRsBean uploadIconRsBean) {
                             mView.uploadCardZIconReturn(uploadIconRsBean);
-                            String s = "";
+
                         }
 
                         @Override
@@ -122,7 +120,7 @@ public class RealNamePresenter extends BasePresenter<RealNameConstract.View> imp
 
                         @Override
                         public void onError(Throwable e) {
-
+                            LoggerUtil.logI("222","上传错误："+e.getMessage());
                         }
 
                         @Override

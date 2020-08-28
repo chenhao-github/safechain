@@ -1,29 +1,21 @@
 package com.code.safechain.presenter;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.code.safechain.base.BasePresenter;
 import com.code.safechain.interfaces.MyPaytypeConstract;
-import com.code.safechain.interfaces.RegistConstract;
 import com.code.safechain.model.HttpManager;
-import com.code.safechain.ui.login.bean.RegistRsBean;
-import com.code.safechain.ui.login.bean.VerificationRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
 import com.code.safechain.ui.transaction.bean.PayTypeRsBean;
-import com.code.safechain.utils.LoggerUtil;
 import com.code.safechain.utils.RxUtils;
-import com.code.safechain.utils.SpUtils;
 
 import java.io.File;
-import java.io.IOException;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 
 /**
  * @Auther: hchen
@@ -90,7 +82,8 @@ public class MyPayTypePresenter extends BasePresenter<MyPaytypeConstract.View> i
 
                         @Override
                         public void onError(Throwable e) {
-
+                            String str = e.getMessage();
+                            String s = "";
                         }
 
                         @Override

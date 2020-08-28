@@ -262,7 +262,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
         ImageView chainIcon = pwLayout.findViewById(R.id.img_chain_icon);//币的图标
         //赋值
         chainName.setText(mSaleOrder.getToken_name());
-        unitPrice.setText(mSaleOrder.getPrice()+"");
+        unitPrice.setText(String.format("%.6f",mSaleOrder.getPrice()));
 //        Glide.with(getActivity()).load("").into(chainIcon);//图标没有
         //按金额购买
         mBuyMoney = pwLayout.findViewById(R.id.txt_buy_money);

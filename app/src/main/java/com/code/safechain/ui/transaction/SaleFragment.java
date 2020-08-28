@@ -120,11 +120,11 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
         mTxtChainNumber.setText(String.format("%.2f",Double.parseDouble(dataBean.getNum())));
         mTxtChainName.setText(dataBean.getSymbol());
         //设置溢价 的提示
-        mEtPriceFloatPercent.setHint(getResources().getString(R.string.transaction_market_price)+dataBean.getPrice_cny());
+        mEtPriceFloatPercent.setHint(getResources().getString(R.string.transaction_market_price)+String.format("%.6f",Double.parseDouble(dataBean.getPrice_cny())));
         //设置初始浮动价
-        mTxtFloatingPrice.setText(dataBean.getPrice_cny());
+        mTxtFloatingPrice.setText(String.format("%.6f",Double.parseDouble(dataBean.getPrice_cny())));
         //设置固定价格的提示信息
-        mEtSetFixPrice.setHint(getResources().getString(R.string.transaction_market_price)+dataBean.getPrice_cny());
+        mEtSetFixPrice.setHint(getResources().getString(R.string.transaction_market_price)+String.format("%.6f",Double.parseDouble(dataBean.getPrice_cny())));
     }
 
     @Override
@@ -173,7 +173,7 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
         String floatPercent = mEtPriceFloatPercent.getText().toString();
         double precentNum = (double)Double.parseDouble(floatPercent);
         double lastPrice = (100+precentNum)/100*Double.parseDouble(mDataBean.getPrice_cny());
-        return String.format("%.2f",lastPrice);
+        return String.format("%.6f",lastPrice);
     }
 
     @Override

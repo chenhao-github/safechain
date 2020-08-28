@@ -5,6 +5,7 @@ import com.code.safechain.ui.login.bean.RegistRsBean;
 import com.code.safechain.ui.login.bean.VerificationRsBean;
 import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.my.bean.GestureRsBean;
+import com.code.safechain.ui.my.bean.SuggestionRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
 import com.code.safechain.ui.transaction.bean.MySaleOrderRsBean;
 import com.code.safechain.ui.transaction.bean.OrderRsBean;
@@ -114,5 +115,9 @@ public interface ApiService {
     //国家代码
     @GET("/api/common")
     Observable<CountryCodeBean> getCountryCode(@QueryMap Map<String, Object> map);
+
+    //意见反馈
+    @GET("/api/opinion/feedback")
+    Observable<SuggestionRsBean> addSuggestion(@QueryMap Map<String, Object> map);
 
 }

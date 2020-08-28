@@ -2,7 +2,6 @@ package com.code.safechain.interfaces;
 
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
-import com.code.safechain.ui.transaction.bean.PayTypeRsBean;
 
 import java.io.File;
 

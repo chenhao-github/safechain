@@ -202,13 +202,17 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
 
     @Override
     public void addPaytypeReturn(PayTypeRsBean payTypeRsBean) {
-        if(payTypeRsBean.getError() == 0)
-            ToastUtil.showShort(payTypeRsBean.getMessage());
+        if(payTypeRsBean.getError() == 0){
+            ToastUtil.showShort("添加成功");
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 
     @Override
     public void uploadWechatIconReturn(UploadIconRsBean uploadIconRsBean) {
         if(uploadIconRsBean.getError() == 0){
+            ToastUtil.showShort("上传成功!");
             mWexinIcon = uploadIconRsBean.getResult().getImg_url();//获得微信支付二维码
             Glide.with(this).load(mWexinIcon).into(mImgWechatIcon);
         }
@@ -217,6 +221,7 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
     @Override
     public void uploadAlipayIconReturn(UploadIconRsBean uploadIconRsBean) {
         if(uploadIconRsBean.getError() == 0){
+            ToastUtil.showShort("上传成功!");
             mAlipayIcon = uploadIconRsBean.getResult().getImg_url();//获得支付宝支付二维码
             Glide.with(this).load(mAlipayIcon).into(mImgAlipayIcon);
         }

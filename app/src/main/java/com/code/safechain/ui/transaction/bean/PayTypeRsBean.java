@@ -1,5 +1,7 @@
 package com.code.safechain.ui.transaction.bean;
 
+import java.util.List;
+
 /**
  * @Auther: hchen
  * @Date: 2020/8/8 0008
@@ -7,15 +9,16 @@ package com.code.safechain.ui.transaction.bean;
  */
 public class PayTypeRsBean {
 
+
     /**
      * error : 0
      * message : success
-     * result : {"lastid":2}
+     * result : []
      */
 
     private int error;
     private String message;
-    private ResultBean result;
+    private List<?> result;
 
     public int getError() {
         return error;
@@ -33,27 +36,11 @@ public class PayTypeRsBean {
         this.message = message;
     }
 
-    public ResultBean getResult() {
+    public List<?> getResult() {
         return result;
     }
 
-    public void setResult(ResultBean result) {
+    public void setResult(List<?> result) {
         this.result = result;
-    }
-
-    public static class ResultBean {
-        /**
-         * lastid : 2
-         */
-
-        private int lastid;
-
-        public int getLastid() {
-            return lastid;
-        }
-
-        public void setLastid(int lastid) {
-            this.lastid = lastid;
-        }
     }
 }

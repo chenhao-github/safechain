@@ -94,9 +94,10 @@ public class ChainDetailActivity extends BaseActivity<WalletChainTranConstract.P
         mDataBean = (WalletHomeRsBean.ResultBean.DataBean) intent.getSerializableExtra(Constants.DATA);
         //设置币的名字
         mTxtTitle.setText(mDataBean.getSymbol());
-        mTxtChainMoney1.setText(mDataBean.getNum());//设置币的数量
-//        mTxtChainMoney2.setText("￥"+String.format("%.5f",Double.parseDouble(mDataBean.getPrice_cny())));
-        mTxtChainMoney2.setText("￥"+mDataBean.getPrice_cny());
+//        mTxtChainMoney1.setText(mDataBean.getNum());//设置币的数量
+        mTxtChainMoney1.setText(String.format("%.6f",Double.parseDouble(mDataBean.getNum())));//设置币的数量
+        mTxtChainMoney2.setText("￥"+String.format("%.6f",Double.parseDouble(mDataBean.getPrice_cny())));
+//        mTxtChainMoney2.setText("￥"+mDataBean.getPrice_cny());
 
         getWalletChainTran(mTxtAll);//获得币交信息和交易信息
     }
@@ -218,7 +219,8 @@ public class ChainDetailActivity extends BaseActivity<WalletChainTranConstract.P
         //转账后，把查询的币的新余额，转为小数点后两位，设置到币身上
 //        mDataBean.setNum(String.format("%.2f",Double.parseDouble(chainTransactionRsBean.getResult().getTotal())));
         mDataBean.setNum(chainTransactionRsBean.getResult().getTotal());
-        mTxtChainMoney1.setText(mDataBean.getNum());//设置币的数量--转账后的新数量
+        mTxtChainMoney1.setText(String.format("%.6f",Double.parseDouble(mDataBean.getNum())));
+//        mTxtChainMoney1.setText(mDataBean.getNum());//设置币的数量--转账后的新数量
         mAdapter.updataListClearAddMore(chainTransactionRsBean.getResult().getData());
     }
 }

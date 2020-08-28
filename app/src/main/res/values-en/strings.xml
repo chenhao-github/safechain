@@ -26,6 +26,7 @@
     <string name="my_paytype_unionpay_username_hint">Name of cardholder</string>
     <string name="my_paytype_unionpay_bankname_hint">Bank card account opening address</string>
     <string name="my_paytype_unionpay_bankno_hint">Bank card number</string>
+    <string name="action_settings">Settings</string>
 
     <string name="my_paytype_upload">upload</string>
     <string name="my_paytype_re_upload">reupload</string>

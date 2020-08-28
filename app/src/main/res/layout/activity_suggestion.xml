@@ -69,6 +69,7 @@
         android:id="@+id/btn_submit"
         android:text="@string/my_suggestion_submit"
         android:textSize="@dimen/dp_16"
+        android:enabled="false"
         android:textColor="@color/colorWhite"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_20"

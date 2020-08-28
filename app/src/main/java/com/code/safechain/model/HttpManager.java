@@ -17,6 +17,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -102,7 +103,9 @@ public class HttpManager {
             Log.i("Request:",String.format("Sending request %s on %s%n%s",request.url(),chain.connection(),request.headers()));
             Response response = chain.proceed(request);
             long endTime = System.nanoTime();
-            Log.i("Received:",String.format("Received response for %s in %.1fms%n%s",response.request().url(),(endTime-startTime)/1e6d,response.headers()));
+            ResponseBody responseBody = response.peekBody(1024 * 1024);
+            Log.i("Received:",String.format("Received response for %s in %.1fms%n%s json:%s",response.request().url(),
+                    (endTime-startTime)/1e6d,response.headers(),responseBody.string()));
             return response;
         }
     }
