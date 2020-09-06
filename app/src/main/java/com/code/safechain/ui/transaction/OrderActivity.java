@@ -41,8 +41,8 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
     TextView txtAll;
     @BindView(R.id.txt_ongoing)
     TextView txtOngoing;
-    @BindView(R.id.txt_failed)
-    TextView txtFailed;
+  /*  @BindView(R.id.txt_failed)
+    TextView txtFailed;*/
     @BindView(R.id.txt_completed)
     TextView txtCompleted;
     //最后点击的导航
@@ -51,6 +51,8 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
     RecyclerView rlvOrder;
     private ArrayList<OrderRsBean.ResultBean> mOrderBeans;
     private OrderAdapter mOrderAdapter;
+    private int type;//操作的类别  0我要买，1我要卖
+    private int mNavigationId;
 
     @Override
     protected int getLayout() {
@@ -64,6 +66,7 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
 
     @Override
     protected void initView() {
+        type = getIntent().getIntExtra("type",0);//获得操作的类别
         lastTv = txtAll;//进入系统默认是 全部
 
         rlvOrder.setLayoutManager(new LinearLayoutManager(this));
@@ -84,12 +87,17 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
         presenter.getOrders(map);
     }
 
-    @OnClick({R.id.img_back, R.id.txt_all, R.id.txt_ongoing, R.id.txt_failed, R.id.txt_completed})
+    @OnClick({R.id.img_back, R.id.txt_all, R.id.txt_ongoing, R.id.txt_completed})
     public void onViewClicked(View view) {
+        mNavigationId = view.getId();
+        getOrdersByNavigation();
+    }
+
+    private void getOrdersByNavigation() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
         map.put("role_type",1);//1买家  2卖家
-        switch (view.getId()) {
+        switch (mNavigationId) {
             case R.id.img_back:
                 finish();
                 break;
@@ -102,13 +110,15 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
 
                 map.put("state",1);//进行中
                 break;
-            case R.id.txt_failed:
-                switchTv(txtFailed);
-                break;
+            /*case R.id.txt_failed:
+                switchTv(txtFailed);///已取消
+
+                map.put("state",2);//已取消
+                break;*/
             case R.id.txt_completed:
                 switchTv(txtCompleted);
 
-                map.put("state",2);//已完成
+                map.put("state",4);//已完成
                 break;
         }
 
@@ -130,8 +140,17 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
     public void onItemClick(BaseAdapter.BaseViewHolder holder) {
         OrderRsBean.ResultBean resultBean = mOrderBeans.get(holder.getAdapterPosition());
         Intent intent = new Intent(this, OrderDetailActivity.class);
-        intent.putExtra("order",resultBean);
-        startActivity(intent);
+        intent.putExtra("order",resultBean);//订单信息
+        intent.putExtra("type",type);
+        startActivityForResult(intent,100);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100 && resultCode == 100){
+            getOrdersByNavigation();//从详情页面回来后，重新查询对应导航的数据，因为数据已经改变
+        }
     }
 
     //得到订单的回传

@@ -1,11 +1,9 @@
 package com.code.safechain.interfaces;
 
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
-import com.code.safechain.ui.transaction.bean.PayTypeRsBean;
+import com.code.safechain.ui.transaction.bean.SetPayTypeRsBean;
 
 import java.io.File;
-
-import okhttp3.ResponseBody;
 
 /**
  * @Auther: hchen
@@ -15,7 +13,7 @@ import okhttp3.ResponseBody;
 public interface MyPaytypeConstract {
 
     interface View extends IBaseView{
-        void addPaytypeReturn(PayTypeRsBean payTypeRsBean);//上传支付方式 回传
+        void addPaytypeReturn(SetPayTypeRsBean payTypeRsBean);//上传支付方式 回传
         void uploadWechatIconReturn(UploadIconRsBean uploadIconRsBean);//上传微信二维码 回传
         void uploadAlipayIconReturn(UploadIconRsBean uploadIconRsBean);//上传支付宝二维码 回传
     }

@@ -109,10 +109,12 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
         //获得设置的语言，把页面中对应的语言打钩
         setSetedLanguage(SpUtils.getInstance(getActivity()).getSelectLanguage());
         //设置用户名
-        if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getPhone()))
-            mTxtName.setText(BaseApp.userBean.getResult().getPhone());
-        if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getEmail()))
-            mTxtName.setText(BaseApp.userBean.getResult().getEmail());
+        if(BaseApp.userBean != null){
+            if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getPhone()))
+                mTxtName.setText(BaseApp.userBean.getResult().getPhone());
+            if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getEmail()))
+                mTxtName.setText(BaseApp.userBean.getResult().getEmail());
+        }
 
         //设置版本号
         String versionName = APKVersionCodeUtils.getVerName(getActivity());
@@ -149,6 +151,10 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
     }
 
     private void setUserInfo() {
+        if(BaseApp.userBean == null){
+            //加载基本信息
+
+        }
         //设置实名认证
         if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getCard_id())){
             txtRealNameRs.setText(BaseApp.getRes().getString(R.string.my_realname_yes));

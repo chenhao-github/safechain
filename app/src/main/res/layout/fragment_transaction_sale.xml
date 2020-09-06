@@ -182,7 +182,7 @@
                 android:id="@+id/txt_collection_method_title"
                 android:text="@string/transaction_collection_method"
                 style="@style/Text2Style" />
-            <!--收款方式行-->
+            <!--收款方式行  默认全部隐藏，通过接口获得支付方式，显示设置的支付方式-->
             <LinearLayout
                 android:id="@+id/ll_collection_method"
                 android:layout_alignParentRight="true"
@@ -196,6 +196,7 @@
                 <CheckBox
                     android:id="@+id/ck_wechat"
                     android:button="@null"
+                    android:visibility="invisible"
                     android:background="@drawable/ck_wechat_selector"
                     android:checked="true"
                     android:layout_width="@dimen/dp_25"
@@ -204,6 +205,7 @@
                 <CheckBox
                     android:id="@+id/ck_alipay"
                     android:button="@null"
+                    android:visibility="invisible"
                     android:background="@drawable/ck_alipay_selector"
                     android:layout_marginLeft="@dimen/dp_13"
                     android:layout_width="@dimen/dp_25"
@@ -212,6 +214,7 @@
                 <CheckBox
                     android:id="@+id/ck_unionpay"
                     android:button="@null"
+                    android:visibility="invisible"
                     android:background="@drawable/ck_unionpay_selector"
                     android:layout_marginLeft="@dimen/dp_13"
                     android:layout_width="@dimen/dp_25"

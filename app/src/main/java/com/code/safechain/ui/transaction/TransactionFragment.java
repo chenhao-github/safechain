@@ -45,6 +45,7 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
     public BuyFragment mBuy;
     private SaleFragment mSale;
     private PopupWindow mPw;
+    private int type = 0;//0表示我要买  1表示我要卖
 
     @Override
     protected int getLayout() {
@@ -73,17 +74,27 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        type = 0;//默认选中 我要买
+    }
+
     @OnClick({R.id.txt_buy, R.id.txt_sale, R.id.img_order, R.id.img_filter})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_buy:
+                type = 0;//选中 我要买
                 dealBuySaleAndFragment(0);
                 break;
             case R.id.txt_sale:
+                type = 1;//选中 我要卖
                 dealBuySaleAndFragment(1);
                 break;
             case R.id.img_order:
-                startActivity(new Intent(getActivity(),OrderActivity.class));
+                Intent intent = new Intent(getActivity(), OrderActivity.class);
+                intent.putExtra("type",type);
+                startActivity(intent);
                 break;
             case R.id.img_filter:
                 showPopupwindow();//弹出筛选popupwindow

@@ -118,10 +118,11 @@
         android:layout_below="@+id/txt_name"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_30">
         <ImageView
             android:id="@+id/img_realname"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_realname"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20" />
@@ -153,17 +154,21 @@
             android:textColor="@color/colorMyRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            style="@style/Line1Style"
+            android:layout_alignLeft="@+id/img_realname"
+            />
     </RelativeLayout>
     <!--手势密码行-->
     <RelativeLayout
         android:id="@+id/rl_gesture"
         android:layout_below="@+id/rl_realname"
-        android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_30">
         <ImageView
             android:id="@+id/img_gesture"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_gesture"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_22" />
@@ -196,16 +201,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+    <!--粗的灰线-->
+    <TextView
+        android:id="@+id/txt_line1"
+        android:layout_below="@+id/rl_gesture"
+        android:background="@color/colorLine1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_5" />
     <!--关于我们行-->
     <RelativeLayout
         android:id="@+id/rl_aboutme"
-        android:layout_below="@+id/rl_gesture"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_below="@+id/txt_line1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_30">
         <ImageView
             android:id="@+id/img_aboutme"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_aboutme"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20" />
@@ -227,17 +239,21 @@
             android:layout_centerVertical="true"
             android:layout_width="@dimen/dp_8"
             android:layout_height="@dimen/dp_14" />
+        <TextView
+            style="@style/Line1Style"
+            android:layout_alignLeft="@+id/img_aboutme"
+            />
     </RelativeLayout>
     <!--意见反馈行-->
     <RelativeLayout
         android:id="@+id/rl_suggestion"
         android:layout_below="@+id/rl_aboutme"
-        android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_30">
         <ImageView
             android:id="@+id/img_suggestion"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_suggestion"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20" />
@@ -260,16 +276,23 @@
             android:layout_width="@dimen/dp_8"
             android:layout_height="@dimen/dp_14" />
     </RelativeLayout>
+    <!--粗的灰线-->
+    <TextView
+        android:id="@+id/txt_line2"
+        android:layout_below="@+id/rl_suggestion"
+        android:background="@color/colorLine1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_5" />
     <!--当前版本行-->
     <RelativeLayout
         android:id="@+id/rl_version"
-        android:layout_below="@+id/rl_suggestion"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_below="@+id/txt_line2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_30">
         <ImageView
             android:id="@+id/img_version"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_version"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20" />
@@ -300,6 +323,10 @@
             android:textColor="@color/colorMyRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            style="@style/Line1Style"
+            android:layout_alignLeft="@+id/img_version"
+            />
     </RelativeLayout>
     <!--检查更新行-->
   <!--  <RelativeLayout
@@ -337,12 +364,12 @@
     <RelativeLayout
         android:id="@+id/rl_paytype"
         android:layout_below="@+id/rl_version"
-        android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_30">
         <ImageView
             android:id="@+id/img_paytype"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_update"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20" />
@@ -365,10 +392,17 @@
             android:layout_width="@dimen/dp_8"
             android:layout_height="@dimen/dp_14" />
     </RelativeLayout>
+    <!--粗的灰线-->
+    <TextView
+        android:id="@+id/txt_line3"
+        android:layout_below="@+id/rl_paytype"
+        android:background="@color/colorLine1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_5" />
     <!--退出登录-->
     <RelativeLayout
         android:id="@+id/rl_loginout"
-        android:layout_below="@+id/rl_paytype"
+        android:layout_below="@+id/txt_line3"
         android:layout_centerInParent="true"
         android:background="@drawable/bg_circle_my_loginout"
         android:layout_marginTop="@dimen/dp_26"

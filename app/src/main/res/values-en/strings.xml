@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Safe Chain</string>
-    <string name="app_name1">--- Safe Chain ---</string>
+    <string name="app_name">Sky Ecochain</string>
+    <string name="app_name1">--- Sky Ecochain ---</string>
     <string name="title_wallet">wallet</string>
     <string name="title_transaction">transaction</string>
     <string name="title_ecotope">ecotope</string>
@@ -8,6 +8,10 @@
     <!--我的模块-->
     <string name="title_my">my</string>
     <string name="my_show_language">Show Language</string>
+    <string name="my_show_language_system">With system language</string>
+    <string name="my_show_language_en">English</string>
+    <string name="my_show_language_zh">Chinese</string>
+
     <string name="my_realname">Real Name</string>
     <string name="my_realname_no">Unauthorized</string>
     <string name="my_realname_yes">Certified</string>
@@ -51,7 +55,7 @@
     <string name="login_account_hint">please input email or phone number</string>
     <string name="login_pwd_hint">password</string>
     <string name="login_pwd_forget">password forget?</string>
-    <string name="login_account_not">not have Safe Chain account?</string>
+    <string name="login_account_not">not have Sky Ecochain account?</string>
     <string name="login_goto_regist">goto regist</string>
     <string name="login_retrieve_password">Retrieve password</string>
     <string name="login_pwd_update">reset password</string>
@@ -64,7 +68,7 @@
     <string name="login_send_code">Send verification code</string>
     <string name="login_regist_email">Regist by email</string>
     <string name="login_email_hint">Please input email</string>
-    <string name="login_account_yes">Already have Safe Chain account</string>
+    <string name="login_account_yes">Already have Sky Ecochain account</string>
     <string name="login_goto_login">Goto login</string>
     <string name="login_next">Next</string>
     <string name="regist_pwd_set">password setting</string>
@@ -168,14 +172,22 @@
     <string name="transaction_order_completed">Completed</string>
     <string name="transaction_trade">Trade</string>
     <string name="transaction_please_pay">Please pay</string>
+    <string name="transaction_please_pay_confirm">Please confirm the payment</string>
     <string name="transaction_time_remaining">Payment time remaining</string>
     <string name="transaction_total_price">Total price</string>
     <string name="transaction_seller_nickname">Seller nickname</string>
     <string name="transaction_payment_method">Payment method</string>
     <string name="transaction_cancel_order">Cancel order</string>
+
     <string name="transaction_to_pay">To pay</string>
+    <string name="transaction_wait_confirm">Waiting for confirm</string>
+
+    <string name="transaction_pay_confirm">confirm the payment</string>
+    <string name="transaction_wait_pay">Waiting for payment</string>
+
     <string name="transaction_paytype_wechat">wechat</string>
     <string name="transaction_paytype_alipay">alipay</string>
     <string name="transaction_paytype_unionpay">unionpay</string>
+    <string name="chain_ctime">create time</string>
 
 </resources>

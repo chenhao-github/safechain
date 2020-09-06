@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -24,8 +23,7 @@ import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.MyPaytypeConstract;
 import com.code.safechain.presenter.MyPayTypePresenter;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
-import com.code.safechain.ui.transaction.bean.PayTypeRsBean;
-import com.code.safechain.utils.DeviceIdFactory;
+import com.code.safechain.ui.transaction.bean.SetPayTypeRsBean;
 import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
@@ -33,15 +31,9 @@ import com.code.safechain.utils.ToastUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 
 public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> implements MyPaytypeConstract.View {
 
@@ -201,11 +193,13 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
     }
 
     @Override
-    public void addPaytypeReturn(PayTypeRsBean payTypeRsBean) {
+    public void addPaytypeReturn(SetPayTypeRsBean payTypeRsBean) {
         if(payTypeRsBean.getError() == 0){
             ToastUtil.showShort("添加成功");
             setResult(RESULT_OK);
             finish();
+        }else {
+            ToastUtil.showShort(payTypeRsBean.getMessage());
         }
     }
 

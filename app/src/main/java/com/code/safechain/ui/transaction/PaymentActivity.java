@@ -15,19 +15,30 @@ import com.code.safechain.R;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.TransactionBuyConstract;
+import com.code.safechain.model.HttpManager;
 import com.code.safechain.presenter.TransactionBuyPresenter;
+import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.transaction.adapter.PayTypeAdapter;
 import com.code.safechain.ui.transaction.bean.OthersSaleOrderRsBean;
 import com.code.safechain.ui.transaction.bean.TransactionBuyRsBean;
+import com.code.safechain.ui.transaction.bean.UpdateOrderRsBean;
+import com.code.safechain.utils.RxUtils;
+import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 public class PaymentActivity extends BaseActivity<TransactionBuyConstract.Presenter> implements TransactionBuyConstract.View {
 
@@ -69,6 +80,8 @@ public class PaymentActivity extends BaseActivity<TransactionBuyConstract.Presen
     //12分钟换算成毫秒
     private int timeStemp = 720000;
     private CountDownTimer timer;
+    private String mOrder_no;
+    private String mToken;
 
     @Override
     protected int getLayout() {
@@ -82,19 +95,21 @@ public class PaymentActivity extends BaseActivity<TransactionBuyConstract.Presen
 
     @Override
     protected void initView() {
+        mToken = SpUtils.getInstance(this).getString(Constants.TOKEN);
         //买的卖单信息
         mSaleOrder = (OthersSaleOrderRsBean.ResultBean) getIntent().getSerializableExtra(Constants.DATA);
         mMap = (HashMap<String, Object>) getIntent().getSerializableExtra("map");//下单pw 获得数据
+        mOrder_no = getIntent().getStringExtra("order_no");
         getCountDownTime();//开始倒计时
         //赋值
-        mTxtMoney.setText("￥ "+(float)mMap.get("total"));//设置应付款
+        mTxtMoney.setText("￥ "+mMap.get("total"));//设置应付款
         mTxtPayee.setText(mSaleOrder.getUser_name());//设置收款人
         //获得所有支付方式
         mPays = mSaleOrder.getPays();
         //获取选择的支付方式
         getChoosePayType();
         //默认显示第一个支付方式的支付图片或银联信息
-        if(mPays != null)
+        if(mPays != null && mPays.size()>0)
             switchPaytype(mPays.get(0));
 
         //给支付方式 spanner适配支付方式
@@ -228,16 +243,55 @@ public class PaymentActivity extends BaseActivity<TransactionBuyConstract.Presen
 
             case R.id.btn_successful_payment:
                 //我要买，买币下单
-                buyChain();
+                updatePaytype();
                 break;
         }
     }
 
-    private void buyChain() {
-        mMap.put("pay_type",mPayType);
+    private void updatePaytype() {
+        //提交
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token", mToken);
+        map.put("role_type",1);
+//        map.put("order_no",Long.parseLong(mOrder_no));
+        map.put("order_no",mOrder_no);
+        map.put("state", 3);//3 已付款
+//        map.put("type", 1);//1 更改支付方式
+        if(mPayType == 0){
+            ToastUtil.showShort("没有支付方式，无法提交!");
+            return;
+        }
+        map.put("pay_type",mPayType);
         //加密
-        String json = SystemUtils.getJson(mMap);
-        presenter.buyChain(json);
+        String json = SystemUtils.getJson(map);
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),json);
+
+        HttpManager.getInstance().getApiServer().updatePaytypeOfOrder(body)
+                .compose(RxUtils.<UpdateOrderRsBean>changeScheduler())
+                .subscribe(new Observer<UpdateOrderRsBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(UpdateOrderRsBean updateOrderRsBean) {
+                        if(updateOrderRsBean.getError() == 0){
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        String m = "";
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

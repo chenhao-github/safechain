@@ -6,7 +6,7 @@ import com.code.safechain.base.BasePresenter;
 import com.code.safechain.interfaces.MyPaytypeConstract;
 import com.code.safechain.model.HttpManager;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
-import com.code.safechain.ui.transaction.bean.PayTypeRsBean;
+import com.code.safechain.ui.transaction.bean.SetPayTypeRsBean;
 import com.code.safechain.utils.RxUtils;
 
 import java.io.File;
@@ -31,15 +31,15 @@ public class MyPayTypePresenter extends BasePresenter<MyPaytypeConstract.View> i
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),json);
 
         HttpManager.getInstance().getApiServer().addPaytype(body)
-            .compose(RxUtils.<PayTypeRsBean>changeScheduler())
-            .subscribe(new Observer<PayTypeRsBean>() {
+            .compose(RxUtils.<SetPayTypeRsBean>changeScheduler())
+            .subscribe(new Observer<SetPayTypeRsBean>() {
                 @Override
                 public void onSubscribe(Disposable d) {
                     mDisposable=d;
                 }
 
                 @Override
-                public void onNext(PayTypeRsBean payTypeRsBean) {
+                public void onNext(SetPayTypeRsBean payTypeRsBean) {
                     mView.addPaytypeReturn(payTypeRsBean);
                 }
 

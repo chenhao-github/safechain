@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.code.safechain.R;
@@ -45,8 +46,12 @@ public class RealNameActivity extends BaseActivity<RealNameConstract.Presenter>
     EditText mEtRealname;
     @BindView(R.id.et_identity)
     EditText mEtIdentity;
+    @BindView(R.id.rl_identity_front)
+    RelativeLayout mFront;
     @BindView(R.id.img_camera_front)
     ImageView mImgCameraFront;
+    @BindView(R.id.rl_identity_back)
+    RelativeLayout mBack;
     @BindView(R.id.img_camera_back)
     ImageView mImgCameraBack;
     @BindView(R.id.btn_confirm)
@@ -155,9 +160,11 @@ public class RealNameActivity extends BaseActivity<RealNameConstract.Presenter>
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {//正面的返回
             mImgCameraFront.setImageBitmap(BitmapFactory.decodeFile(mFile.getPath()));//使用图片
+            mFront.setBackground(null);//去掉背景
             presenter.uploadCardZIcon(mToken,mFile);
         }else if(requestCode == 200 && resultCode == RESULT_OK){//反面的返回
             mImgCameraBack.setImageBitmap(BitmapFactory.decodeFile(mFile.getPath()));//使用图片
+            mBack.setBackground(null);//去掉背景
             presenter.uploadCardBIcon(mToken,mFile);
         }
     }

@@ -46,6 +46,15 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_18"
             android:src="@mipmap/icon_my_language_system" />
+        <TextView
+            android:layout_toRightOf="@+id/img_language_system"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:text="@string/my_show_language_system"
+            android:textSize="15sp"
+            android:textColor="@color/colorMyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/img_system_checked0"
             android:layout_width="@dimen/dp_18"
@@ -73,6 +82,15 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_18"
             android:src="@mipmap/icon_my_language_en" />
+        <TextView
+            android:layout_toRightOf="@+id/img_language_en"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:text="@string/my_show_language_en"
+            android:textSize="15sp"
+            android:textColor="@color/colorMyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/img_system_checked1"
             android:layout_width="@dimen/dp_18"
@@ -99,6 +117,15 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_18"
             android:src="@mipmap/icon_my_language_zh" />
+        <TextView
+            android:layout_toRightOf="@+id/img_language_zh"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:text="@string/my_show_language_zh"
+            android:textSize="15sp"
+            android:textColor="@color/colorMyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/img_system_checked2"
             android:layout_width="@dimen/dp_18"

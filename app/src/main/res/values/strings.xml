@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Safe Chain</string>
-    <string name="app_name1">--- Safe Chain ---</string>
+    <!--sky ecochain  Sky Ecochain-->
+    <string name="app_name">Sky Ecochain</string>
+    <string name="app_name1">--- Sky Ecochain ---</string>
     <string name="title_wallet">钱包</string>
     <string name="title_transaction">交易</string>
     <string name="title_ecotope">生态</string>
@@ -8,6 +9,10 @@
     <!--我的模块-->
     <string name="title_my">我的</string>
     <string name="my_show_language">显示语言</string>
+    <string name="my_show_language_system">随系统语言</string>
+    <string name="my_show_language_en">英文</string>
+    <string name="my_show_language_zh">中文</string>
+
     <string name="my_realname">实名认证</string>
     <string name="my_realname_no">未认证</string>
     <string name="my_realname_yes">已认证</string>
@@ -51,7 +56,7 @@
     <string name="login_account_hint">请输入邮箱或手机号码</string>
     <string name="login_pwd_hint">密码</string>
     <string name="login_pwd_forget">忘记密码?</string>
-    <string name="login_account_not">还没有Safe Chain账号?</string>
+    <string name="login_account_not">还没有Sky Ecochain账号?</string>
     <string name="login_goto_regist">去注册</string>
     <string name="login_retrieve_password">找回密码</string>
     <string name="login_pwd_update">重置密码</string>
@@ -64,7 +69,7 @@
     <string name="login_send_code">发送验证码</string>
     <string name="login_regist_email">邮箱注册</string>
     <string name="login_email_hint">请输入邮箱</string>
-    <string name="login_account_yes">已有Safe Chain账号</string>
+    <string name="login_account_yes">已有Sky Ecochain账号</string>
     <string name="login_goto_login">去登陆</string>
     <string name="login_next">下一步</string>
     <string name="regist_pwd_set">设置密码</string>
@@ -169,15 +174,23 @@
     <string name="transaction_order_completed">已完成</string>
     <string name="transaction_trade">交易额</string>
     <string name="transaction_please_pay">请付款</string>
+    <string name="transaction_please_pay_confirm">请确认收款</string>
     <string name="transaction_time_remaining">付款剩余时间</string>
     <string name="transaction_total_price">总价</string>
     <string name="transaction_seller_nickname">卖家昵称</string>
     <string name="transaction_payment_method">收款方式</string>
     <string name="transaction_cancel_order">取消订单</string>
+
     <string name="transaction_to_pay">去付款</string>
+    <string name="transaction_wait_confirm">等待卖家确认</string>
+
+    <string name="transaction_pay_confirm">确认收款</string>
+    <string name="transaction_wait_pay">等待买家付款</string>
+
     <string name="transaction_paytype_wechat">微信</string>
     <string name="transaction_paytype_alipay">支付宝</string>
     <string name="transaction_paytype_unionpay">银联</string>
+    <string name="chain_ctime">下单时间</string>
 
 
 

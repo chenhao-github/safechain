@@ -7,11 +7,13 @@ import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.my.bean.SuggestionRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
+import com.code.safechain.ui.transaction.bean.GetPayTypeRsBean;
 import com.code.safechain.ui.transaction.bean.MySaleOrderRsBean;
 import com.code.safechain.ui.transaction.bean.OrderRsBean;
-import com.code.safechain.ui.transaction.bean.PayTypeRsBean;
+import com.code.safechain.ui.transaction.bean.SetPayTypeRsBean;
 import com.code.safechain.ui.transaction.bean.OthersSaleOrderRsBean;
 import com.code.safechain.ui.transaction.bean.TransactionBuyRsBean;
+import com.code.safechain.ui.transaction.bean.UpdateOrderRsBean;
 import com.code.safechain.ui.wallet.bean.AddAddressRsBean;
 import com.code.safechain.ui.wallet.bean.ChainInfoRsBean;
 import com.code.safechain.ui.wallet.bean.ChainTransactionRsBean;
@@ -46,6 +48,10 @@ public interface ApiService {
     //修改用户信息
     @PUT("/api/user")
     Observable<GestureRsBean> updateUser(@Body RequestBody requestBody);
+
+    //修改订单的支付方式
+    @PUT("/api/order")
+    Observable<UpdateOrderRsBean>  updatePaytypeOfOrder(@Body RequestBody requestBody);
 
     //获得用户信息
     @GET("/api/user")
@@ -102,7 +108,7 @@ public interface ApiService {
 
     //添加支付方式
     @POST("/api/common")
-    Observable<PayTypeRsBean> addPaytype(@Body RequestBody requestBody);//添加钱包地址
+    Observable<SetPayTypeRsBean> addPaytype(@Body RequestBody requestBody);//添加支付方式
 
     //我要卖
     @POST("/api/otc")
@@ -115,6 +121,10 @@ public interface ApiService {
     //国家代码
     @GET("/api/common")
     Observable<CountryCodeBean> getCountryCode(@QueryMap Map<String, Object> map);
+
+    //获取支付方式
+    @GET("/api/common")
+    Observable<GetPayTypeRsBean> getPaytype(@QueryMap Map<String, Object> map);//添加支付方式
 
     //意见反馈
     @GET("/api/opinion/feedback")

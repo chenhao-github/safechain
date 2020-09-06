@@ -63,26 +63,29 @@
         android:paddingLeft="@dimen/dp_16"
         android:layout_width="@dimen/dp_320"
         android:layout_height="@dimen/dp_40" />
-    <!--身份证正面-->
+    <!--身份证正面
+    android:background="@drawable/bg_my_identity"
+    -->
     <RelativeLayout
         android:id="@+id/rl_identity_front"
         android:layout_below="@+id/et_identity"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/bg_my_identity"
+        android:background="@mipmap/front"
         android:layout_width="@dimen/dp_320"
         android:layout_height="@dimen/dp_153">
         <ImageView
             android:id="@+id/img_camera_front"
-            android:src="@mipmap/ic_camera"
-            android:layout_marginTop="@dimen/dp_5"
+            android:scaleType="fitXY"
+            android:layout_margin="@dimen/dp_5"
             android:layout_centerHorizontal="true"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100" />
+            android:background="@drawable/bg_my_identity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
         <TextView
             android:id="@+id/txt_front_show"
-            android:layout_below="@+id/img_camera_front"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_5"
             android:layout_centerHorizontal="true"
             android:text="@string/my_front_hint"
             android:textSize="@dimen/dp_16"
@@ -96,22 +99,23 @@
         android:layout_below="@+id/rl_identity_front"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/bg_my_identity"
+        android:background="@mipmap/back"
         android:layout_width="@dimen/dp_320"
         android:layout_height="@dimen/dp_153">
         <ImageView
             android:id="@+id/img_camera_back"
-            android:src="@mipmap/ic_camera"
-            android:layout_marginTop="@dimen/dp_5"
+            android:scaleType="fitXY"
+            android:layout_margin="@dimen/dp_5"
+            android:background="@drawable/bg_my_identity"
             android:layout_centerHorizontal="true"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <TextView
             android:id="@+id/txt_back_show"
-            android:layout_below="@+id/img_camera_back"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_5"
             android:layout_centerHorizontal="true"
-            android:text="@string/my_front_hint"
+            android:text="@string/my_back_hint"
             android:textSize="@dimen/dp_16"
             android:textColor="@color/colorIdentity"
             android:layout_width="wrap_content"

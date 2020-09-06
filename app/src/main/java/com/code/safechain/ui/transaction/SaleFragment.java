@@ -1,10 +1,13 @@
 package com.code.safechain.ui.transaction;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,22 +18,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.code.safechain.R;
+import com.code.safechain.app.BaseApp;
 import com.code.safechain.base.BaseFragment;
 import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.MySaleChainConstract;
 import com.code.safechain.interfaces.TransactionConstract;
+import com.code.safechain.model.HttpManager;
 import com.code.safechain.presenter.MySaleChainPresenter;
 import com.code.safechain.presenter.TransactionPresenter;
+import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.transaction.adapter.MySaleChainAdapter;
 import com.code.safechain.ui.transaction.adapter.PayTypeAdapter;
+import com.code.safechain.ui.transaction.bean.GetPayTypeRsBean;
 import com.code.safechain.ui.transaction.bean.MySaleOrderRsBean;
 import com.code.safechain.ui.transaction.bean.OthersSaleOrderRsBean;
 import com.code.safechain.ui.wallet.bean.WalletHomeRsBean;
 import com.code.safechain.utils.DeviceIdFactory;
+import com.code.safechain.utils.RxUtils;
 import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +49,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.ResponseBody;
 
 /**
  * @Auther: hchen
@@ -111,6 +123,7 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
     private ArrayList<WalletHomeRsBean.ResultBean.DataBean> mDataBeans;
     private MySaleChainAdapter mAdapter;
     private WalletHomeRsBean.ResultBean.DataBean mDataBean;
+    private boolean mHavePaytype;//是否有支付方式
 
     //设置选中的币的信息
     private void setDataOfChain(WalletHomeRsBean.ResultBean.DataBean dataBean) {
@@ -185,9 +198,87 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
         map = SystemUtils.getMap(map);
 
         presenter.getWalletHome(map);//获取我的币资产
+
+
     }
 
-    @OnClick({R.id.btn_submit, R.id.btn_floating_price, R.id.btn_fixed_price, R.id.txt_total})
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            //获取支付方式
+            getPaytype();
+        }
+    }
+
+    //获取支付方式
+    private void getPaytype() {
+        //封装数据
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token", SpUtils.getInstance(getActivity()).getString(Constants.TOKEN));
+        map.put("type", 3);
+        map = SystemUtils.getMap(map);
+        HttpManager.getInstance().getApiServer().getPaytype(map)
+                .compose(RxUtils.<GetPayTypeRsBean>changeScheduler())
+                .subscribe(new Observer<GetPayTypeRsBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(GetPayTypeRsBean getPayTypeRsBean) {
+                        //设置支付方式
+
+                        setPaytype(getPayTypeRsBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        String s = e.getMessage();
+                        String a = "";
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    //设置支付方式
+    private void setPaytype(GetPayTypeRsBean getPayTypeRsBean) {
+//        mHavePaytype = false;
+        List<GetPayTypeRsBean.ResultBean.PaysBean> pays = getPayTypeRsBean.getResult().getPays();
+        if(pays == null || pays.size() == 0){
+            ToastUtil.showShort("没有添加支付方式，请添加！");
+        }else {
+            for (int i = 0; i < pays.size(); i++) {
+                GetPayTypeRsBean.ResultBean.PaysBean paysBean = pays.get(i);
+                if(paysBean.getType() == 1){//微信支付
+                    if(!TextUtils.isEmpty(paysBean.getImg_url())){
+                        mHavePaytype = true;
+                        mCkWechat.setVisibility(View.VISIBLE);
+                    }
+                }else if(paysBean.getType() == 2){//支付宝支付
+                    if(!TextUtils.isEmpty(paysBean.getImg_url())){
+                        mHavePaytype = true;
+                        mCkAlipay.setVisibility(View.VISIBLE);
+                    }
+                }else if(paysBean.getType() == 4){//银联支付
+                    if(!TextUtils.isEmpty(paysBean.getBank_no())){
+                        mHavePaytype = true;
+                        mCkUnionpay.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+            if(!mHavePaytype){
+                ToastUtil.showShort("请完善支付方式！");
+            }
+        }
+    }
+
+    @OnClick({R.id.btn_submit, R.id.btn_floating_price, R.id.btn_fixed_price, R.id.txt_total, R.id.rl_mini_trade
+        , R.id.rl_maxi_trade})
     public void onViewClicked(View v) {
         if(v.getId() == R.id.btn_submit){
             submit();//提交
@@ -229,11 +320,27 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
 
         }else if(v.getId() == R.id.txt_total){
             mTxtTotalShipment.setText(String.format("%.2f",Double.parseDouble(mDataBean.getNum())));
+        }else if(v.getId() == R.id.rl_mini_trade){
+            //最小值获得焦点
+            mTxtMiniTrade.requestFocus();
+            //弹出软键盘
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(mTxtMiniTrade, 0);
+        }else if(v.getId() == R.id.rl_maxi_trade){
+            //最大值获得焦点
+            mTxtMaxiTrade.requestFocus();
+            //弹出软键盘
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(mTxtMaxiTrade, 0);
         }
     }
 
     private void submit() {
-        DecimalFormat df = new DecimalFormat("######0.00");
+        if(!mHavePaytype){
+            ToastUtil.showShort("请完善支付方式！");
+            return;
+        }
+//        DecimalFormat df = new DecimalFormat("######0.00");
         //封装数据到Map
         HashMap<String, Object> map = new HashMap<>();
         map.put("token", SpUtils.getInstance(getActivity()).getString(Constants.TOKEN));

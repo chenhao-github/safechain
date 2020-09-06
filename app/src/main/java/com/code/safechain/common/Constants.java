@@ -60,7 +60,7 @@ public interface Constants {
     String PAY_UNIONPAY_BANK_NAME="pay_unionpay_bank_name";//银联 银行名
     String PAY_UNIONPAY_BANK_ADDRESS="pay_unionpay_bank_address";//银联 银行地址
     //订单状态
-    String[] ORDERSTATE = {"无","【进行中】","【已完成】"};
+    String[] ORDERSTATE = {"无","【进行中】","【已取消】","【已付款】","【已完成】"};
 
     //倒计时 xs后重新发送
     String RESEND = BaseApp.baseApp.getResources().getString(R.string.regist_phone_resend);

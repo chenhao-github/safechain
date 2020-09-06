@@ -18,12 +18,17 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.code.safechain.R;
+import com.code.safechain.app.BaseApp;
 import com.code.safechain.base.BaseFragment;
 import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.TranSaleOrderConstract;
+import com.code.safechain.model.HttpManager;
 import com.code.safechain.presenter.TranSaleOrderPresenter;
+import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.transaction.adapter.BuyChainSaleAdapter;
 import com.code.safechain.ui.transaction.bean.OthersSaleOrderRsBean;
+import com.code.safechain.ui.transaction.bean.TransactionBuyRsBean;
+import com.code.safechain.utils.RxUtils;
 import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
@@ -35,6 +40,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @Auther: hchen
@@ -115,6 +124,8 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
 
         map = SystemUtils.getMap(map);
         presenter.getSaleOrder(map);
+
+        type_buy = TYPE_MONEY;//每次进入页面，默认都是 按金额购买
     }
 
     //获取卖单的返回
@@ -145,13 +156,13 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
 //                mTimer.cancel();//关闭定时器
                 break;*/
             case R.id.btn_place_order://下单
-                toPaymentActivity();
+                createOrder();
                 break;
         }
 
     }
 
-    private void toPaymentActivity() {
+    private void createOrder() {
         String s = mInput.getText().toString();
         if(TextUtils.isEmpty(s)){
             ToastUtil.showShort("输入不能为空!");
@@ -179,7 +190,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
             totalPay = Float.valueOf(input.stripTrailingZeros().toPlainString());//
             BigDecimal num = input.divide(a1,2, BigDecimal.ROUND_HALF_UP);//计算交易数量
             mNumber.setText(num.stripTrailingZeros().toPlainString());//设置数量 去除末尾的0
-            mActualPayment.setText(s.toString());//设置实付款
+            mActualPayment.setText("￥"+s.toString());//设置实付款
         }else if(type_buy == TYPE_NUMBER) {//如果按数量购买
             float input = Float.parseFloat(s.toString());
             if(input<1 || input >Float.parseFloat(mSaleOrder.getNum())){
@@ -192,26 +203,74 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
             BigDecimal b1 = new BigDecimal(s.toString());//数量
             BigDecimal payMoney = a1.multiply(b1);//应付金额
             totalPay = Float.valueOf(payMoney.stripTrailingZeros().toPlainString());
-            mActualPayment.setText(payMoney.stripTrailingZeros().toPlainString());
+//            mActualPayment.setText(payMoney.stripTrailingZeros().toPlainString());
+            mActualPayment.setText("￥"+String.format("%.6f", Double.parseDouble(payMoney.stripTrailingZeros().toPlainString())));
         }
 
-        HashMap<String, Object> map = new HashMap<>();
+        final HashMap<String, Object> map = new HashMap<>();
         map.put("token", SpUtils.getInstance(getActivity()).getString(Constants.TOKEN));
         map.put("store_id", mSaleOrder.getStore_id());
-        map.put("num", mSaleOrder.getNum());
-        map.put("price", mSaleOrder.getPrice());
-        map.put("total", totalPay);
+//        map.put("num", mSaleOrder.getNum());
+        if(mSaleOrder.getNum().indexOf(".") != -1){
+            map.put("num", Integer.parseInt(mSaleOrder.getNum().substring(0,mSaleOrder.getNum().indexOf("."))));
+        }else {
+            map.put("num", Integer.parseInt(mSaleOrder.getNum()));
+        }
+//        map.put("price", mSaleOrder.getPrice());
+        map.put("price", String.format("%.6f", mSaleOrder.getPrice()));
+        map.put("total", String.format("%.6f", Double.parseDouble(totalPay+"")));
+        //加密
+        String json = SystemUtils.getJson(map);
+        //下单
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),json);
+        //
+        HttpManager.getInstance().getApiServer().buyChain(body)
+                .compose(RxUtils.<TransactionBuyRsBean>changeScheduler())
+                .subscribe(new Observer<TransactionBuyRsBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(TransactionBuyRsBean transactionBuyRsBean) {
+                       if(transactionBuyRsBean.getError() == 0){
+                            ToastUtil.showShort("下单成功");
+                            //下单成功后，跳转到付款页面
+                            //订单号
+                            String order_no = transactionBuyRsBean.getResult().getOrder_no();
+                            toPaymentActivity(map,order_no);
+                        }else {
+                            ToastUtil.showShort("下单失败");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+//                        String str = e.getMessage();
+//                        String s = "";
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
+
+    //跳转到下单后的付款页面
+    private void toPaymentActivity(HashMap<String, Object> map, String order_no) {
         //得到点击的数据，和 付款金额 传递到下单页面
         Intent intent = new Intent(getActivity(), PaymentActivity.class);
         intent.putExtra(Constants.DATA, mSaleOrder);//把点击的数据传递到 下单页面
         intent.putExtra("map",map);//把封装的数据传入到下一个页面
+        intent.putExtra("order_no",order_no);//把订单号传入到下一个页面
 
         mPw.dismiss();//关闭pw
         SystemUtils.setBackgroundAlpha(getActivity().getWindow(),Constants.NO_SHADOW);//去除阴影
         //跳转到付款页面，买后，数量减少，回到本页面中重新请求新数据
         startActivityForResult(intent,100);
-
     }
 
     //点击 购买按钮的回调,显示购买popupwindow
@@ -232,6 +291,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
             public void onDismiss() {
                 //设置背景不透明
                 SystemUtils.setBackgroundAlpha(getActivity().getWindow(), Constants.NO_SHADOW);
+                type_buy = TYPE_MONEY;//关闭pw，恢复默认 按金额购买，下次进入 默认按金额购买
 //                mTimer.cancel();//关闭倒计时
 //                n = 30;//把倒计时重置到30秒
             }
@@ -260,6 +320,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
         TextView chainName = pwLayout.findViewById(R.id.txt_chain_name);//币的名字
         TextView unitPrice = pwLayout.findViewById(R.id.txt_unit_price);//单价
         ImageView chainIcon = pwLayout.findViewById(R.id.img_chain_icon);//币的图标
+        TextView buyAll = pwLayout.findViewById(R.id.txt_input_end);//全部买入
         //赋值
         chainName.setText(mSaleOrder.getToken_name());
         unitPrice.setText(String.format("%.6f",mSaleOrder.getPrice()));
@@ -279,7 +340,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
         //自动取消
 //        mAutoCancel = pwLayout.findViewById(R.id.btn_auto_cancel);
         //赋值
-        mQuota.setText(mSaleOrder.getMin() + " - " + mSaleOrder.getMax());//限额赋值
+        mQuota.setText("￥"+mSaleOrder.getMin() + " - " + "￥"+ mSaleOrder.getMax());//限额赋值
         //下单
         mPlaceOrder = pwLayout.findViewById(R.id.btn_place_order);
         //添加监听
@@ -288,7 +349,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
 //        mAutoCancel.setOnClickListener(this);//取消按钮
         mPlaceOrder.setOnClickListener(this);//下单
         //输入框添加值改变事件
-       mInput.addTextChangedListener(new TextWatcher() {
+        mInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -321,7 +382,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
                     //在divide方法中传递第二个参数，定义精确到小数点后几位，否则在不整除的情况下，结果是无限循环小数时，就会抛出以上异常。
                     BigDecimal num = input.divide(a1,2, BigDecimal.ROUND_HALF_UP);//计算交易数量
                     mNumber.setText(num.stripTrailingZeros().toPlainString());//设置数量 去除末尾的0
-                    mActualPayment.setText(s.toString());//设置实付款
+                    mActualPayment.setText("￥"+s.toString());//设置实付款
                 }else if(type_buy == TYPE_NUMBER) {//如果按数量购买
                     float input = Float.parseFloat(s.toString());
                     if(input<1 || input >Float.parseFloat(mSaleOrder.getNum())){
@@ -333,13 +394,24 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
                     BigDecimal a1 = new BigDecimal(Double.toString(mSaleOrder.getPrice()));//单价
                     BigDecimal b1 = new BigDecimal(s.toString());//输入的币数量
                     BigDecimal payMoney = a1.multiply(b1);//应付金额
-                    mActualPayment.setText(payMoney.stripTrailingZeros().toPlainString());
+//                    mActualPayment.setText(payMoney.stripTrailingZeros().toPlainString());
+                    mActualPayment.setText("￥"+String.format("%.6f", Double.parseDouble(payMoney.stripTrailingZeros().toPlainString())));
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+        buyAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(type_buy == TYPE_MONEY) {//如果按金额购买
+                    mInput.setText(mSaleOrder.getMax()+"");
+                }else if(type_buy == TYPE_NUMBER) {//如果按数量购买
+                    mInput.setText(String.format("%.2f",Double.parseDouble(mSaleOrder.getNum())));
+                }
             }
         });
     }
@@ -354,12 +426,12 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
             mBuyMoney.setTextColor(getResources().getColor(R.color.colorTransfer));
             mBuyNumber.setTextColor(getResources().getColor(R.color.colorTitle));
             //修改限额的值 为min--max
-            mQuota.setText(mSaleOrder.getMin() + " - " + mSaleOrder.getMax());//限额赋值
+            mQuota.setText("￥"+mSaleOrder.getMin() + " - " + "￥" + mSaleOrder.getMax());//限额赋值
         }else {
             mBuyMoney.setTextColor(getResources().getColor(R.color.colorTitle));
             mBuyNumber.setTextColor(getResources().getColor(R.color.colorTransfer));
             //修改限额的值为 1-数量
-            mQuota.setText("1 - " + mSaleOrder.getNum());//限额赋值
+            mQuota.setText("1 - " + String.format("%.2f",Double.parseDouble(mSaleOrder.getNum())));//限额赋值
         }
         setInputHint(type);//修改购买弹出框中的提示信息
     }

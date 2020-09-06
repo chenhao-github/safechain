@@ -35,16 +35,20 @@ public class OrderAdapter extends BaseAdapter<OrderRsBean.ResultBean> {
         TextView status = (TextView) holder.getViewById(R.id.txt_status);
         TextView number = (TextView) holder.getViewById(R.id.txt_number);
         TextView price = (TextView) holder.getViewById(R.id.txt_unit_price);
+        TextView ctime = (TextView) holder.getViewById(R.id.txt_ctime);
         TextView orderNumber = (TextView) holder.getViewById(R.id.txt_order_number);
         TextView trade = (TextView) holder.getViewById(R.id.txt_trade);
 
         chainName.setText("");
         status.setText(Constants.ORDERSTATE[data.getState()]);
-        if(data.getState() == 2){//已完成 设置为绿色
+        if(data.getState() == 4){//已完成 设置为绿色
             status.setTextColor(BaseApp.getRes().getColor(R.color.colorGreenInto));
+        }else {
+            status.setTextColor(BaseApp.getRes().getColor(R.color.colorTitle));
         }
-        number.setText(data.getNum());
+        number.setText(String.format("%.6f", Double.parseDouble(data.getNum())));
         price.setText(data.getPrice());
+        ctime.setText(data.getCtime());
         orderNumber.setText(data.getOrder_no());
         trade.setText("￥ "+data.getTotal());
 

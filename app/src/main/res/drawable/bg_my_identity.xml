@@ -3,7 +3,7 @@
     android:shape="rectangle"
     android:useLevel="false" >
     <!--//内部填充颜色-->
-    <solid android:color="@color/colorWhite" />
+    <!--<solid android:color="@color/colorWhite" />-->
 <!--自定义的图形大小-->
     <!--<size
         android:height="@dimen/dp_22"

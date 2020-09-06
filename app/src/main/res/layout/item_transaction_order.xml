@@ -28,7 +28,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_alignTop="@+id/txt_purchase"
-        android:text="【已取消】"
         android:textSize="@dimen/dp_13"
         android:textColor="@color/colorTitle"
         android:layout_width="wrap_content"
@@ -45,7 +44,7 @@
         android:text="43.22HKDT"
         android:layout_toRightOf="@+id/txt_number_title"
         android:layout_alignBottom="@+id/txt_number_title"
-        android:layout_marginLeft="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_46"
         style="@style/Text2StyleOrder" />
     <!--单价 文字-->
     <TextView
@@ -59,14 +58,31 @@
         android:text="￥ 8.45"
         android:layout_toRightOf="@+id/txt_unit_price_title"
         android:layout_alignBottom="@+id/txt_unit_price_title"
-        android:layout_marginLeft="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_44"
         style="@style/Text2StyleOrder" />
+    <!--下单时间 文字-->
+    <TextView
+        android:id="@+id/txt_ctime_title"
+        android:text="@string/chain_ctime"
+        android:layout_below="@+id/txt_unit_price_title"
+        style="@style/Text2StyleOrder" />
+    <!--下单时间 值-->
+    <TextView
+        android:id="@+id/txt_ctime"
+        android:layout_toRightOf="@+id/txt_ctime_title"
+        android:layout_alignBottom="@+id/txt_ctime_title"
+        style="@style/Text2StyleOrder"
+        android:layout_marginLeft="@dimen/dp_18"
+
+        />
     <!--订单号 文字-->
     <TextView
         android:id="@+id/txt_order_number_title"
         android:text="@string/transaction_order_number"
-        android:layout_below="@+id/txt_unit_price_title"
-        style="@style/Text2StyleOrder" />
+        android:layout_below="@+id/txt_ctime_title"
+        style="@style/Text2StyleOrder"
+        android:layout_marginBottom="@dimen/dp_10"
+        />
     <!--订单号 值-->
     <TextView
         android:id="@+id/txt_order_number"
@@ -76,6 +92,7 @@
         style="@style/Text2StyleOrder"
         android:layout_marginLeft="0dp"
         android:layout_alignLeft="@+id/txt_unit_price"
+
         />
     <!--交易额 文字-->
     <TextView

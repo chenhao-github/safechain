@@ -7,7 +7,7 @@ import java.util.List;
  * @Date: 2020/8/8 0008
  * @Description:
  */
-public class PayTypeRsBean {
+public class SetPayTypeRsBean {
 
 
     /**

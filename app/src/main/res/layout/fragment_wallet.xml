@@ -91,7 +91,7 @@
         android:textColor="@color/colorMyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <!--斜杠-->
+    <!--&lt;!&ndash;斜杠&ndash;&gt;
     <TextView
         android:id="@+id/txt_sprit"
         android:layout_toRightOf="@+id/txt_asset"
@@ -101,8 +101,8 @@
         android:textSize="@dimen/dp_20"
         android:textColor="@color/colorMyHeaderBg"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <!--收藏-->
+        android:layout_height="wrap_content" />-->
+   <!-- &lt;!&ndash;收藏&ndash;&gt;
     <TextView
         android:id="@+id/txt_collect"
         android:layout_toRightOf="@+id/txt_sprit"
@@ -112,7 +112,7 @@
         android:textSize="@dimen/dp_15"
         android:textColor="@color/colorIdentity"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_chain"
         android:layout_below="@+id/txt_asset"
