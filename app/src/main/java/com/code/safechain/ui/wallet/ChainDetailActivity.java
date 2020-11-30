@@ -108,8 +108,10 @@ public class ChainDetailActivity extends BaseActivity<WalletChainTranConstract.P
         map.put("token_id",mDataBean.getToken_id());
         if(tv.equals(mTxtInto)){
             map.put("type",1);
+//            map.put("type",6);
         }else if(tv.equals(mTxtOut)){
             map.put("type",2);
+//            map.put("type",1);
         }
 //        else if(tv.equals(mTxtFail)){
 //            map.put("status",3);

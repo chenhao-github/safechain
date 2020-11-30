@@ -143,7 +143,7 @@ public class UpdatePwdActivity extends BaseActivity<UpdateUserInfoConstract.Pres
 //        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
         if("1".equals(mType)){//手机
             map.put("phone",mPhoneNumber);
-            map.put("nation","+86");
+            map.put("nation","86");
             map.put("sms_code",mVeriCode);
         }else if ("2".equals(mType)){//邮箱
             map.put("email",mPhoneNumber);

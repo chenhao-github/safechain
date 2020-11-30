@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Sky Ecochain</string>
+    <string name="app_name">SkyEcochain</string>
     <string name="app_name1">--- Sky Ecochain ---</string>
-    <string name="title_wallet">wallet</string>
+    <string name="title_wallet">property</string>
     <string name="title_transaction">transaction</string>
     <string name="title_ecotope">ecotope</string>
     <string name="title_consult">consult</string>
@@ -14,12 +14,17 @@
 
     <string name="my_realname">Real Name</string>
     <string name="my_realname_no">Unauthorized</string>
+    <string name="my_realname_wait">wait certified</string>
+    <string name="my_realname_disable">disabled</string>
+    <string name="my_realname_reject">rejected</string>
+    <string name="my_realname_cancel">cancel</string>
     <string name="my_realname_yes">Certified</string>
     <string name="my_gesture">Gestures Password</string>
     <string name="my_gesture_set">Has Been Set</string>
     <string name="my_gesture_noset">Is Not Set</string>
     <string name="my_setting_gesture">setting gesture</string>
     <string name="my_check_gesture">check gesture</string>
+    <string name="my_forget_paywd">payword forget?</string>
     <string name="my_aboutme">About Us</string>
     <string name="my_suggestion">Suggestion</string>
     <string name="my_version">Current Version</string>
@@ -28,7 +33,8 @@
     <string name="my_paytype_wechat_hint">Please input wechat</string>
     <string name="my_paytype_alipay_hint">Please input alipay</string>
     <string name="my_paytype_unionpay_username_hint">Name of cardholder</string>
-    <string name="my_paytype_unionpay_bankname_hint">Bank card account opening address</string>
+    <string name="my_paytype_unionpay_bankname_hint">Name of Bank</string>
+    <string name="my_paytype_unionpay_bankaddress_hint">Bank card account opening address</string>
     <string name="my_paytype_unionpay_bankno_hint">Bank card number</string>
     <string name="action_settings">Settings</string>
 
@@ -42,14 +48,16 @@
     <string name="my_upload_confirm">upload confirm</string>
     <!--关于我们-->
     <string name="my_network">network</string>
-    <string name="my_network_url">www.safechain.com</string>
+    <string name="my_network_url">http://www.skyecochain.com/</string>
     <string name="my_forum">forum</string>
-    <string name="my_forum_url">bbs.safechain.com</string>
     <string name="my_microblog">microblog</string>
+    <string name="my_forum_url">https://weibo.com/u/6177204408</string>
     <!--意见反馈-->
     <string name="my_suggestion_hint">please input your suggestion and idea</string>
     <string name="my_phone_hint">please input your phone number</string>
     <string name="my_suggestion_submit">feedback submit</string>
+    <!--在线客服-->
+    <string name="my_onlineservice">online service</string>
     <!--登录-->
     <string name="login_login">login</string>
     <string name="login_account_hint">please input email or phone number</string>
@@ -89,17 +97,25 @@
     <string name="wallet_collect">collect</string>
     <string name="wallet_collection">collection</string>
     <string name="wallet_transfer">transfer</string>
+    <string name="wallet_transfer_success">success</string>
     <string name="wallet_chain_all">all</string>
     <string name="wallet_chain_into">into</string>
     <string name="wallet_chain_out">out</string>
-    <string name="wallet_chain_fail">fail</string>
+    <string name="wallet_otc_buy">OTC Buy</string>
+    <string name="wallet_game_buy">Game consumption</string>
+    <string name="wallet_game_reward">Game Reward</string>
+    <string name="wallet_otc_sale">OTC Sale</string>
+    <string name="wallet_out_charge">Out Charge</string>
+    <string name="wallet_game_withdraw_money">Game Withdraw Money</string>
+
     <string name="collection_hint">Scan QR code,into</string>
     <string name="wallet_address">wallet address</string>
     <string name="wallet_share">share</string>
     <string name="wallet_copy">copy</string>
     <string name="wallet_set_money">setting money</string>
     <string name="wallet_chain_balance">balance：</string>
-    <string name="wallet_input_amount_hint">Please enter the amount</string>
+    <string name="chain_chain_number_title">number：</string>
+    <string name="wallet_input_number_hint">Please enter the number</string>
     <string name="wallet_collection_address">Collection address</string>
     <string name="wallet_input_address_hint">Please enter a valid collection address</string>
     <string name="wallet_miner_fee">Miner fee</string>
@@ -126,6 +142,7 @@
     <string name="chain_quota_title">quota</string>
     <string name="chain_unit_price">unit price</string>
     <string name="chain_purchase">purchase</string>
+    <string name="chain_withdraw">withdraw</string>
     <string name="transaction_money">money</string>
     <string name="transaction_buy_filter_hint">The system will filter the items that contain the target amount for you</string>
     <string name="transaction_mode_of_payment">Mode of payment</string>
@@ -140,8 +157,8 @@
     <string name="transaction_auto_cancel">Automatically cancel after 30s</string>
     <string name="transaction_place_order">Place an order</string>
     <string name="transaction_count_down_title">Payment time remaining</string>
-    <string name="transaction_payment_hint1">Open yourself up</string>
-    <string name="transaction_payment_hint2">wechat，Payment to payee</string>
+    <string name="transaction_payment_hint1">Please Open yourself</string>
+    <string name="transaction_payment_hint2">，Payment to payee</string>
     <string name="transaction_buy_payee">payee</string>
     <string name="transaction_buy_wechat">Wechat</string>
     <string name="transaction_successful_payment">I have paid successfully</string>
@@ -168,14 +185,15 @@
     <string name="transaction_order_number">Order number</string>
     <string name="transaction_order_all">All</string>
     <string name="transaction_order_ongoing">Ongoing</string>
-    <string name="transaction_order_failed">failed</string>
+    <string name="transaction_order_failed">Cancelled</string>
     <string name="transaction_order_completed">Completed</string>
     <string name="transaction_trade">Trade</string>
     <string name="transaction_please_pay">Please pay</string>
     <string name="transaction_please_pay_confirm">Please confirm the payment</string>
     <string name="transaction_time_remaining">Payment time remaining</string>
     <string name="transaction_total_price">Total price</string>
-    <string name="transaction_seller_nickname">Seller nickname</string>
+    <string name="transaction_seller_nickname1">Seller nickname</string>
+    <string name="transaction_seller_nickname2">Buyer nickname</string>
     <string name="transaction_payment_method">Payment method</string>
     <string name="transaction_cancel_order">Cancel order</string>
 

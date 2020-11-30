@@ -25,6 +25,8 @@ public interface Constants {
     String NATION = "nation";
     String ACCOUNT = "account";
     String PASSWORD = "password";
+    String LOGIN_TYPE = "login_type";//登录类别  1手机 2邮箱
+    String LOGIN_TIME = "login_time";//登录时间
     String TOKEN = "token";
     String TOKEN_ID = "token_id";
     String PAYWD = "paywd";
@@ -32,9 +34,14 @@ public interface Constants {
     String[] TRANSACTIONS = {"",
             "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_chain_into)+"】",
             "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_chain_out)+"】",
-            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_chain_fail)+"】"};
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_otc_buy)+"】",
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_game_buy)+"】",
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_game_reward)+"】",
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_otc_sale)+"】",
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_out_charge)+"】",
+            "【"+BaseApp.baseApp.getResources().getString(R.string.wallet_game_withdraw_money)+"】","未知","未知","未知","未知","未知","未知","未知","未知","未知","未知"};
     //转账类型的颜色
-    int[] TRANSACTIONS_COLOR = {R.color.colorGreenInto, R.color.colorBlueOut, R.color.colorRedError};
+    int[] TRANSACTIONS_COLOR = {R.color.colorGreenInto,R.color.colorGreenInto, R.color.colorBlueOut, R.color.colorRedError};
 
     //窗口透明度常量
     float SHADOW = 0.2f;//阴影
@@ -60,11 +67,20 @@ public interface Constants {
     String PAY_UNIONPAY_BANK_NAME="pay_unionpay_bank_name";//银联 银行名
     String PAY_UNIONPAY_BANK_ADDRESS="pay_unionpay_bank_address";//银联 银行地址
     //订单状态
-    String[] ORDERSTATE = {"无","【进行中】","【已取消】","【已付款】","【已完成】"};
+    String[] ORDERSTATE = {"无","【已下单】","【已取消】","【已付款】","【已完成】"};
 
     //倒计时 xs后重新发送
     String RESEND = BaseApp.baseApp.getResources().getString(R.string.regist_phone_resend);
     //发送验证码
     String SENDCODE = BaseApp.baseApp.getResources().getString(R.string.login_send_code);
+
+    //实名认证结果
+    String[] CERTIFIED = {"无",
+            BaseApp.baseApp.getResources().getString(R.string.my_realname_no),
+            BaseApp.baseApp.getResources().getString(R.string.my_realname_wait),
+            BaseApp.baseApp.getResources().getString(R.string.my_realname_disable),
+            BaseApp.baseApp.getResources().getString(R.string.my_realname_reject),
+            BaseApp.baseApp.getResources().getString(R.string.my_realname_cancel),
+            BaseApp.baseApp.getResources().getString(R.string.my_realname_yes)};
 
 }

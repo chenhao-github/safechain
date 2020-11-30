@@ -15,7 +15,7 @@
             android:layout_height="@dimen/dp_18"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_18"
-            android:src="@mipmap/ic_message_new" />
+            android:src="@mipmap/ic_message_no" />
 
         <TextView
             android:id="@+id/txt_title"
@@ -49,12 +49,12 @@
         android:background="@drawable/bg_circle_my_header"
         android:layout_below="@+id/txt_line"
         android:layout_centerInParent="true"
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_width="@dimen/dp_80"
-        android:layout_height="@dimen/dp_80">
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40">
         <ImageView
             android:id="@+id/img_header"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@mipmap/ic_logo_login"
             android:layout_centerInParent="true"
             android:layout_width="@dimen/dp_74"
             android:layout_height="@dimen/dp_74" />
@@ -62,6 +62,7 @@
         <RelativeLayout
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:visibility="invisible"
             android:background="@drawable/bg_circle_my_header_rightbottom"
             android:layout_width="@dimen/dp_18"
             android:layout_height="@dimen/dp_18">
@@ -79,7 +80,7 @@
         android:visibility="invisible"
         android:layout_below="@+id/rl_header"
         android:layout_centerInParent="true"
-        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_7"
         android:textSize="18sp"
         android:textColor="@color/colorMyName"
         android:layout_width="wrap_content"
@@ -88,7 +89,7 @@
     <LinearLayout
         android:id="@+id/ll_regist_login"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_1"
         android:gravity="center"
         android:visibility="invisible"
         android:layout_width="match_parent"
@@ -116,9 +117,9 @@
     <RelativeLayout
         android:id="@+id/rl_realname"
         android:layout_below="@+id/txt_name"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30">
+        android:layout_height="@dimen/dp_39">
         <ImageView
             android:id="@+id/img_realname"
             android:layout_marginLeft="@dimen/dp_20"
@@ -149,7 +150,6 @@
             android:layout_toLeftOf="@+id/img_right1"
             android:layout_marginRight="@dimen/dp_16"
             android:layout_centerVertical="true"
-            android:text="@string/my_realname_no"
             android:textSize="14sp"
             android:textColor="@color/colorMyRight"
             android:layout_width="wrap_content"
@@ -164,7 +164,7 @@
         android:id="@+id/rl_gesture"
         android:layout_below="@+id/rl_realname"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30">
+        android:layout_height="@dimen/dp_39">
         <ImageView
             android:id="@+id/img_gesture"
             android:layout_marginLeft="@dimen/dp_20"
@@ -213,7 +213,7 @@
         android:id="@+id/rl_aboutme"
         android:layout_below="@+id/txt_line1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30">
+        android:layout_height="@dimen/dp_39">
         <ImageView
             android:id="@+id/img_aboutme"
             android:layout_marginLeft="@dimen/dp_20"
@@ -249,7 +249,7 @@
         android:id="@+id/rl_suggestion"
         android:layout_below="@+id/rl_aboutme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30">
+        android:layout_height="@dimen/dp_39">
         <ImageView
             android:id="@+id/img_suggestion"
             android:layout_marginLeft="@dimen/dp_20"
@@ -288,7 +288,7 @@
         android:id="@+id/rl_version"
         android:layout_below="@+id/txt_line2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30">
+        android:layout_height="@dimen/dp_39">
         <ImageView
             android:id="@+id/img_version"
             android:layout_marginLeft="@dimen/dp_20"
@@ -324,48 +324,56 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="invisible"
             style="@style/Line1Style"
             android:layout_alignLeft="@+id/img_version"
             />
     </RelativeLayout>
-    <!--检查更新行-->
-  <!--  <RelativeLayout
-        android:id="@+id/rl_update"
+    <!--在线客服行-->
+    <RelativeLayout
+        android:id="@+id/rl_onlineservice"
         android:layout_below="@+id/rl_version"
-        android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_39">
         <ImageView
-            android:id="@+id/img_update"
+            android:id="@+id/img_onlineservice"
             android:layout_marginLeft="@dimen/dp_20"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_update"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20" />
         <TextView
-            android:id="@+id/txt_update"
-            android:layout_toRightOf="@+id/img_update"
+            android:id="@+id/txt_onlineservice"
+            android:layout_toRightOf="@+id/img_onlineservice"
             android:layout_centerVertical="true"
-            android:text="@string/my_update"
+            android:text="@string/my_onlineservice"
             android:textSize="15sp"
             android:textColor="@color/colorMyName"
             android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
-            android:id="@+id/img_right6"
+            android:id="@+id/img_right8"
             android:src="@mipmap/ic_right"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_18"
             android:layout_centerVertical="true"
             android:layout_width="@dimen/dp_8"
             android:layout_height="@dimen/dp_14" />
-    </RelativeLayout>-->
+    </RelativeLayout>
+    <!--粗的灰线-->
+    <TextView
+        android:id="@+id/txt_line3"
+        android:layout_below="@+id/rl_onlineservice"
+        android:background="@color/colorLine1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_5" />
     <!--支付方式行-->
     <RelativeLayout
         android:id="@+id/rl_paytype"
-        android:layout_below="@+id/rl_version"
+        android:layout_below="@+id/txt_line3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30">
+        android:layout_height="@dimen/dp_39">
         <ImageView
             android:id="@+id/img_paytype"
             android:layout_marginLeft="@dimen/dp_20"
@@ -392,20 +400,14 @@
             android:layout_width="@dimen/dp_8"
             android:layout_height="@dimen/dp_14" />
     </RelativeLayout>
-    <!--粗的灰线-->
-    <TextView
-        android:id="@+id/txt_line3"
-        android:layout_below="@+id/rl_paytype"
-        android:background="@color/colorLine1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_5" />
+
     <!--退出登录-->
     <RelativeLayout
         android:id="@+id/rl_loginout"
-        android:layout_below="@+id/txt_line3"
+        android:layout_below="@+id/rl_paytype"
         android:layout_centerInParent="true"
         android:background="@drawable/bg_circle_my_loginout"
-        android:layout_marginTop="@dimen/dp_26"
+        android:layout_marginTop="@dimen/dp_5"
         android:layout_width="@dimen/dp_44"
         android:layout_height="@dimen/dp_44">
         <ImageView
@@ -420,7 +422,7 @@
         android:id="@+id/txt_user_statis"
         android:layout_below="@+id/rl_loginout"
         android:layout_centerInParent="true"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_5"
         android:textSize="@dimen/dp_12"
         android:textColor="@color/colorMyRight"
         android:text="您是第100000位用户，共200000位用户"

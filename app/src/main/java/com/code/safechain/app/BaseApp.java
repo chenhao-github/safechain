@@ -6,12 +6,17 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 
 import com.code.safechain.ui.main.bean.UserBean;
+import com.code.safechain.ui.wallet.bean.WalletHomeRsBean;
 import com.code.safechain.utils.LocalManageUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseApp extends Application {
 
     public static BaseApp baseApp;
     public static UserBean userBean;
+    public static List<WalletHomeRsBean.ResultBean.DataBean> mChains;
 
     @Override
     public void onCreate() {

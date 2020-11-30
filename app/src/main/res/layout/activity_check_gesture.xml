@@ -29,10 +29,20 @@
         android:layout_height="@dimen/dp_1" />
     <com.code.safechain.ui.my.GestureView
         android:id="@+id/gestureview"
-        android:layout_below="@+id/txt_line"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_centerInParent="true"
-        android:layout_width="300dp"
-        android:layout_height="400dp" />
+        android:layout_width="250dp"
+        android:layout_height="300dp" />
+
+    <!--忘记手势密码-->
+    <TextView
+        android:id="@+id/txts_forget_paywd"
+        android:text="@string/my_forget_paywd"
+        android:textColor="@color/colorTitle"
+        android:textSize="@dimen/dp_15"
+        android:layout_below="@+id/gestureview"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

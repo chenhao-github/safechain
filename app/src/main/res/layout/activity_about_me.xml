@@ -61,7 +61,7 @@
         android:background="@color/colorLine1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1" />
-    <!--网站-->
+    <!--官网-->
     <RelativeLayout
         android:id="@+id/rl_network"
         android:layout_below="@+id/txt_line1"
@@ -87,14 +87,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <!--网站下的灰线-->
+    <!--官网下的灰线-->
     <TextView
         android:id="@+id/txt_line2"
         android:layout_below="@+id/rl_network"
         android:background="@color/colorLine1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1" />
-    <!--论坛-->
+    <!--微博-->
     <RelativeLayout
         android:id="@+id/rl_forum"
         android:layout_below="@+id/txt_line2"
@@ -106,7 +106,7 @@
             android:layout_centerVertical="true"
             android:textSize="@dimen/dp_16"
             android:textColor="@color/colorMyName"
-            android:text="@string/my_forum"
+            android:text="@string/my_microblog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -116,21 +116,55 @@
             android:layout_marginRight="@dimen/dp_18"
             android:textSize="@dimen/dp_14"
             android:textColor="@color/colorMyNetWorkUrl"
-            android:text="@string/my_forum_url"
+            android:text="SkyEcochain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <!--论坛下的灰线-->
+    <!--微博下的灰线-->
     <TextView
         android:id="@+id/txt_line3"
         android:layout_below="@+id/rl_forum"
         android:background="@color/colorLine1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1" />
-    <!--微博-->
+    <!--Twitter-->
     <RelativeLayout
-        android:id="@+id/rl_microblog"
+        android:id="@+id/rl_twitter"
         android:layout_below="@+id/txt_line3"
+        android:layout_width="@dimen/dp_360"
+        android:layout_height="@dimen/dp_50">
+        <TextView
+            android:id="@+id/txt_twitter"
+            android:layout_marginLeft="@dimen/dp_18"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/dp_16"
+            android:textColor="@color/colorMyName"
+            android:text="Twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txt_twitter_url"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_18"
+            android:textSize="@dimen/dp_14"
+            android:textColor="@color/colorMyNetWorkUrl"
+            android:text="SkyEcochain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <!--twitter下的灰线-->
+    <TextView
+        android:id="@+id/txt_line4"
+        android:layout_below="@+id/rl_twitter"
+        android:background="@color/colorLine1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1" />
+
+    <!--Telegram-->
+    <RelativeLayout
+        android:id="@+id/rl_Telegram"
+        android:layout_below="@+id/txt_line4"
         android:layout_width="@dimen/dp_360"
         android:layout_height="@dimen/dp_50">
         <TextView
@@ -139,7 +173,7 @@
             android:layout_centerVertical="true"
             android:textSize="@dimen/dp_16"
             android:textColor="@color/colorMyName"
-            android:text="@string/my_microblog"
+            android:text="Telegram"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -149,14 +183,14 @@
             android:layout_marginRight="@dimen/dp_18"
             android:textSize="@dimen/dp_14"
             android:textColor="@color/colorMyNetWorkUrl"
-            android:text="@string/my_forum_url"
+            android:text="SkyEcochain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <!--微博下的灰线-->
     <TextView
-        android:id="@+id/txt_line4"
-        android:layout_below="@+id/rl_microblog"
+        android:id="@+id/txt_line5"
+        android:layout_below="@+id/rl_Telegram"
         android:background="@color/colorLine1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1" />

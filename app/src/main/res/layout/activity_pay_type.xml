@@ -226,7 +226,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40" />
         <!--开户卡地址-->
-        <RelativeLayout
+        <!--<RelativeLayout
             android:id="@+id/rl_bank_address"
             android:layout_below="@+id/et_user_name"
             android:layout_centerHorizontal="true"
@@ -237,14 +237,15 @@
             android:paddingLeft="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40">
-            <Spinner
+            &lt;!&ndash;<Spinner
                 android:id="@+id/sp_bank_name"
                 android:textColor="@color/colorMyName"
                 android:background="@drawable/bg_login_spinner"
                 android:layout_centerVertical="true"
                 android:layout_width="@dimen/dp_100"
-                android:layout_height="wrap_content"/>
-            <!--开户银行地址输入框-->
+                android:layout_height="wrap_content"/>&ndash;&gt;
+
+            &lt;!&ndash;开户银行地址输入框&ndash;&gt;
             <EditText
                 android:id="@+id/et_bank_address"
                 android:layout_toRightOf="@+id/sp_bank_name"
@@ -260,11 +261,47 @@
                 android:typeface="normal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_35" />
-        </RelativeLayout>
+        </RelativeLayout>-->
+        <!--银行名字-->
+        <EditText
+            android:id="@+id/sp_bank_name"
+            android:layout_below="@+id/et_user_name"
+            android:layout_marginTop="@dimen/dp_17"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorTitle"
+            android:textColorHint="@color/colorMyName"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:background="@drawable/bg_login_account"
+            android:typeface="normal"
+            android:hint="@string/my_paytype_unionpay_bankname_hint"
+            android:paddingLeft="@dimen/dp_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40" />
+        <!--开户银行地址输入框-->
+        <EditText
+            android:id="@+id/et_bank_address"
+            android:layout_below="@+id/sp_bank_name"
+            android:layout_marginTop="@dimen/dp_17"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:textSize="@dimen/dp_15"
+            android:textColor="@color/colorTitle"
+            android:textColorHint="@color/colorMyName"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:background="@drawable/bg_login_account"
+            android:typeface="normal"
+            android:hint="@string/my_paytype_unionpay_bankaddress_hint"
+            android:paddingLeft="@dimen/dp_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40" />
         <!--银行卡号-->
         <EditText
             android:id="@+id/et_bank_no"
-            android:layout_below="@+id/rl_bank_address"
+            android:layout_below="@+id/et_bank_address"
             android:layout_marginTop="@dimen/dp_17"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/dp_20"

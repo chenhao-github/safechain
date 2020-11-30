@@ -45,7 +45,6 @@
             android:layout_toLeftOf="@+id/img_order"
             android:layout_marginRight="@dimen/dp_17"
             android:layout_centerVertical="true"
-            android:visibility="invisible"
             android:layout_width="@dimen/dp_18"
             android:layout_height="@dimen/dp_18" />
         <!--底线-->

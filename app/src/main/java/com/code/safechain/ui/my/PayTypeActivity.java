@@ -10,20 +10,25 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.code.safechain.R;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.MyPaytypeConstract;
+import com.code.safechain.model.HttpManager;
 import com.code.safechain.presenter.MyPayTypePresenter;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
+import com.code.safechain.ui.transaction.bean.GetPayTypeRsBean;
 import com.code.safechain.ui.transaction.bean.SetPayTypeRsBean;
+import com.code.safechain.utils.RxUtils;
 import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
@@ -31,9 +36,12 @@ import com.code.safechain.utils.ToastUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> implements MyPaytypeConstract.View {
 
@@ -77,11 +85,13 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
     @BindView(R.id.et_user_name)//持卡人姓名
     EditText mEtUserName;
     @BindView(R.id.sp_bank_name)//银行下拉框
-    Spinner mSpBankName;
+    EditText mSpBankName;
     @BindView(R.id.et_bank_address)//银行地址
     EditText mEtBankAddress;
     @BindView(R.id.et_bank_no)//银行卡号
     EditText mEtBankNo;
+    @BindView(R.id.btn_submit)//提交 按钮
+    Button mBtnSubmit;
 
     private ArrayList<String> mBanksList;//银行列表数据
     private ArrayAdapter<String> bankAdapter;//下拉框框适配器
@@ -90,10 +100,11 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
     private String mWexinIcon;
     //支付宝二维码
     private String mAlipayIcon;
-    private String mBankName;//银行名字
+//    private String mBankName;//银行名字
 
     private File mFile;//相册中的图片
     private String mToken;
+
 
     @Override
     protected int getLayout() {
@@ -107,89 +118,114 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
 
     @Override
     protected void initView() {
-        //如果已有支付信息，则显示
-        initPayData();
+        //获取支付方式，如果已有支付信息，则显示
+        getPaytype();
 
     }
+    //获取支付方式
+    private void getPaytype() {
+        //封装数据
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+        map.put("type", 3);
+        map = SystemUtils.getMap(map);
+        HttpManager.getInstance().getApiServer().getPaytype(map)
+                .compose(RxUtils.<GetPayTypeRsBean>changeScheduler())
+                .subscribe(new Observer<GetPayTypeRsBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-    private void initPayData() {
-        String wexinName = SpUtils.getInstance(this).getString(Constants.PAY_EXIN_NAME);
-        String wexinIcon = SpUtils.getInstance(this).getString(Constants.PAY_WEXIN_ICON);
-        String alipayName = SpUtils.getInstance(this).getString(Constants.PAY_Alipay_NAME);
-        String alipayIcon = SpUtils.getInstance(this).getString(Constants.PAY_Alipay_ICON);
-        String userName = SpUtils.getInstance(this).getString(Constants.PAY_UNIONPAY_USER_NAME);
+                    }
 
-        String bankAdddress = SpUtils.getInstance(this).getString(Constants.PAY_UNIONPAY_BANK_ADDRESS);
-        String bankCarNo = SpUtils.getInstance(this).getString(Constants.PAY_UNIONPAY_BANK_NO);
-        //设置已有的值，如果有
-        //微信
-        if(!TextUtils.isEmpty(wexinName))
-            mEtWechatName.setText(wexinName);
-        if(!TextUtils.isEmpty(wexinIcon)){
-            Glide.with(this).load(wexinIcon).into(mImgWechatIcon);
-            mTxtWechatUpload.setText(getResources().getString(R.string.my_paytype_re_upload));
+                    @Override
+                    public void onNext(GetPayTypeRsBean getPayTypeRsBean) {
+                        //设置支付方式
+                        GetPayTypeRsBean.ResultBean result = getPayTypeRsBean.getResult();
+                        if(getPayTypeRsBean.getError() == 0 && result != null && result.getPays().size()>0){//有支付方式
+                            initPayData(result);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void initPayData(GetPayTypeRsBean.ResultBean result) {
+        List<GetPayTypeRsBean.ResultBean.PaysBean> pays = result.getPays();//获得支付方式
+        for (int i = 0; i < pays.size(); i++) {
+            GetPayTypeRsBean.ResultBean.PaysBean paysBean = pays.get(i);
+            if(paysBean.getType() == 1){//微信支付
+                if(!TextUtils.isEmpty(paysBean.getImg_url())){
+                    mEtWechatName.setText(paysBean.getUser_name());
+                    Glide.with(this).load(paysBean.getImg_url()).into(mImgWechatIcon);
+                    mWexinIcon = paysBean.getImg_url();//设置微信二维码路径
+                    mTxtWechatUpload.setText(getResources().getString(R.string.my_paytype_re_upload));
+                }
+            }else if(paysBean.getType() == 2){//支付宝支付
+                if(!TextUtils.isEmpty(paysBean.getImg_url())){
+                    mEtAlipayName.setText(paysBean.getUser_name());
+                    Glide.with(this).load(paysBean.getImg_url()).into(mImgAlipayIcon);
+                    mAlipayIcon = paysBean.getImg_url();//设置支付宝二维码路径
+                    mTxtAlipayUpload.setText(getResources().getString(R.string.my_paytype_re_upload));
+                }
+            }else if(paysBean.getType() == 4){//银联支付
+                if(!TextUtils.isEmpty(paysBean.getUser_name()))//设置银行账号名字
+                    mEtUserName.setText(paysBean.getUser_name());
+                if(!TextUtils.isEmpty(paysBean.getBank_name())){//银行名字不为空，已经设置过，使用设置过的数据
+//                    mBankName = paysBean.getBank_name();
+//                    mSpBankName.setSelection(mBanksList.indexOf(mBankName),true);
+                    mSpBankName.setText(paysBean.getBank_name());
+                }
+                if(!TextUtils.isEmpty(paysBean.getPay_addr()))//银行地址不为空
+                    mEtBankAddress.setText(paysBean.getPay_addr());
+                if(!TextUtils.isEmpty(paysBean.getBank_no()))//银行卡号不为空
+                    mEtBankNo.setText(paysBean.getBank_no());
+            }
         }
-        //支付宝
-        if(!TextUtils.isEmpty(alipayName))
-            mEtAlipayName.setText(alipayName);
-        if(!TextUtils.isEmpty(alipayIcon)){
-            Glide.with(this).load(alipayIcon).into(mImgAlipayIcon);
-            mTxtAlipayUpload.setText(getResources().getString(R.string.my_paytype_re_upload));
-        }
-        //银联
-        if(!TextUtils.isEmpty(userName))
-            mEtUserName.setText(userName);
-        if(!TextUtils.isEmpty(bankAdddress))
-            mEtBankAddress.setText(bankAdddress);
-        if(!TextUtils.isEmpty(bankCarNo))
-            mEtBankNo.setText(bankCarNo);
-
-
     }
 
     @Override
     protected void initData() {
         //配置银行 下拉框数据
-        initSpinnerCountry();
+//        initSpinnerCountry();
         mToken = SpUtils.getInstance(this).getString(Constants.TOKEN);
     }
     private void initSpinnerCountry() {
         //创建数据源
-        mBanksList = new ArrayList<>();
-        mBanksList.add("中国银行");
-        mBanksList.add("工商银行");
-        mBanksList.add("建设银行");
-        mBanksList.add("交通银行");
-        mBanksList.add("农业银行");
-        mBanksList.add("招商银行");
+//        mBanksList = new ArrayList<>();
+//        mBanksList.add("中国银行");
+//        mBanksList.add("工商银行");
+//        mBanksList.add("建设银行");
+//        mBanksList.add("交通银行");
+//        mBanksList.add("农业银行");
+//        mBanksList.add("招商银行");
 
-        //定义适配器
-        bankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mBanksList);
-        //设置下拉列表下拉时的菜单样式
-        bankAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //将适配器添加到下拉列表上
-        mSpBankName.setAdapter(bankAdapter);
-        mSpBankName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mBankName = mBanksList.get(position);//得到选中的银行
-                //保存银行名字
-                SpUtils.getInstance(PayTypeActivity.this).setValue(Constants.PAY_UNIONPAY_BANK_NAME,mBankName);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        //配置完数据后，如果已选择了银行，显示选择的银行
-        mBankName = SpUtils.getInstance(this).getString(Constants.PAY_UNIONPAY_BANK_NAME);
-        if(!TextUtils.isEmpty(mBankName)){//用名字，设置银行选中
-            mSpBankName.setSelection(mBanksList.indexOf(mBankName),true);
-        }else {//没有名字 默认是 中国银行  保存银行名字
-            mBankName = mBanksList.get(0);
-            SpUtils.getInstance(this).setValue(Constants.PAY_UNIONPAY_BANK_NAME,mBanksList.get(0));
-        }
+//        //定义适配器
+//        bankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mBanksList);
+//        //设置下拉列表下拉时的菜单样式
+//        bankAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        //将适配器添加到下拉列表上
+//        mSpBankName.setAdapter(bankAdapter);
+//        mSpBankName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                mBankName = mBanksList.get(position);//得到选中的银行
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        mBankName = mBanksList.get(0);//默认是中国银行
     }
 
     @Override
@@ -207,8 +243,10 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
     public void uploadWechatIconReturn(UploadIconRsBean uploadIconRsBean) {
         if(uploadIconRsBean.getError() == 0){
             ToastUtil.showShort("上传成功!");
+            mBtnSubmit.setEnabled(true);//设置可用
             mWexinIcon = uploadIconRsBean.getResult().getImg_url();//获得微信支付二维码
             Glide.with(this).load(mWexinIcon).into(mImgWechatIcon);
+            mTxtWechatUpload.setText(getResources().getString(R.string.my_paytype_re_upload));
         }
     }
 
@@ -216,8 +254,10 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
     public void uploadAlipayIconReturn(UploadIconRsBean uploadIconRsBean) {
         if(uploadIconRsBean.getError() == 0){
             ToastUtil.showShort("上传成功!");
+            mBtnSubmit.setEnabled(true);//设置可用
             mAlipayIcon = uploadIconRsBean.getResult().getImg_url();//获得支付宝支付二维码
             Glide.with(this).load(mAlipayIcon).into(mImgAlipayIcon);
+            mTxtAlipayUpload.setText(getResources().getString(R.string.my_paytype_re_upload));
         }
     }
 
@@ -256,50 +296,58 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
 
     private void submitPaytype() {
         //得到支付方式信息
+        //微信名字
         String wexinName = mEtWechatName.getText().toString();
-        //mWexinIcon
+        //支付宝名字
         String alipayName = mEtAlipayName.getText().toString();
-        //mAlipayIcon
+        //银行账号名字
         String userName = mEtUserName.getText().toString();
-        //mBankName
+        String bankName = mSpBankName.getText().toString();
+        //银行地址
         String bankAdddress = mEtBankAddress.getText().toString();
+        //银行卡号
         String bankCarNo = mEtBankNo.getText().toString();
         //封装数据
         HashMap<String, Object> map = new HashMap<>();
         map.put("type",1);
         map.put("token",mToken);
-
         //微信
         if(!TextUtils.isEmpty(wexinName)){
             map.put("wechat_user_name",wexinName);
-            SpUtils.getInstance(this).setValue(Constants.PAY_EXIN_NAME,wexinName);
         }
         if(!TextUtils.isEmpty(mWexinIcon)){
             map.put("wechat_img_url",mWexinIcon);
-            SpUtils.getInstance(this).setValue(Constants.PAY_WEXIN_ICON,mWexinIcon);
+        }else {//为空时，如果是重新上传，则提示等待上传成功
+            if(mTxtWechatUpload.getText().equals(getResources().getString(R.string.my_paytype_re_upload))){
+                ToastUtil.showShort("请等待上传成功再试!");
+                return;
+            }
         }
-
+        //支付宝
         if(!TextUtils.isEmpty(alipayName)){
             map.put("ali_user_name",alipayName);
-            SpUtils.getInstance(this).setValue(Constants.PAY_Alipay_NAME,alipayName);
         }
         if(!TextUtils.isEmpty(mAlipayIcon)){
             map.put("ali_img_url",mAlipayIcon);
-            SpUtils.getInstance(this).setValue(Constants.PAY_Alipay_ICON,mAlipayIcon);
+        }else {//为空时，如果是重新上传，则提示等待上传成功
+            if(mTxtAlipayUpload.getText().equals(getResources().getString(R.string.my_paytype_re_upload))){
+                ToastUtil.showShort("请等待上传成功再试!");
+                return;
+            }
         }
-
+        //银行卡
         if(!TextUtils.isEmpty(userName)){
             map.put("union_user_name",userName);
-            SpUtils.getInstance(this).setValue(Constants.PAY_UNIONPAY_USER_NAME,userName);
+        }
+        if(!TextUtils.isEmpty(bankName)){
+            map.put("bank_name",bankName);
+        }
+
+        if(!TextUtils.isEmpty(bankAdddress)){
+            map.put("pay_addr",bankAdddress);
         }
         if(!TextUtils.isEmpty(bankCarNo)){
             map.put("bank_no",bankCarNo);
-            SpUtils.getInstance(this).setValue(Constants.PAY_UNIONPAY_BANK_NO,bankCarNo);
-        }
-        //银行的名字是:  银行的名字+具体地址
-        if(!TextUtils.isEmpty(bankAdddress)){
-            map.put("bank_name",mBankName+","+bankAdddress);
-            SpUtils.getInstance(this).setValue(Constants.PAY_UNIONPAY_BANK_ADDRESS,bankAdddress);
         }
 
         //计算 pay_type 的值
@@ -309,7 +357,7 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
         if(!TextUtils.isEmpty(alipayName) && !TextUtils.isEmpty(mAlipayIcon))
             num += 2;
         if(!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(bankCarNo)
-                && !TextUtils.isEmpty(bankAdddress) && !TextUtils.isEmpty(mBankName))
+                && !TextUtils.isEmpty(bankAdddress) && !TextUtils.isEmpty(bankName))
             num += 4;
 
         map.put("pay_type",num);
@@ -341,6 +389,7 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
             if(!"".equals(filePath)){//图片的路径不为""空的双引号，可以上传
                 mFile = new File(filePath);
                 presenter.uploadWechatIcon(mToken,mFile);
+                mBtnSubmit.setEnabled(false);//设置不可用
             }
         }
         if(requestCode == 200 && resultCode == RESULT_OK){//支付宝上传
@@ -356,6 +405,7 @@ public class PayTypeActivity extends BaseActivity<MyPaytypeConstract.Presenter> 
             if(!"".equals(filePath)){//图片的路径不为""空的双引号，可以上传
                 mFile = new File(filePath);
                 presenter.uploadAlipayIcon(mToken,mFile);
+                mBtnSubmit.setEnabled(false);//设置不可用
             }
         }
 

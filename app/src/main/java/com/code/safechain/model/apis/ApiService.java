@@ -4,16 +4,19 @@ import com.code.safechain.ui.login.bean.CountryCodeBean;
 import com.code.safechain.ui.login.bean.RegistRsBean;
 import com.code.safechain.ui.login.bean.VerificationRsBean;
 import com.code.safechain.ui.main.bean.UserBean;
+import com.code.safechain.ui.my.bean.CheckVerifiCodeRs;
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.my.bean.SuggestionRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
 import com.code.safechain.ui.transaction.bean.GetPayTypeRsBean;
 import com.code.safechain.ui.transaction.bean.MySaleOrderRsBean;
+import com.code.safechain.ui.transaction.bean.OrderDetailRsBean;
 import com.code.safechain.ui.transaction.bean.OrderRsBean;
 import com.code.safechain.ui.transaction.bean.SetPayTypeRsBean;
 import com.code.safechain.ui.transaction.bean.OthersSaleOrderRsBean;
 import com.code.safechain.ui.transaction.bean.TransactionBuyRsBean;
 import com.code.safechain.ui.transaction.bean.UpdateOrderRsBean;
+import com.code.safechain.ui.transaction.bean.WithDrawRsBean;
 import com.code.safechain.ui.wallet.bean.AddAddressRsBean;
 import com.code.safechain.ui.wallet.bean.ChainInfoRsBean;
 import com.code.safechain.ui.wallet.bean.ChainTransactionRsBean;
@@ -77,6 +80,10 @@ public interface ApiService {
     @GET("/api/common")
     Observable<GestureRsBean> checkPaywd(@QueryMap Map<String, Object> map);
 
+    //验证 验证码
+    @GET("/api/user/code")
+    Observable<CheckVerifiCodeRs> checkVerifiCode(@QueryMap Map<String, Object> map);
+
     //获取所有钱包地址
     @GET("/api/wallet")
     Observable<WalletAddressRsBean> getWalletAddress(@QueryMap Map<String, Object> map);
@@ -118,6 +125,10 @@ public interface ApiService {
     @GET("/api/order")
     Observable<OrderRsBean>  getOrders(@QueryMap Map<String, Object> map);
 
+    //订单详情
+    @GET("/api/order")
+    Observable<OrderDetailRsBean>  getOrderDetail(@QueryMap Map<String, Object> map);
+
     //国家代码
     @GET("/api/common")
     Observable<CountryCodeBean> getCountryCode(@QueryMap Map<String, Object> map);
@@ -130,4 +141,7 @@ public interface ApiService {
     @GET("/api/opinion/feedback")
     Observable<SuggestionRsBean> addSuggestion(@QueryMap Map<String, Object> map);
 
+    //撤销
+    @POST("/api/otc/repeal_store")
+    Observable<WithDrawRsBean> withDraw(@Body RequestBody requestBody);
 }

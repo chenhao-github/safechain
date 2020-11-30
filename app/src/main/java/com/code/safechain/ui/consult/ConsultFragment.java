@@ -46,7 +46,8 @@ public class ConsultFragment extends Fragment {
         }
         mWebview.setWebViewClient(new WebViewClient());
 
-        mWebview.loadUrl("http://wx.80soho.com/#/consulation");
+//        mWebview.loadUrl("http://wx.80soho.com/#/consulation");
+        mWebview.loadUrl("http://h5.safe-chain.io/#/consulation");
         return view;
     }
 

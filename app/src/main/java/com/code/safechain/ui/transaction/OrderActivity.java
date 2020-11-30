@@ -68,6 +68,7 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
     protected void initView() {
         type = getIntent().getIntExtra("type",0);//获得操作的类别
         lastTv = txtAll;//进入系统默认是 全部
+        mNavigationId = lastTv.getId();//默认导航id
 
         rlvOrder.setLayoutManager(new LinearLayoutManager(this));
         mOrderBeans = new ArrayList<>();
@@ -80,11 +81,18 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
 
     @Override
     protected void initData() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
-        map.put("role_type",1);//1买家  2卖家
-        map = SystemUtils.getMap(map);
-        presenter.getOrders(map);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
+//        map.put("role_type",1);//1买家  2卖家
+//        map = SystemUtils.getMap(map);
+//        presenter.getOrders(map);
+        getOrdersByNavigation();
     }
 
     @OnClick({R.id.img_back, R.id.txt_all, R.id.txt_ongoing, R.id.txt_completed})
@@ -96,7 +104,7 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
     private void getOrdersByNavigation() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
-        map.put("role_type",1);//1买家  2卖家
+        map.put("role_type",type+1);//1买家  2卖家
         switch (mNavigationId) {
             case R.id.img_back:
                 finish();
@@ -148,9 +156,9 @@ public class OrderActivity extends BaseActivity<TransactionOrdersConstract.Prese
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100 && resultCode == 100){
-            getOrdersByNavigation();//从详情页面回来后，重新查询对应导航的数据，因为数据已经改变
-        }
+//        if(requestCode == 100 && resultCode == 100){
+//            getOrdersByNavigation();//从详情页面回来后，重新查询对应导航的数据，因为数据已经改变
+//        }
     }
 
     //得到订单的回传

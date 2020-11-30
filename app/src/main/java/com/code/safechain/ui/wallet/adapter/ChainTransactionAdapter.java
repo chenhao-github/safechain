@@ -31,10 +31,10 @@ public class ChainTransactionAdapter extends BaseAdapter<ChainTransactionRsBean.
         TextView name = (TextView) holder.getViewById(R.id.txt_type_name);
         TextView time = (TextView) holder.getViewById(R.id.txt_time);
         //赋值
-        price.setText("￥"+String.format("%.6f",Double.parseDouble(data.getAmount())));
+        price.setText(String.format("%.6f",Double.parseDouble(data.getAmount())));
 //        price.setText("￥"+data.getAmount());
         name.setText(Constants.TRANSACTIONS[data.getType()]);
-        name.setTextColor(mContext.getResources().getColor(Constants.TRANSACTIONS_COLOR[data.getType()]));
+//        name.setTextColor(mContext.getResources().getColor(Constants.TRANSACTIONS_COLOR[data.getType()]));
         time.setText(data.getCtime());
 
     }

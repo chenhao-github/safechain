@@ -15,15 +15,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.code.safechain.R;
+import com.code.safechain.app.BaseApp;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.MyConstract;
 import com.code.safechain.interfaces.RealNameConstract;
 import com.code.safechain.presenter.MyPresenter;
 import com.code.safechain.presenter.RealNamePresenter;
+import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
 import com.code.safechain.utils.SpUtils;
@@ -79,7 +82,34 @@ public class RealNameActivity extends BaseActivity<RealNameConstract.Presenter>
 
     @Override
     protected void initData() {
+//        mImgCameraFront.setClickable(false);
+        //如果是未认证，待审核，驳回，可修改  ，已通过 不可修改
+        if(BaseApp.userBean != null ){
+            UserBean.ResultBean result = BaseApp.userBean.getResult();
+            //得到状态
+            int state = result.getState();
+            if(state==3 || state==5 || state==6){//认证通过，禁用，注销 设置不可操作
+                mEtRealname.setEnabled(false);
+                mEtIdentity.setEnabled(false);
+                mImgCameraFront.setClickable(false);
+                mImgCameraBack.setClickable(false);
+                mBtnConfirm.setVisibility(View.INVISIBLE);//隐藏 确认上传 按钮
 
+            }else {
+                mEtRealname.setEnabled(true);
+                mEtIdentity.setEnabled(true);
+                mImgCameraFront.setClickable(true);
+                mImgCameraBack.setClickable(true);
+            }
+
+            //先显示认证信息
+            mEtRealname.setText(result.getTrue_name());
+            mEtIdentity.setText(result.getCard_id());
+            Glide.with(this).load(result.getCard_z()).into(mImgCameraFront);
+            Glide.with(this).load(result.getCard_b()).into(mImgCameraBack);
+        }else {
+            Toast.makeText(this, "认证信息未获取，请稍后重试！", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -135,11 +165,11 @@ public class RealNameActivity extends BaseActivity<RealNameConstract.Presenter>
             return;
         }
         if(TextUtils.isEmpty(frontImg)){
-            ToastUtil.showShort("请上传身份证正面!");
+            ToastUtil.showShort("请上传身份证正面，或等待上传成功再试!");
             return;
         }
         if(TextUtils.isEmpty(backImg)){
-            ToastUtil.showShort("请上传身份证反面!");
+            ToastUtil.showShort("请上传身份证反面，或等待上传成功再试!");
             return;
         }
         //提交
@@ -172,7 +202,7 @@ public class RealNameActivity extends BaseActivity<RealNameConstract.Presenter>
     @Override
     public void updateRealNameReturn(GestureRsBean gestureRsBean) {
         if(gestureRsBean.getError() == 0){
-            ToastUtil.showShort("认证成功！");
+            ToastUtil.showShort("上传成功！");
             setResult(RESULT_OK);
             finish();
         }
@@ -182,6 +212,7 @@ public class RealNameActivity extends BaseActivity<RealNameConstract.Presenter>
     public void uploadCardZIconReturn(UploadIconRsBean uploadIconRsBean) {
         if(uploadIconRsBean.getError() == 0){
             frontImg = uploadIconRsBean.getResult().getImg_url();//获得正面
+            ToastUtil.showShort("正面上传成功!");
         }
     }
 
@@ -189,6 +220,7 @@ public class RealNameActivity extends BaseActivity<RealNameConstract.Presenter>
     public void uploadCardBIconReturn(UploadIconRsBean uploadIconRsBean) {
         if(uploadIconRsBean.getError() == 0){
             backImg = uploadIconRsBean.getResult().getImg_url();//获得反面
+            ToastUtil.showShort("反面上传成功!");
         }
     }
 }

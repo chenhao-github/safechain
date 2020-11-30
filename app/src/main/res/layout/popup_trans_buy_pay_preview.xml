@@ -62,7 +62,7 @@
         <ImageView
             android:id="@+id/img_chain_icon"
             android:layout_centerInParent="true"
-            android:src="@mipmap/chain_icon"
+            android:src="@mipmap/ic_logo"
             android:scaleType="fitXY"
             android:layout_width="@dimen/dp_18"
             android:layout_height="@dimen/dp_18" />

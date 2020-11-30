@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <!--币的名字标记行：标记和名字-->
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/ll_chain_self_name"
         android:layout_toRightOf="@+id/txt_chain_money1"
         android:layout_below="@+id/txt_line"
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <!--币的中文名标记行：标记和名字-->
+    &lt;!&ndash;币的中文名标记行：标记和名字&ndash;&gt;
     <LinearLayout
         android:id="@+id/ll_chain_china_name"
         android:layout_below="@+id/ll_chain_self_name"
@@ -112,7 +112,7 @@
             android:textSize="@dimen/dp_8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+    </LinearLayout>-->
     <!--功能标签行-->
     <LinearLayout
         android:id="@+id/ll_navigation"

@@ -1,13 +1,8 @@
-package com.code.safechain.ui.ecotope;
+package com.code.safechain.ui.my;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -16,27 +11,19 @@ import com.code.safechain.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.OnClick;
 
-/**
- * @Auther: hchen
- * @Date: 2020/7/4 0004
- * @Description:
- */
-public class EcotopeFragment extends Fragment {
-
+public class OnlineServiceActivity extends AppCompatActivity {
 
     @BindView(R.id.webview)
     WebView mWebview;
-    private View view;
-    private Unbinder unbinder;
     private WebSettings mSettings;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ecotope, null);
-        unbinder = ButterKnife.bind(this, view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_online_service);
+        ButterKnife.bind(this);
 
         mSettings = mWebview.getSettings();
         mSettings.setJavaScriptEnabled(true);
@@ -69,13 +56,7 @@ public class EcotopeFragment extends Fragment {
         mSettings.setLoadWithOverviewMode(true);
 
 //        mWebview.loadUrl("http://wx.80soho.com/#/ecology");
-        mWebview.loadUrl("http://h5.safe-chain.io/#/ecology");
-        return view;
+        mWebview.loadUrl("http://ddt.zoosnet.net/LR/Chatpre.aspx?id=DDT78423483&lng=cn");
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

@@ -84,7 +84,7 @@ public class ChainInfoRsBean {
         private String en_abstract;
         private String en_name;
         private int fee_type;
-        private int gas_limit;
+        private float gas_limit;
         private String homepage;
         private int id;
         private int in_wallet;
@@ -163,11 +163,11 @@ public class ChainInfoRsBean {
             this.fee_type = fee_type;
         }
 
-        public int getGas_limit() {
+        public float getGas_limit() {
             return gas_limit;
         }
 
-        public void setGas_limit(int gas_limit) {
+        public void setGas_limit(float gas_limit) {
             this.gas_limit = gas_limit;
         }
 

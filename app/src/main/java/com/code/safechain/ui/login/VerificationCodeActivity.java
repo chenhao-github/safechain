@@ -206,7 +206,7 @@ public class VerificationCodeActivity extends BaseActivity<RegistConstract.Prese
         HashMap<String, Object> map = new HashMap<>();
         map.put("type",1);
         map.put("phone", phoneNum);
-        map.put("nation",mCountryCode);//设置国家编号
+        map.put("nation",""+mCountryCode);//设置国家编号
         //加密
         String json = SystemUtils.getJson(map);//得到签名后的数据作为sign的值的json串
         presenter.sendVerifiCode(json);
@@ -245,7 +245,7 @@ public class VerificationCodeActivity extends BaseActivity<RegistConstract.Prese
         Intent intent = new Intent(this, SetPwdActivity.class);
         intent.putExtra(Constants.PHONE_NUMBER,phoneNum);//电话号码
         intent.putExtra(Constants.VERIFICODE,veriCode);//验证码
-        intent.putExtra(Constants.NATION,mCountryCode);//国家代码
+        intent.putExtra(Constants.NATION,""+mCountryCode);//国家代码
         intent.putExtra(Constants.DATA,1);//手机 设置密码
         startActivity(intent);
     }

@@ -1,5 +1,8 @@
 package com.code.safechain.ui.my;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +14,7 @@ import com.code.safechain.presenter.MyPresenter;
 import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
+import com.code.safechain.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +48,8 @@ public class AboutMeActivity extends BaseActivity<MyConstract.Presenter> impleme
 
 
 
-    @OnClick(R.id.img_back)
+    @OnClick({R.id.img_back, R.id.txt_network_url, R.id.txt_forum_url, R.id.txt_twitter_url,
+            R.id.txt_microblog_url})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
@@ -52,7 +57,28 @@ public class AboutMeActivity extends BaseActivity<MyConstract.Presenter> impleme
             case R.id.img_back:
                 finish();
                 break;
+            case R.id.txt_network_url:
+                setSysClipboardText(getResources().getString(R.string.my_network_url));
+                break;
+            case R.id.txt_forum_url:
+                setSysClipboardText("SkyEcochain");
+                break;
+            case R.id.txt_twitter_url:
+                setSysClipboardText("SkyEcochain");;
+                break;
+            case R.id.txt_microblog_url:
+                setSysClipboardText("SkyEcochain");;
+                break;
         }
+    }
+
+    public void setSysClipboardText(String data) {
+        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+// 创建普通字符型ClipData
+        ClipData mClipData = ClipData.newPlainText("Label", data);
+// 将ClipData内容放到系统剪贴板里。
+        cm.setPrimaryClip(mClipData);
+        ToastUtil.showShort("复制成功");
     }
 
     @Override

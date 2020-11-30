@@ -88,11 +88,10 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
     protected void initView() {
         mRlvBuyChain.setLayoutManager(new LinearLayoutManager(getActivity()));
         mChainSaleBeans = new ArrayList<>();
-        mAdapter = new BuyChainSaleAdapter(getActivity(), mChainSaleBeans);
+        mAdapter = new BuyChainSaleAdapter(getActivity(), mChainSaleBeans,"buy");//从卖点购买
         mRlvBuyChain.setAdapter(mAdapter);
         mAdapter.setOnClickListener(this);//添加 条目中的组件的点击监听
     }
-
 
     @Override
     protected void initData() {
@@ -119,7 +118,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("token", SpUtils.getInstance(getActivity()).getString(Constants.TOKEN));
-        map.put("size",Constants.SIZE);
+        map.put("size",Constants.SIZE);//分页数量
 //        map.put("lastid",Constants.SIZE);//最后一条数据的 商品id（主键id）,从这里开始取 size条
 
         map = SystemUtils.getMap(map);
@@ -211,11 +210,14 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
         map.put("token", SpUtils.getInstance(getActivity()).getString(Constants.TOKEN));
         map.put("store_id", mSaleOrder.getStore_id());
 //        map.put("num", mSaleOrder.getNum());
-        if(mSaleOrder.getNum().indexOf(".") != -1){
-            map.put("num", Integer.parseInt(mSaleOrder.getNum().substring(0,mSaleOrder.getNum().indexOf("."))));
-        }else {
-            map.put("num", Integer.parseInt(mSaleOrder.getNum()));
-        }
+        String _num = mNumber.getText().toString();//得到购买数量
+//        if(_num.indexOf(".") != -1){
+//            map.put("num", Integer.parseInt(_num.substring(0,_num.indexOf("."))));
+//        }else {
+//            map.put("num", Integer.parseInt(_num));
+//        }
+        map.put("num", Float.parseFloat(_num));//不去小数点后面的
+
 //        map.put("price", mSaleOrder.getPrice());
         map.put("price", String.format("%.6f", mSaleOrder.getPrice()));
         map.put("total", String.format("%.6f", Double.parseDouble(totalPay+"")));
@@ -241,7 +243,7 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
                             String order_no = transactionBuyRsBean.getResult().getOrder_no();
                             toPaymentActivity(map,order_no);
                         }else {
-                            ToastUtil.showShort("下单失败");
+                            ToastUtil.showShort(transactionBuyRsBean.getMessage());
                         }
                     }
 
@@ -296,24 +298,6 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
 //                n = 30;//把倒计时重置到30秒
             }
         });
-        /*//倒计时
-        mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                n--;
-                mAutoCancel.setText(n+"s后自动取消");
-                if(n==0){
-                   getActivity().runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           mPw.dismiss();
-                       }
-                   });
-                    mTimer.cancel();
-                }
-            }
-        },1000,1000);*/
     }
 
     private void initViewOfPw(View pwLayout) {
@@ -375,9 +359,9 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
                     //得到最大最小金额
                     BigDecimal min = new BigDecimal(Double.toString(mSaleOrder.getMin()));//最小金额
                     BigDecimal max = new BigDecimal(Double.toString(mSaleOrder.getMax()));//最大金额
-                    if(input.compareTo(min) == -1 || input.compareTo(max) == 1){
+                    /*if(input.compareTo(min) == -1 || input.compareTo(max) == 1){
                         ToastUtil.showShort("金额超过限额!");
-                    }
+                    }*/
 
                     //在divide方法中传递第二个参数，定义精确到小数点后几位，否则在不整除的情况下，结果是无限循环小数时，就会抛出以上异常。
                     BigDecimal num = input.divide(a1,2, BigDecimal.ROUND_HALF_UP);//计算交易数量
@@ -431,7 +415,11 @@ public class BuyFragment extends BaseFragment<TranSaleOrderConstract.Presenter>
             mBuyMoney.setTextColor(getResources().getColor(R.color.colorTitle));
             mBuyNumber.setTextColor(getResources().getColor(R.color.colorTransfer));
             //修改限额的值为 1-数量
-            mQuota.setText("1 - " + String.format("%.2f",Double.parseDouble(mSaleOrder.getNum())));//限额赋值
+            double num = Double.parseDouble(mSaleOrder.getNum());
+            if(num>1)
+                mQuota.setText("1 - " + String.format("%.2f",num));//限额赋值
+            else
+                mQuota.setText(String.format("%.2f",num));//限额赋值
         }
         setInputHint(type);//修改购买弹出框中的提示信息
     }

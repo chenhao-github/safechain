@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         switchFragment(0);//刚进入系统默认显示 钱包
         requestPermiss();//处理动态权限
         getUserInfo();
+
     }
 
     private void initTab() {
@@ -74,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
         mTab.addTab(mTab.newTab()
                 .setText(getResources().getString(R.string.title_wallet))
                 .setIcon(getResources().getDrawable(R.drawable.ic_wallet_black)));
-        mTab.addTab(mTab.newTab()
-                .setText(getResources().getString(R.string.title_transaction))
-                .setIcon(getResources().getDrawable(R.drawable.ic_transaction_black)));
+//        mTab.addTab(mTab.newTab()
+//                .setText(getResources().getString(R.string.title_transaction))
+//                .setIcon(getResources().getDrawable(R.drawable.ic_transaction_black)));
         mTab.addTab(mTab.newTab()
                 .setText(getResources().getString(R.string.title_ecotope))
                 .setIcon(getResources().getDrawable(R.drawable.ic_ecotope_black)));
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         fragments = new ArrayList<>();
         //添加fragment对象
         fragments.add(new WalletFragment());
-        fragments.add(new TransactionFragment());
+//        fragments.add(new TransactionFragment());
         fragments.add(new EcotopeFragment());
         fragments.add(new ConsultFragment());
         fragments.add(new MyFragment());
@@ -197,17 +198,5 @@ public class MainActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocalManageUtil.setLocal(newBase));
     }
-
-
-
-//    protected void onSaveInstanceState(Bundle outState) {
-//        //在FragmentActivity保存所有Fragment状态前把Fragment从FragmentManager中移除掉。
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        for (int i = 0; i < fragments.size(); i++) {
-//            transaction.remove(fragments.get(i));
-//        }
-//        transaction.commitAllowingStateLoss();
-//        super.onSaveInstanceState(outState);
-//    }
 
 }

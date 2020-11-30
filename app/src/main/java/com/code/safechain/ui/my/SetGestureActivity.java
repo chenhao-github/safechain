@@ -56,10 +56,10 @@ public class SetGestureActivity extends BaseActivity<GestureConstract.Presenter>
                     mList.addAll(list);
                     Log.i("111", "onFinish: "+mList);
 //                    tvGuide.setText(R.string.gesture_set_again);
-                    ToastUtil.showLong("请再次绘制相同解锁图案");
+                    ToastUtil.showShort("请再次绘制相同解锁图案");
                 } else {
                     if (isSame(list)) {
-                        ToastUtil.showLong("设置成功");
+                        ToastUtil.showShort("设置成功");
                         updatePaywd(list);//修改手势秘密
 //                        setResult(RESULT_OK);
 //                        finish();
@@ -67,7 +67,7 @@ public class SetGestureActivity extends BaseActivity<GestureConstract.Presenter>
 //                        gestureView.showError();
 //                        tvError.setVisibility(View.VISIBLE);
 //                        tvError.setText("两次绘制图案不一致 请重新绘制");
-                        ToastUtil.showLong("两次绘制图案不一致 请重新绘制");
+                        ToastUtil.showShort("两次绘制图案不一致 请重新绘制");
                     }
                 }
                 mGestureview.reset();
@@ -77,7 +77,7 @@ public class SetGestureActivity extends BaseActivity<GestureConstract.Presenter>
             public void onError() {
 //                tvError.setVisibility(View.VISIBLE);
 //                tvError.setText("手势密码最少连续四个点");
-                ToastUtil.showLong("手势密码最少连续四个点");
+                ToastUtil.showShort("手势密码最少连续四个点");
             }
         });
 

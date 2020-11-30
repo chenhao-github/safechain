@@ -2,6 +2,7 @@ package com.code.safechain.ui.transaction;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -184,9 +185,13 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
 
     private String countFloatPrice() {
         String floatPercent = mEtPriceFloatPercent.getText().toString();
-        double precentNum = (double)Double.parseDouble(floatPercent);
-        double lastPrice = (100+precentNum)/100*Double.parseDouble(mDataBean.getPrice_cny());
-        return String.format("%.6f",lastPrice);
+        if(!"".equals(floatPercent)){
+            double precentNum = (double)Double.parseDouble(floatPercent);
+            double lastPrice = (100+precentNum)/100*Double.parseDouble(mDataBean.getPrice_cny());
+            return String.format("%.6f",lastPrice);
+        }else {
+            return "";
+        }
     }
 
     @Override
@@ -229,7 +234,6 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
                     @Override
                     public void onNext(GetPayTypeRsBean getPayTypeRsBean) {
                         //设置支付方式
-
                         setPaytype(getPayTypeRsBean);
                     }
 
@@ -347,30 +351,40 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
         map.put("token_id",mDataBean.getToken_id());//选中的币的id
         map.put("type",priceType);//一口价 浮动价
 
-        //最小量 不能为空
+        //最小交易额 不能为空
         String min = mTxtMiniTrade.getText().toString();
         if(TextUtils.isEmpty(min)){
             ToastUtil.showShort("最小交易额不能为空");
             return;
         }
+
         map.put("min",String.format("%.2f",Double.parseDouble(min)));
-        //最大量 不能为空
+        //最大交易额 不能为空
         String maxi = mTxtMaxiTrade.getText().toString();
         if(TextUtils.isEmpty(maxi)){
-            ToastUtil.showShort("最大交易额不能为空");
+            ToastUtil.showShort("最大交易额不能为空！");
+            return;
+        }
+        //最小交易额要小于最大交易额
+        if(Double.parseDouble(min) >= Double.parseDouble(maxi)){
+            ToastUtil.showShort("最小交易额要小于最大交易额！");
             return;
         }
         map.put("max",String.format("%.2f",Double.parseDouble(maxi)));
 
-        //总出货量
+        //出货量 不能为空
         String vTotalShipment = mTxtTotalShipment.getText().toString();
         if(TextUtils.isEmpty(vTotalShipment) ){
             ToastUtil.showShort("出货总量不能为空");
             return;
         }
-        double vNum = (double)Double.parseDouble(vTotalShipment);//出货总量，转换为数字
-        double chainNum = (double)Double.parseDouble(mDataBean.getNum());
-
+        double vNum = (double)Double.parseDouble(vTotalShipment);//出货量，转换为数字
+        if(vNum < 10){//出货量 不能小于10
+            ToastUtil.showShort("出货总量不能小于10！");
+            return;
+        }
+        double chainNum = (double)Double.parseDouble(mDataBean.getNum());//出货总量，转换为数字
+        //出货量 不能大于 原本数据总量
         if(vNum > chainNum){//判断出货量  不能为空
             ToastUtil.showShort("出货总量不能大于币的总量！");
             return;
@@ -461,6 +475,10 @@ public class SaleFragment extends BaseFragment<MySaleChainConstract.Presenter>
     public void saleChainReturn(MySaleOrderRsBean mySaleOrderRsBean) {
         if(mySaleOrderRsBean.getError() == 0){
             ToastUtil.showShort("卖币成功");
+
+            //切换到 我要买
+            TransactionFragment parentFragment = (TransactionFragment) getParentFragment();
+            parentFragment.dealBuySaleFromSaleFragment(0);
         }
     }
 

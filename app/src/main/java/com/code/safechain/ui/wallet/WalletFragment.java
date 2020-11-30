@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.code.safechain.R;
+import com.code.safechain.app.BaseApp;
 import com.code.safechain.base.BaseAdapter;
 import com.code.safechain.base.BaseFragment;
 import com.code.safechain.common.Constants;
@@ -144,7 +145,7 @@ public class WalletFragment extends BaseFragment<WalletHomeConstract.Presenter>
             mTxtMoney.setText(String.format("%.2f", walletHomeRsBean.getResult().getTotal()));
 //            mTxtMoney.setText(walletHomeRsBean.getResult().getTotal()+"");
             mAdapter.updataListClearAddMore(walletHomeRsBean.getResult().getData());
-
+            BaseApp.mChains = walletHomeRsBean.getResult().getData();//把所有币信息保存到BaseApp中供矿工费使用
         }
 
     }

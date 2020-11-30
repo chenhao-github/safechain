@@ -2,7 +2,7 @@
     <!--sky ecochain  Sky Ecochain-->
     <string name="app_name">Sky Ecochain</string>
     <string name="app_name1">--- Sky Ecochain ---</string>
-    <string name="title_wallet">钱包</string>
+    <string name="title_wallet">资产</string>
     <string name="title_transaction">交易</string>
     <string name="title_ecotope">生态</string>
     <string name="title_consult">资讯</string>
@@ -15,12 +15,17 @@
 
     <string name="my_realname">实名认证</string>
     <string name="my_realname_no">未认证</string>
+    <string name="my_realname_wait">待审核</string>
+    <string name="my_realname_disable">禁用</string>
+    <string name="my_realname_reject">驳回</string>
+    <string name="my_realname_cancel">注销</string>
     <string name="my_realname_yes">已认证</string>
     <string name="my_gesture">手势密码</string>
     <string name="my_gesture_set">已设置</string>
     <string name="my_gesture_noset">未设置</string>
     <string name="my_setting_gesture">设置手势密码</string>
     <string name="my_check_gesture">验证手势密码</string>
+    <string name="my_forget_paywd">忘记手势密码?</string>
     <string name="my_aboutme">关于我们</string>
     <string name="my_suggestion">意见反馈</string>
     <string name="my_version">当前版本</string>
@@ -29,7 +34,8 @@
     <string name="my_paytype_wechat_hint">请输入微信号</string>
     <string name="my_paytype_alipay_hint">请输入支付宝号</string>
     <string name="my_paytype_unionpay_username_hint">持卡人姓名</string>
-    <string name="my_paytype_unionpay_bankname_hint">银行卡开户地址</string>
+    <string name="my_paytype_unionpay_bankname_hint">银行名称</string>
+    <string name="my_paytype_unionpay_bankaddress_hint">银行卡开户地址</string>
     <string name="my_paytype_unionpay_bankno_hint">银行卡号</string>
     <string name="action_settings">Settings</string>
 
@@ -42,15 +48,17 @@
     <string name="my_back_hint">拍摄上传，身份证背面</string>
     <string name="my_upload_confirm">确认上传</string>
     <!--关于我们-->
-    <string name="my_network">网站</string>
-    <string name="my_network_url">www.safechain.com</string>
+    <string name="my_network">官网</string>
+    <string name="my_network_url">http://www.skyecochain.com/</string>
     <string name="my_forum">论坛</string>
-    <string name="my_forum_url">bbs.safechain.com</string>
     <string name="my_microblog">微博</string>
+    <string name="my_forum_url">https://weibo.com/u/6177204408</string>
     <!--意见反馈-->
     <string name="my_suggestion_hint">请填写你的意见和建议</string>
     <string name="my_phone_hint">请填写你的电话号码</string>
     <string name="my_suggestion_submit">提交反馈</string>
+    <!--在线客服-->
+    <string name="my_onlineservice">在线客服</string>
     <!--登录 -->
     <string name="login_login">登录</string>
     <string name="login_account_hint">请输入邮箱或手机号码</string>
@@ -90,17 +98,25 @@
     <string name="wallet_collect">收藏</string>
     <string name="wallet_collection">收款</string>
     <string name="wallet_transfer">转账</string>
+    <string name="wallet_transfer_success">转账成功</string>
     <string name="wallet_chain_all">全部</string>
     <string name="wallet_chain_into">转入</string>
     <string name="wallet_chain_out">转出</string>
-    <string name="wallet_chain_fail">失败</string>
+    <string name="wallet_otc_buy">OTC购买</string>
+    <string name="wallet_game_buy">游戏充值</string>
+    <string name="wallet_game_reward">游戏奖励</string>
+    <string name="wallet_otc_sale">OTC卖出</string>
+    <string name="wallet_out_charge">转出手续费</string>
+    <string name="wallet_game_withdraw_money">游戏提币</string>
+
     <string name="collection_hint">扫二维码，转入</string>
     <string name="wallet_address">钱包地址</string>
     <string name="wallet_share">分享</string>
     <string name="wallet_copy">复制</string>
     <string name="wallet_set_money">设置金额</string>
     <string name="wallet_chain_balance">余额：</string>
-    <string name="wallet_input_amount_hint">请输入金额</string>
+    <string name="chain_chain_number_title">数量：</string>
+    <string name="wallet_input_number_hint">请输入数量</string>
     <string name="wallet_collection_address">收款地址</string>
     <string name="wallet_input_address_hint">请输入有效的收款地址</string>
     <string name="wallet_miner_fee">矿工费</string>
@@ -128,6 +144,7 @@
     <string name="chain_quota_title">限额</string>
     <string name="chain_unit_price">单价</string>
     <string name="chain_purchase">购买</string>
+    <string name="chain_withdraw">撤销</string>
     <string name="transaction_money">金额</string>
     <string name="transaction_buy_filter_hint">系统会为您筛选包含目标金额的商品</string>
     <string name="transaction_mode_of_payment">支付方式</string>
@@ -142,8 +159,8 @@
     <string name="transaction_auto_cancel">30S后自动取消</string>
     <string name="transaction_place_order">下单</string>
     <string name="transaction_count_down_title">付款时间剩余</string>
-    <string name="transaction_payment_hint1">打开你本人</string>
-    <string name="transaction_payment_hint2">的微信,向收款人付款</string>
+    <string name="transaction_payment_hint1">请打开您本人的</string>
+    <string name="transaction_payment_hint2">,向收款人付款</string>
     <string name="transaction_buy_payee">收款人</string>
     <string name="transaction_buy_wechat">微信账号</string>
     <string name="transaction_successful_payment">我已成功付款</string>
@@ -170,14 +187,15 @@
     <string name="transaction_order_number">订单号</string>
     <string name="transaction_order_all">全部</string>
     <string name="transaction_order_ongoing">进行中</string>
-    <string name="transaction_order_failed">已失败</string>
+    <string name="transaction_order_failed">已取消</string>
     <string name="transaction_order_completed">已完成</string>
     <string name="transaction_trade">交易额</string>
     <string name="transaction_please_pay">请付款</string>
     <string name="transaction_please_pay_confirm">请确认收款</string>
     <string name="transaction_time_remaining">付款剩余时间</string>
     <string name="transaction_total_price">总价</string>
-    <string name="transaction_seller_nickname">卖家昵称</string>
+    <string name="transaction_seller_nickname1">卖家昵称</string>
+    <string name="transaction_seller_nickname2">买家昵称</string>
     <string name="transaction_payment_method">收款方式</string>
     <string name="transaction_cancel_order">取消订单</string>
 
@@ -191,7 +209,6 @@
     <string name="transaction_paytype_alipay">支付宝</string>
     <string name="transaction_paytype_unionpay">银联</string>
     <string name="chain_ctime">下单时间</string>
-
 
 
 </resources>

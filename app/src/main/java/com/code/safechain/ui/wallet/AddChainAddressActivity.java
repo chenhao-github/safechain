@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.code.safechain.R;
+import com.code.safechain.app.BaseApp;
 import com.code.safechain.base.BaseActivity;
 import com.code.safechain.base.BaseAdapter;
 import com.code.safechain.common.Constants;
@@ -47,6 +49,8 @@ public class AddChainAddressActivity extends BaseActivity<WalletAddAddressConstr
     ImageView mImgBack;
     @BindView(R.id.txt_save)
     TextView mTxtSave;
+    @BindView(R.id.img_chain_icon)
+    ImageView mImgChainIcon;
     @BindView(R.id.txt_chain_name)
     TextView mTxtChainName;
     @BindView(R.id.et_chain_address)
@@ -72,6 +76,7 @@ public class AddChainAddressActivity extends BaseActivity<WalletAddAddressConstr
     protected void initView() {
         //得到当前币
         mChain = (WalletHomeRsBean.ResultBean.DataBean) getIntent().getSerializableExtra(Constants.DATA);
+        Glide.with(this).load(mChain.getLogo_url()).into(mImgChainIcon);
         mName = mChain.getSymbol();
         mTxtChainName.setText(mChain.getSymbol());
     }
@@ -154,17 +159,20 @@ public class AddChainAddressActivity extends BaseActivity<WalletAddAddressConstr
     //RecycleView配置数据
     private void dealRlv(RecyclerView rlv) {
         rlv.setLayoutManager(new LinearLayoutManager(this));
-        mChains = new ArrayList<>();
-        mChains.add(new Chain(R.mipmap.chain_icon,"ETH","80,000.00","3,000.00",""));
-        mChains.add(new Chain(R.mipmap.chain_icon,"USDT","5,000.00","1,000.00",""));
-        mChains.add(new Chain(R.mipmap.chain_icon,"XRP","800.00","0.00",""));
+//        mChains = new ArrayList<>();
+//        mChains.add(new Chain(R.mipmap.chain_icon,"SEC","80,000.00","3,000.00",""));
+//        mChains.add(new Chain(R.mipmap.chain_icon,"ETH","5,000.00","1,000.00",""));
+//        mChains.add(new Chain(R.mipmap.chain_icon,"XRP","800.00","0.00",""));
 
-        mAdapter = new ChainNameAdapter(this, mChains);
+        mAdapter = new ChainNameAdapter(this, BaseApp.mChains);
         rlv.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseAdapter.BaseViewHolder holder) {
-                mName = mChains.get(holder.getLayoutPosition()).getName();
+                //得到点击的币
+                WalletHomeRsBean.ResultBean.DataBean chain = BaseApp.mChains.get(holder.getLayoutPosition());
+                Glide.with(AddChainAddressActivity.this).load(chain.getLogo_url()).into(mImgChainIcon);
+                mName = chain.getSymbol();
                 mTxtChainName.setText(mName);
                 mPw.dismiss();
                 SystemUtils.setBackgroundAlpha(getWindow(),Constants.NO_SHADOW);//设置背景不透明

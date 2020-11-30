@@ -22,7 +22,7 @@
     <!-- This is the main color -->
     <item>
         <shape>
-            <solid android:color="@color/colorWhite" />
+            <!--<solid android:color="@color/colorWhite" />-->
             <!--定义圆角-->
             <corners
                 android:radius="@dimen/dp_10"
@@ -30,10 +30,10 @@
         </shape>
     </item>
     <!-- This is the line 上下边线 颜色是 上面设置的colorIdentityStroke-->
-    <item android:bottom="@dimen/dp_1" android:top="@dimen/dp_1" android:left="@dimen/dp_1" android:right="@dimen/dp_1">
-        <!--内容填充色-->
-        <shape>
-            <solid android:color="@color/colorWhite" />
-        </shape>
-    </item>
+    <!--<item android:bottom="@dimen/dp_1" android:top="@dimen/dp_1" android:left="@dimen/dp_1" android:right="@dimen/dp_1">-->
+        <!--&lt;!&ndash;内容填充色&ndash;&gt;-->
+        <!--<shape>-->
+            <!--<solid android:color="@color/colorWhite" />-->
+        <!--</shape>-->
+    <!--</item>-->
 </layer-list>

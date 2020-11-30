@@ -160,7 +160,10 @@ public class SetPwdActivity extends BaseActivity<RegistConstract.Presenter> impl
     public void sendPwdReturn(RegistRsBean registRsBean) {
         if(registRsBean.getError() == 0){
             //跳转到注册成功界面
-            startActivity(new Intent(this, RegistSuccessActivity.class));
+//            startActivity(new Intent(this, RegistSuccessActivity.class));
+//            finish();
+            //跳转到登录页面
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
 
         }else if (registRsBean.getError() == -202){

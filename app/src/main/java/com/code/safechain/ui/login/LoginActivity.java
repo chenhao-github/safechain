@@ -23,6 +23,7 @@ import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -43,6 +44,9 @@ public class LoginActivity extends BaseActivity<LoginConstract.Presenter> implem
     @BindView(R.id.btn_login)
     Button mBtnLogin;
     boolean isShow;//密码输入框眼睛是否显示
+    private String mLoginType;//登录类别 1手机号 2邮箱
+    private String mPhone;
+    private String mPwd;
 
     @Override
     protected int getLayout() {
@@ -104,6 +108,12 @@ public class LoginActivity extends BaseActivity<LoginConstract.Presenter> implem
         if(registRsBean.getError() == 0){
             String token = registRsBean.getResult().getToken();
             SpUtils.getInstance(this).setValue(Constants.TOKEN, token);//保存登录token
+            //保存账号，密码，类别，登录时间
+            SpUtils.getInstance(this).setValue(Constants.ACCOUNT,mPhone);
+            SpUtils.getInstance(this).setValue(Constants.PASSWORD,mPwd);
+            SpUtils.getInstance(this).setValue(Constants.LOGIN_TYPE,mLoginType);
+            SpUtils.getInstance(this).setValue(Constants.LOGIN_TIME,new Date().getTime());
+
             startActivity(new Intent(this,MainActivity.class));
             finish();
         }else {
@@ -136,31 +146,33 @@ public class LoginActivity extends BaseActivity<LoginConstract.Presenter> implem
         //封装数据到Map
         HashMap<String, Object> map = new HashMap<>();
         //得到账号和密码
-        String phone = mEtAccount.getText().toString().trim();
-        String pwd = mEtPwd.getText().toString().trim();
-        if(TextUtils.isEmpty(phone)){
+        mPhone = mEtAccount.getText().toString().trim();
+        mPwd = mEtPwd.getText().toString().trim();
+        if(TextUtils.isEmpty(mPhone)){
             ToastUtil.showShort("账号不能为空!");
             return;
         }
-        if(SystemUtils.isMobile(phone)){//是手机号，封装手机号信息
+        if(SystemUtils.isMobile(mPhone)){//是手机号，封装手机号信息
+            mLoginType = "1";
             map.put("type","1");
-            map.put("phone",phone);
+            map.put("phone", mPhone);
             map.put("nation","+86");
         }else {//不是手机号，验证是否是邮箱
-            if(SystemUtils.isEmail(phone)){//是邮箱，封装邮箱
+            if(SystemUtils.isEmail(mPhone)){//是邮箱，封装邮箱
+                mLoginType = "2";
                 map.put("type","2");
-                map.put("email",phone);
+                map.put("email", mPhone);
             }else {
                 ToastUtil.showShort("请输入正确的手机号或邮箱");
                 return;
             }
         }
 
-        if(TextUtils.isEmpty(pwd) || pwd.length()<4 || pwd.length()>20){
+        if(TextUtils.isEmpty(mPwd) || mPwd.length()<4 || mPwd.length()>20){
             ToastUtil.showShort("密码不合法!");
             return;
         }
-        map.put("passwd",pwd);
+        map.put("passwd", mPwd);
         map.put("device_type",2);
         map.put("device_id", DeviceIdFactory.getInstance(this).getDeviceUuid());
         //加密

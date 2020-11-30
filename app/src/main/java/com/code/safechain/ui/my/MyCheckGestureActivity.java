@@ -1,4 +1,4 @@
-package com.code.safechain.ui.wallet;
+package com.code.safechain.ui.my;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.code.safechain.R;
 import com.code.safechain.common.Constants;
 import com.code.safechain.model.HttpManager;
-import com.code.safechain.ui.my.GestureView;
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.utils.RxUtils;
 import com.code.safechain.utils.SpUtils;
@@ -22,11 +21,10 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class CheckGestureActivity extends AppCompatActivity {
+public class MyCheckGestureActivity extends AppCompatActivity implements View.OnClickListener {
     private GestureView mGestureview;
     private String mCurrentPaywd;
     private TextView mTxtsForgetPaywd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +66,11 @@ public class CheckGestureActivity extends AppCompatActivity {
         });
     }
 
+    private void initView() {
+        mTxtsForgetPaywd = (TextView) findViewById(R.id.txts_forget_paywd);
+        mTxtsForgetPaywd.setOnClickListener(this);
+    }
+
     //通过 回传到ChainDetailActivity，再跳转到 TransferActivity页面，TransferActivity操作完后
     // 再回传到回传到ChainDetailActivity 要区分
     //不通过，继续设置
@@ -105,22 +108,24 @@ public class CheckGestureActivity extends AppCompatActivity {
 
     //处理验证结果
     private void dealRs(GestureRsBean gestureRsBean) {
-        if (gestureRsBean.getError() == 0) {//验证成功，回传到ChainDetailActivity
-            Intent intent = new Intent();
-            intent.putExtra(Constants.PAYWD, mCurrentPaywd);
-            setResult(200, intent);
-            finish();
-        } else if (gestureRsBean.getError() == -209) {//没有支付密码
-            Intent intent = new Intent();
-            setResult(300, intent);
+        if (gestureRsBean.getError() == 0) {//验证成功，跳转到SetGestureActivity
+            startActivity(new Intent(this, SetGestureActivity.class));
             finish();
         } else if (gestureRsBean.getError() == -208) {//支付密码不正确
-            ToastUtil.showShort(gestureRsBean.getMessage());
+            ToastUtil.showShort("旧支付密码错误！");
         }
     }
 
-    private void initView() {
-        mTxtsForgetPaywd = (TextView) findViewById(R.id.txts_forget_paywd);
-        mTxtsForgetPaywd.setVisibility(View.INVISIBLE);
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            default:
+                break;
+            case R.id.txts_forget_paywd:
+                startActivity(new Intent(this, VerificationCodeUpdatePaywdActivity.class));
+                finish();
+                break;
+        }
     }
 }

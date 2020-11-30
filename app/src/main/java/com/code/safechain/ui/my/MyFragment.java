@@ -14,15 +14,18 @@ import com.code.safechain.app.BaseApp;
 import com.code.safechain.base.BaseFragment;
 import com.code.safechain.common.Constants;
 import com.code.safechain.interfaces.MyConstract;
+import com.code.safechain.model.HttpManager;
 import com.code.safechain.presenter.MyPresenter;
 import com.code.safechain.ui.login.LoginActivity;
 import com.code.safechain.ui.login.VerificationCodeActivity;
+import com.code.safechain.ui.main.SplushActivity;
 import com.code.safechain.ui.main.bean.UserBean;
 import com.code.safechain.ui.my.bean.GestureRsBean;
 import com.code.safechain.ui.my.bean.UploadIconRsBean;
 import com.code.safechain.utils.APKVersionCodeUtils;
 import com.code.safechain.utils.LocalManageUtil;
 import com.code.safechain.utils.LoggerUtil;
+import com.code.safechain.utils.RxUtils;
 import com.code.safechain.utils.SpUtils;
 import com.code.safechain.utils.SystemUtils;
 import com.code.safechain.utils.ToastUtil;
@@ -32,6 +35,8 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 
 /**
@@ -44,6 +49,8 @@ import okhttp3.ResponseBody;
  * activity.reStartApp();
  */
 public class MyFragment extends BaseFragment<MyConstract.Presenter> implements MyConstract.View {
+    @BindView(R.id.img_message)
+    ImageView mImgMessage;
     @BindView(R.id.img_language)
     ImageView mImgLanguage;
     @BindView(R.id.rl_header)//上面的头像区域
@@ -69,6 +76,7 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
     TextView txtVersionRs;
     @BindView(R.id.txt_user_statis)//用户状态
     TextView txtUserStatis;
+    private boolean paywdSetted;
 
 
     @Override
@@ -108,14 +116,6 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
 //        showLanguage();//显示语言
         //获得设置的语言，把页面中对应的语言打钩
         setSetedLanguage(SpUtils.getInstance(getActivity()).getSelectLanguage());
-        //设置用户名
-        if(BaseApp.userBean != null){
-            if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getPhone()))
-                mTxtName.setText(BaseApp.userBean.getResult().getPhone());
-            if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getEmail()))
-                mTxtName.setText(BaseApp.userBean.getResult().getEmail());
-        }
-
         //设置版本号
         String versionName = APKVersionCodeUtils.getVerName(getActivity());
         txtVersionRs.setText(versionName);
@@ -123,11 +123,23 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
 
         //得到是否设置手势密码
 //        setGestureRsTxt();
-        //设置用户信息
-        setUserInfo();
+        //设置用户信息,,
+        if(BaseApp.userBean == null){
+            //加载基本信息
+            getUserInfo();
+        }else {
+            setUserInfo();
+        }
+//
+//        //获得用户信息
+//        getUserInfo();
+    }
 
-        //获得用户信息
-//        getUserData();
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden)
+            getUserInfo();
     }
 
 
@@ -151,21 +163,55 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
     }
 
     private void setUserInfo() {
-        if(BaseApp.userBean == null){
-            //加载基本信息
-
+        //设置用户名
+        if(BaseApp.userBean != null){
+            if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getPhone()))
+                mTxtName.setText(BaseApp.userBean.getResult().getPhone());
+            if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getEmail()))
+                mTxtName.setText(BaseApp.userBean.getResult().getEmail());
         }
-        //设置实名认证
-        if(!TextUtils.isEmpty(BaseApp.userBean.getResult().getCard_id())){
-            txtRealNameRs.setText(BaseApp.getRes().getString(R.string.my_realname_yes));
-        }
+        //设置实名认证结果
+        txtRealNameRs.setText(Constants.CERTIFIED[BaseApp.userBean.getResult().getState()]);
         //设置手势密码
         if(BaseApp.userBean.getResult().getHas_paywd() == 0){
             txtGestureRs.setText(BaseApp.getRes().getString(R.string.my_gesture_set));
+            paywdSetted = true;
         }
         //设置用户排名
         txtUserStatis.setText("您是第"+BaseApp.userBean.getResult().getPk_user()+"位用户，共"
                 +BaseApp.userBean.getResult().getTotal()+"位用户");
+    }
+
+    private void getUserInfo() {
+        //封装数据
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token", SpUtils.getInstance(getActivity()).getString(Constants.TOKEN));
+        map = SystemUtils.getMap(map);
+        HttpManager.getInstance().getApiServer().getUserData(map)
+                .compose(RxUtils.<UserBean>changeScheduler())
+                .subscribe(new Observer<UserBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(UserBean userBean) {
+                        BaseApp.userBean = userBean;//保存用户信息
+                        setUserInfo();//设置用户信息
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+//                        String s = e.getMessage();
+//                        String a = "";
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
    /* private void getUserData() {
@@ -176,20 +222,26 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
         presenter.getUserData(map);
     }*/
 
-    @OnClick({R.id.img_header_change, R.id.img_language, R.id.rl_realname, R.id.rl_gesture, R.id.rl_aboutme,
-            R.id.rl_suggestion, R.id.rl_version, R.id.rl_paytype, R.id.rl_loginout, R.id.btn_regist,
-    R.id.btn_login})
+    @OnClick({R.id.img_message, R.id.img_header_change, R.id.img_language, R.id.rl_realname, R.id.rl_gesture,
+            R.id.rl_aboutme, R.id.rl_suggestion, R.id.rl_version, R.id.rl_paytype, R.id.rl_loginout,
+            R.id.btn_regist,R.id.rl_onlineservice,R.id.btn_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.img_message:
+                startActivity(new Intent(getActivity(),MessageActivity.class));
+                break;
             case R.id.img_header_change:
                 break;
             case R.id.img_language:
-                //设置到手势密码设置界面
                 startActivityForResult(new Intent(getActivity(),SettingLanguageActivity.class),300);
                 break;
             case R.id.rl_realname:
-                //跳转到实名认证页面
-                startActivityForResult(new Intent(getActivity(), RealNameActivity.class),200);
+                if(BaseApp.userBean != null){
+                    //跳转到实名认证页面
+                    startActivityForResult(new Intent(getActivity(), RealNameActivity.class),200);
+                }else {
+                    ToastUtil.showShort("稍等，认证信息未获取");
+                }
                 break;
             case R.id.rl_aboutme:
                 //跳转到关于我们页面
@@ -200,16 +252,29 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
                 toActivity(SuggestionActivity.class);
                 break;
             case R.id.rl_gesture:
-                //设置到手势密码设置界面
-                startActivityForResult(new Intent(getActivity(),SetGestureActivity.class),100);
+                if(BaseApp.userBean != null){
+                    //设置到手势密码设置界面
+                    if(paywdSetted){//设置了手势密码，跳转到验证，然后修改
+                        startActivity(new Intent(getActivity(),MyCheckGestureActivity.class));
+                    }else {//没有设置手势密码，跳转到设置页面
+                        startActivityForResult(new Intent(getActivity(),SetGestureActivity.class),100);
+                    }
+                }else {
+                    ToastUtil.showShort("稍等，设置信息未获取");
+                }
                 break;
             case R.id.rl_paytype:
                 //跳转到支付方式设置页面
                 startActivityForResult(new Intent(getActivity(), PayTypeActivity.class),400);
                 break;
+            case R.id.rl_onlineservice:
+                //跳转到在线客服
+                startActivityForResult(new Intent(getActivity(), OnlineServiceActivity.class),400);
+                break;
             case R.id.rl_loginout: //登出
-                SpUtils.getInstance(getActivity()).setValue(Constants.TOKEN,"");
-                showLoginState();
+//                SpUtils.getInstance(getActivity()).setValue(Constants.TOKEN,"");
+//                showLoginState();
+                toLoginActivity();
                 break;
             case R.id.btn_regist: //跳转到注册 发送验证码页面
                 startActivity(new Intent(getActivity(), VerificationCodeActivity.class));
@@ -222,14 +287,26 @@ public class MyFragment extends BaseFragment<MyConstract.Presenter> implements M
         }
     }
 
+    private void toLoginActivity() {
+        //清空登录信息
+        SpUtils.getInstance(getActivity()).setValue(Constants.TOKEN,"");
+        SpUtils.getInstance(getActivity()).setValue(Constants.ACCOUNT,"");
+        SpUtils.getInstance(getActivity()).setValue(Constants.PASSWORD,"");
+        SpUtils.getInstance(getActivity()).setValue(Constants.LOGIN_TYPE,"");
+        SpUtils.getInstance(getActivity()).setValue(Constants.LOGIN_TIME,0l);
+
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 100 && resultCode == getActivity().RESULT_OK){//设置手势密码成功
             txtGestureRs.setText(BaseApp.getRes().getString(R.string.my_gesture_set));
         }
-        if(requestCode == 200 && resultCode == getActivity().RESULT_OK){//实名认证成功
-            txtRealNameRs.setText(BaseApp.getRes().getString(R.string.my_realname_yes));
+        if(requestCode == 200 && resultCode == getActivity().RESULT_OK){//实名认证待审核
+            txtRealNameRs.setText(BaseApp.getRes().getString(R.string.my_realname_wait));
         }
         if(requestCode == 300 && resultCode == getActivity().RESULT_OK){//设置语言成功，重启主页，无需处理
 

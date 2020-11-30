@@ -62,8 +62,8 @@ public class OthersSaleOrderRsBean {
          * user_name :
          */
 
-        private int max;
-        private int min;
+        private float max;
+        private float min;
         private String num;
         private int pay_type;
         private double price;
@@ -77,19 +77,19 @@ public class OthersSaleOrderRsBean {
         private String user_name;
         private List<PaysBean> pays;
 
-        public int getMax() {
+        public float getMax() {
             return max;
         }
 
-        public void setMax(int max) {
+        public void setMax(float max) {
             this.max = max;
         }
 
-        public int getMin() {
+        public float getMin() {
             return min;
         }
 
-        public void setMin(int min) {
+        public void setMin(float min) {
             this.min = min;
         }
 
@@ -200,6 +200,7 @@ public class OthersSaleOrderRsBean {
 
             private String bank_name;
             private String bank_no;
+            private String pay_addr;
             private String img_url;
             private int pay_type;
             private String user_name;
@@ -230,6 +231,11 @@ public class OthersSaleOrderRsBean {
                 this.bank_no = bank_no;
             }
 
+            public String getPay_addr() { return pay_addr; }
+
+            public void setPay_addr(String pay_addr) {
+                this.pay_addr = pay_addr;
+            }
             public String getImg_url() {
                 return img_url;
             }

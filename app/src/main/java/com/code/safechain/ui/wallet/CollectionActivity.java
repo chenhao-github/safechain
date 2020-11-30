@@ -57,6 +57,7 @@ public class CollectionActivity extends BaseActivity<WalletConstract.Presenter> 
 
     private WalletHomeRsBean.ResultBean.DataBean mDataBean;
     private PopupWindow mPw;
+    private String mToken_addr;
 
     @Override
     protected int getLayout() {
@@ -79,7 +80,7 @@ public class CollectionActivity extends BaseActivity<WalletConstract.Presenter> 
 
     @Override
     protected void initData() {
-        //封装数据
+        //封装数据，，请求钱包地址
         HashMap<String, Object> map = new HashMap<>();
         map.put("token", SpUtils.getInstance(this).getString(Constants.TOKEN));
         map.put("token_id", mDataBean.getToken_id());
@@ -95,9 +96,10 @@ public class CollectionActivity extends BaseActivity<WalletConstract.Presenter> 
 
                     @Override
                     public void onNext(WalletAddressOnlyRsBean walletAddressOnlyRsBean) {
-                        mTxtWalletAddress.setText(walletAddressOnlyRsBean.getResult().getToken_addr());
+                        mToken_addr = walletAddressOnlyRsBean.getResult().getToken_addr();
+                        mTxtWalletAddress.setText(mToken_addr);
                         //生成二维码，并显示
-                        Bitmap bitmap = ZXingUtils.createQRImage(walletAddressOnlyRsBean.getResult().getToken_addr(), 123, 123);
+                        Bitmap bitmap = ZXingUtils.createQRImage(mToken_addr, 123, 123);
                         mImgQrCode.setImageBitmap(bitmap);
                     }
 
@@ -113,7 +115,7 @@ public class CollectionActivity extends BaseActivity<WalletConstract.Presenter> 
                 });
     }
 
-    @OnClick({R.id.img_back, R.id.ll_share, R.id.ll_copy, R.id.ll_set_money, R.id.txt_wallet_copy})
+    @OnClick({R.id.img_back, R.id.ll_share, R.id.ll_copy, R.id.txt_wallet_copy, R.id.ll_set_money})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
@@ -127,6 +129,9 @@ public class CollectionActivity extends BaseActivity<WalletConstract.Presenter> 
             case R.id.ll_copy://复制到剪贴板
                 setSysClipboardText();
                 break;
+            case R.id.txt_wallet_copy://复制到剪贴板
+                setSysClipboardText();
+                break;
             case R.id.ll_set_money:
                 Toast.makeText(this, "设置金额", Toast.LENGTH_SHORT).show();
                 break;
@@ -136,7 +141,8 @@ public class CollectionActivity extends BaseActivity<WalletConstract.Presenter> 
     public void setSysClipboardText() {
         ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 // 创建普通字符型ClipData
-        ClipData mClipData = ClipData.newPlainText("Label", mDataBean.getAddr());
+        ClipData mClipData = ClipData.newPlainText("Label", mToken_addr);
+
 // 将ClipData内容放到系统剪贴板里。
         cm.setPrimaryClip(mClipData);
         ToastUtil.showShort("复制成功");

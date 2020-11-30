@@ -54,7 +54,7 @@ public class RegistPresenter extends BasePresenter<RegistConstract.View> impleme
 
                 @Override
                 public void onError(Throwable e) {
-
+                    String s = "";
                 }
 
                 @Override

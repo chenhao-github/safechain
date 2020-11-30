@@ -97,9 +97,16 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
                 startActivity(intent);
                 break;
             case R.id.img_filter:
-                showPopupwindow();//弹出筛选popupwindow
+//                showPopupwindow();//弹出筛选popupwindow
+                //跳转到撤回界面
+                startActivity(new Intent(getActivity(),WithDrawActivity.class));
                 break;
         }
+    }
+
+    public void dealBuySaleFromSaleFragment(int i){
+        type = i;//选中 我要卖
+        dealBuySaleAndFragment(i);
     }
 
     /**
@@ -116,7 +123,7 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
             mFm.beginTransaction().show(mBuy).hide(mSale).commit();
         }else {
             //切换到我要卖，先判断是否实名认证
-            if(BaseApp.userBean!=null&&!TextUtils.isEmpty(BaseApp.userBean.getResult().getCard_id())){
+            if(BaseApp.userBean!=null&&BaseApp.userBean.getResult().getState()==6){
                 txtBuy.setTextSize(17);
                 txtBuy.setTextColor(getResources().getColor(R.color.colorIdentity));
                 txtSale.setTextSize(20);
@@ -129,7 +136,7 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
     }
 
     //弹出筛选popupwindow
-    private void showPopupwindow() {
+    /*private void showPopupwindow() {
         View pwLayout = View.inflate(getActivity(), R.layout.popup_trans_buy_filter, null);
         mPw = new PopupWindow(pwLayout, 960, 840);
         SystemUtils.setBackgroundAlpha(getActivity().getWindow(), Constants.SHADOW);//设置背景半透明效果
@@ -140,7 +147,7 @@ public class TransactionFragment extends BaseFragment<TransactionConstract.Prese
         cancel.setOnClickListener(this);
         filter.setOnClickListener(this);
 
-    }
+    }*/
 
     //关闭  筛选  按钮的监听
     @Override

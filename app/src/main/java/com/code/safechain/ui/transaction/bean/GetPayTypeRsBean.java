@@ -76,6 +76,7 @@ public class GetPayTypeRsBean {
             private String img_url;
             private int bank_id;
             private String bank_name;
+            private String pay_addr;
             private String bank_no;
             private int state;
             private String ctime;
@@ -136,6 +137,10 @@ public class GetPayTypeRsBean {
             public void setBank_name(String bank_name) {
                 this.bank_name = bank_name;
             }
+
+            public String getPay_addr() { return pay_addr; }
+
+            public void setPay_addr(String pay_addr) { this.pay_addr = pay_addr; }
 
             public String getBank_no() {
                 return bank_no;
